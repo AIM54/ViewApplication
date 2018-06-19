@@ -7,10 +7,13 @@ import android.view.SurfaceView;
 import android.widget.Button;
 
 import com.bian.viewapplication.activity.ListViewActivity;
+import com.bian.viewapplication.activity.RecyclerViewActivity;
 
 public class MainActivity extends AppCompatActivity {
     private SurfaceView mSurfaceView;
     private Button listButton;
+    private Button recyclerButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +22,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        listButton.setOnClickListener(v -> new Intent(this, ListViewActivity.class));
+        listButton = findViewById(R.id.listview_bt);
+        listButton.setOnClickListener(v ->startActivity( new Intent(this, ListViewActivity.class)));
+        recyclerButton=findViewById(R.id.recycler_bt);
+        recyclerButton.setOnClickListener(v -> startActivity(new Intent(this, RecyclerViewActivity.class)));
     }
 }

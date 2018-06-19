@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ViewApplication</string>
+    <string name="add">添加</string>
+    <string name="delete">删除</string>
 </resources>
