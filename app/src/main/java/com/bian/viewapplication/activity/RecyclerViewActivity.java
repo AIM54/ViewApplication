@@ -65,17 +65,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
 
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-
-        }
-
-        @Override
-        public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-            if (actionState == MyItemTouchHelper.ACTION_STATE_DRAG) {
-                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-            } else if (actionState == MyItemTouchHelper.ACTION_STATE_SWIPE) {
-                CommonLog.i(String.format("dX:%f||dY:%f", dX, dY));
-                viewHolder.itemView.scrollTo(-(int) dX, (int) dY);
-            }
+            CommonLog.i(String.format("viewHolder.itemView.getMeasuredWidth:%d", viewHolder.itemView.getMeasuredWidth()));
         }
     }
 

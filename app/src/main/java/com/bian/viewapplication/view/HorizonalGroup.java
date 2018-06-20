@@ -36,8 +36,7 @@ public class HorizonalGroup extends ViewGroup {
         }
         maxHeight = Math.max(maxHeight, getSuggestedMinimumHeight());
         maxWidth = Math.max(maxWidth, getSuggestedMinimumWidth());
-        CommonLog.i(String.format("maxHeight:%d,maxWidth:%d",maxHeight,maxWidth));
-        setMeasuredDimension(maxWidth,maxHeight);
+        setMeasuredDimension(maxWidth, maxHeight);
     }
 
     @Override
@@ -49,8 +48,7 @@ public class HorizonalGroup extends ViewGroup {
             View childView = getChildAt(index);
             LayoutParams layoutParams = (LayoutParams) childView.getLayoutParams();
             initLeft += layoutParams.leftMargin;
-            CommonLog.i("initLeft:"+initLeft+"||initTop:"+initTop);
-            childView.layout(initLeft, initTop + layoutParams.topMargin, initLeft+childView.getMeasuredWidth(), initTop+layoutParams.topMargin+childView.getMeasuredHeight());
+            childView.layout(initLeft, initTop + layoutParams.topMargin, initLeft + childView.getMeasuredWidth(), initTop + layoutParams.topMargin + childView.getMeasuredHeight());
             initLeft += childView.getMeasuredWidth() + layoutParams.rightMargin;
         }
     }

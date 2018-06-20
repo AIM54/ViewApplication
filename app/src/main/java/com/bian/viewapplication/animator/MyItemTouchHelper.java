@@ -42,6 +42,8 @@ import android.view.ViewConfiguration;
 import android.view.ViewParent;
 import android.view.animation.Interpolator;
 
+import com.bian.viewapplication.util.CommonLog;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -593,6 +595,7 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
                     case END:
                         targetTranslateY = 0;
                         targetTranslateX = Math.signum(mDx) * mRecyclerView.getWidth();
+                        CommonLog.i(String.format("targetTranslateY:%f,targetTranslateX:%f,mDx:%f", targetTranslateY, targetTranslateX, mDx));
                         break;
                     case UP:
                     case DOWN:
@@ -1046,7 +1049,7 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
      * through RecyclerView's ItemTouchListener mechanism. As long as no other ItemTouchListener
      * grabs previous events, this should work as expected.</li>
      * </ul>
-     *
+     * <p>
      * For example, if you would like to let your user to be able to drag an Item by touching one
      * of its descendants, you may implement it as follows:
      * <pre>
@@ -1095,7 +1098,7 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
      * through RecyclerView's ItemTouchListener mechanism. As long as no other ItemTouchListener
      * grabs previous events, this should work as expected.</li>
      * </ul>
-     *
+     * <p>
      * For example, if you would like to let your user to be able to swipe an Item by touching one
      * of its descendants, you may implement it as follows:
      * <pre>
@@ -1162,6 +1165,12 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
         }
     }
 
+    /**
+     * marked by bianmingliang
+     *
+     * @param viewHolder
+     * @return
+     */
     private int swipeIfNecessary(RecyclerView.ViewHolder viewHolder) {
         if (mActionState == ACTION_STATE_DRAG) {
             return 0;
@@ -1208,6 +1217,14 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
         return 0;
     }
 
+    /**
+     * 检查用户是否要进行侧拉操作
+     * note by bianmingliang
+     *
+     * @param viewHolder
+     * @param flags
+     * @return
+     */
     private int checkHorizontalSwipe(RecyclerView.ViewHolder viewHolder, int flags) {
         if ((flags & (LEFT | RIGHT)) != 0) {
             final int dirFlag = mDx > 0 ? RIGHT : LEFT;
@@ -1266,22 +1283,19 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
             return; // we use elevation on Lollipop
         }
         if (mChildDrawingOrderCallback == null) {
-            mChildDrawingOrderCallback = new RecyclerView.ChildDrawingOrderCallback() {
-                @Override
-                public int onGetChildDrawingOrder(int childCount, int i) {
-                    if (mOverdrawChild == null) {
-                        return i;
-                    }
-                    int childPosition = mOverdrawChildPosition;
-                    if (childPosition == -1) {
-                        childPosition = mRecyclerView.indexOfChild(mOverdrawChild);
-                        mOverdrawChildPosition = childPosition;
-                    }
-                    if (i == childCount - 1) {
-                        return childPosition;
-                    }
-                    return i < childPosition ? i : i + 1;
+            mChildDrawingOrderCallback = (childCount, i) -> {
+                if (mOverdrawChild == null) {
+                    return i;
                 }
+                int childPosition = mOverdrawChildPosition;
+                if (childPosition == -1) {
+                    childPosition = mRecyclerView.indexOfChild(mOverdrawChild);
+                    mOverdrawChildPosition = childPosition;
+                }
+                if (i == childCount - 1) {
+                    return childPosition;
+                }
+                return i < childPosition ? i : i + 1;
             };
         }
         mRecyclerView.setChildDrawingOrderCallback(mChildDrawingOrderCallback);
@@ -1887,7 +1901,7 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
          * This method is responsible to give necessary hint to the LayoutManager so that it will
          * keep the View in visible area. For example, for LinearLayoutManager, this is as simple
          * as calling {@link LinearLayoutManager#scrollToPositionWithOffset(int, int)}.
-         *
+         * <p>
          * Default implementation calls {@link RecyclerView#scrollToPosition(int)} if the View's
          * new position is likely to be out of bounds.
          * <p>
@@ -2158,7 +2172,7 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
      * directions and this class will handle the flag callbacks. You should still override onMove
      * or
      * onSwiped depending on your use case.
-     *
+     * <p>
      * <pre>
      * ItemTouchHelper mIth = new ItemTouchHelper(
      *     new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
@@ -2261,7 +2275,7 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
         /**
          * Whether to execute code in response to the the invoking of
          * {@link ItemTouchHelperGestureListener#onLongPress(MotionEvent)}.
-         *
+         * <p>
          * It is necessary to control this here because
          * {@link GestureDetector.SimpleOnGestureListener} can only be set on a
          * {@link GestureDetector} in a GestureDetector's constructor, a GestureDetector will call
@@ -2368,13 +2382,7 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
             mTargetX = targetX;
             mTargetY = targetY;
             mValueAnimator = ValueAnimator.ofFloat(0f, 1f);
-            mValueAnimator.addUpdateListener(
-                    new ValueAnimator.AnimatorUpdateListener() {
-                        @Override
-                        public void onAnimationUpdate(ValueAnimator animation) {
-                            setFraction(animation.getAnimatedFraction());
-                        }
-                    });
+            mValueAnimator.addUpdateListener(animation -> setFraction(animation.getAnimatedFraction()));
             mValueAnimator.setTarget(viewHolder.itemView);
             mValueAnimator.addListener(this);
             setFraction(0f);
