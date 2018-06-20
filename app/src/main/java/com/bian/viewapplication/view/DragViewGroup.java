@@ -26,6 +26,11 @@ public class DragViewGroup extends ViewGroup {
     private int mTopPostion;
     private Paint mPaint;
     private Paint linePaint;
+    /**
+     * 大圆直径和屏幕宽度的比例
+     */
+    private float bigCircleRatio = 1f / 4f;
+    private float smallCircleRatio = 1f / 2f;
 
     public DragViewGroup(Context context) {
         super(context);
@@ -83,8 +88,13 @@ public class DragViewGroup extends ViewGroup {
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
         if (mTopPostion >= 0) {
-            int radius = Math.min(mTopPostion, getMeasuredWidth()) / 2;
-            canvas.drawCircle(getMeasuredWidth() / 2, mTopPostion / 2, radius, mPaint);
+            if (mTopPostion < getMeasuredWidth() * bigCircleRatio) {
+                canvas.drawCircle(getMeasuredWidth() / 2, mTopPostion / 2, mTopPostion / 2, mPaint);
+            } else {
+                canvas.drawCircle(getMeasuredWidth() / 2, mTopPostion - getMeasuredWidth() * bigCircleRatio / 2, getMeasuredWidth() * bigCircleRatio / 2, mPaint);
+                float smallRadius=(mTopPostion-getMeasuredWidth()*bigCircleRatio)/2;
+                canvas.drawCircle(getMeasuredWidth()/2,smallRadius,smallRadius,mPaint);
+            }
         } else {
             int radius = Math.min(Math.abs(mTopPostion), getMeasuredWidth()) / 2;
             canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() + mTopPostion / 2, radius, mPaint);

@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
     private SurfaceView mSurfaceView;
     private Button listButton;
     private Button recyclerButton;
+    private Button vgButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +24,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         listButton = findViewById(R.id.listview_bt);
-        listButton.setOnClickListener(v ->startActivity( new Intent(this, ListViewActivity.class)));
-        recyclerButton=findViewById(R.id.recycler_bt);
+        listButton.setOnClickListener(v -> startActivity(new Intent(this, ListViewActivity.class)));
+        recyclerButton = findViewById(R.id.recycler_bt);
         recyclerButton.setOnClickListener(v -> startActivity(new Intent(this, RecyclerViewActivity.class)));
+        vgButton = findViewById(R.id.vg_button);
     }
 }

@@ -8,9 +8,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/dp15"
+        android:gravity="center_vertical"
         android:paddingBottom="@dimen/dp15"
-        android:gravity="center_vertical">
+        android:paddingTop="@dimen/dp15">
 
         <ImageView
             android:id="@+id/bank_logo_iv"
@@ -28,4 +28,9 @@
             tools:text="中国农业银行" />
     </LinearLayout>
 
+    <Button
+        android:id="@+id/right_button"
+        android:layout_width="@dimen/dp150"
+        android:layout_height="@dimen/dp100"
+        android:text="@string/update" />
 </LinearLayout>

@@ -213,7 +213,8 @@ public class MyItemAnimator extends SimpleItemAnimator {
     @Override
     public boolean animateAdd(final ViewHolder holder) {
         resetAnimation(holder);
-        holder.itemView.setAlpha(0);
+        holder.itemView.setScaleY(0);
+        holder.itemView.setScaleX(0);
         mPendingAdditions.add(holder);
         return true;
     }
@@ -222,7 +223,7 @@ public class MyItemAnimator extends SimpleItemAnimator {
         final View view = holder.itemView;
         final ViewPropertyAnimator animation = view.animate();
         mAddAnimations.add(holder);
-        animation.alpha(1).setDuration(getAddDuration())
+        animation.scaleY(1).scaleX(1).setDuration(getAddDuration())
                 .setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationStart(Animator animator) {
@@ -231,7 +232,8 @@ public class MyItemAnimator extends SimpleItemAnimator {
 
                     @Override
                     public void onAnimationCancel(Animator animator) {
-                        view.setAlpha(1);
+                        view.setScaleX(1);
+                        view.setScaleY(1);
                     }
 
                     @Override

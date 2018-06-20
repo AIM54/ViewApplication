@@ -70,6 +70,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
             return false;
         }
 
+
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
 
