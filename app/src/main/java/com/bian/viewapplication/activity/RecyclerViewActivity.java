@@ -5,12 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
+
+
 import android.widget.Button;
 
 import com.bian.viewapplication.R;
 import com.bian.viewapplication.adapter.BankAdapter;
 import com.bian.viewapplication.animator.MyItemAnimator;
+import com.bian.viewapplication.animator.MyItemTouchHelper;
 import com.bian.viewapplication.bean.BankInfo;
 import com.bian.viewapplication.util.CommonLog;
 import com.bian.viewapplication.util.Contant;
@@ -48,11 +50,11 @@ public class RecyclerViewActivity extends AppCompatActivity {
         testRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         testRecyclerView.setAdapter(bankAdapter);
         addButton.setOnClickListener(v -> addBankInfo());
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemOnTouchCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.START | ItemTouchHelper.END));
+        MyItemTouchHelper itemTouchHelper = new MyItemTouchHelper(new ItemOnTouchCallback(MyItemTouchHelper.UP | MyItemTouchHelper.DOWN, MyItemTouchHelper.START | MyItemTouchHelper.END));
         itemTouchHelper.attachToRecyclerView(testRecyclerView);
     }
 
-    public class ItemOnTouchCallback extends ItemTouchHelper.SimpleCallback {
+    public class ItemOnTouchCallback extends MyItemTouchHelper.SimpleCallback {
         public ItemOnTouchCallback(int dragDirs, int swipeDirs) {
             super(dragDirs, swipeDirs);
         }
@@ -66,9 +68,9 @@ public class RecyclerViewActivity extends AppCompatActivity {
         @Override
         public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-            if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
+            if (actionState == MyItemTouchHelper.ACTION_STATE_DRAG) {
                 CommonLog.i(String.format("dX:%f||df:%f", dX, dY));
-            } else if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+            } else if (actionState == MyItemTouchHelper.ACTION_STATE_SWIPE) {
                 CommonLog.i(String.format("dX:%f||dY:%f", dX, dY));
             }
         }
@@ -88,6 +90,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
         public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
             super.clearView(recyclerView, viewHolder);
             CommonLog.i("clearView");
+            CommonLog.i(viewHolder.itemView.getTranslationX());
         }
     }
 
