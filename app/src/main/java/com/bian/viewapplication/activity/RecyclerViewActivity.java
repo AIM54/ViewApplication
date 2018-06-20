@@ -5,8 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
-
 import android.widget.Button;
 
 import com.bian.viewapplication.R;
@@ -59,27 +57,11 @@ public class RecyclerViewActivity extends AppCompatActivity {
             super(dragDirs, swipeDirs);
         }
 
-        @Override
-        public void onMoved(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, int fromPos, RecyclerView.ViewHolder target, int toPos, int x, int y) {
-            super.onMoved(recyclerView, viewHolder, fromPos, target, toPos, x, y);
-            CommonLog.i(String.format("fromPos:%d||toPos:%d", fromPos, toPos));
-        }
-
-        @Override
-        public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-            if (actionState == MyItemTouchHelper.ACTION_STATE_DRAG) {
-                CommonLog.i(String.format("dX:%f||df:%f", dX, dY));
-            } else if (actionState == MyItemTouchHelper.ACTION_STATE_SWIPE) {
-                CommonLog.i(String.format("dX:%f||dY:%f", dX, dY));
-            }
-        }
 
         @Override
         public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
             return false;
         }
-
 
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
@@ -87,10 +69,13 @@ public class RecyclerViewActivity extends AppCompatActivity {
         }
 
         @Override
-        public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-            super.clearView(recyclerView, viewHolder);
-            CommonLog.i("clearView");
-            CommonLog.i(viewHolder.itemView.getTranslationX());
+        public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+            if (actionState == MyItemTouchHelper.ACTION_STATE_DRAG) {
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            } else if (actionState == MyItemTouchHelper.ACTION_STATE_SWIPE) {
+                CommonLog.i(String.format("dX:%f||dY:%f", dX, dY));
+                viewHolder.itemView.scrollTo(-(int) dX, (int) dY);
+            }
         }
     }
 

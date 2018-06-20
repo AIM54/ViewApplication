@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bian.viewapplication.R;
@@ -47,21 +48,23 @@ public class BankAdapter extends RecyclerView.Adapter<BankAdapter.MyViewHolder> 
     public void addItem(int index, BankInfo bankInfo) {
         bankInfoArrayList.add(index, bankInfo);
         notifyItemInserted(index);
-        CommonLog.i("bankInfoArrayList.size:"+bankInfoArrayList.size());
+        CommonLog.i("bankInfoArrayList.size:" + bankInfoArrayList.size());
     }
 
-    public void changeItemContent(int index,String bankInfo){
+    public void changeItemContent(int index, String bankInfo) {
     }
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private ImageView logoIv;
         private TextView nameTv;
+        public LinearLayout rootView;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             logoIv = itemView.findViewById(R.id.bank_logo_iv);
             nameTv = itemView.findViewById(R.id.bank_name_tv);
+            rootView = itemView.findViewById(R.id.root_layout);
         }
     }
 }
