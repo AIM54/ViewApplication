@@ -1,9 +1,11 @@
 package com.bian.viewapplication.view;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
 import android.support.v7.widget.RecyclerView;
@@ -26,11 +28,16 @@ public class DragViewGroup extends ViewGroup {
     private int mTopPostion;
     private Paint mPaint;
     private Paint linePaint;
+    private Path bezierPath;
     /**
      * 大圆直径和屏幕宽度的比例
      */
     private float bigCircleRatio = 1f / 4f;
+    /**
+     * 大圆和小圆之间的直径比例
+     */
     private float smallCircleRatio = 1f / 2f;
+    private int centerX;
 
     public DragViewGroup(Context context) {
         super(context);
@@ -71,6 +78,7 @@ public class DragViewGroup extends ViewGroup {
         linePaint.setStyle(Paint.Style.STROKE);
         linePaint.setStrokeWidth(getContext().getResources().getDimension(R.dimen.dp4));
         linePaint.setColor(Color.RED);
+        bezierPath = new Path();
     }
 
     @Override
@@ -88,18 +96,40 @@ public class DragViewGroup extends ViewGroup {
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
         if (mTopPostion >= 0) {
-            if (mTopPostion < getMeasuredWidth() * bigCircleRatio) {
-                canvas.drawCircle(getMeasuredWidth() / 2, mTopPostion / 2, mTopPostion / 2, mPaint);
-            } else {
-                canvas.drawCircle(getMeasuredWidth() / 2, mTopPostion - getMeasuredWidth() * bigCircleRatio / 2, getMeasuredWidth() * bigCircleRatio / 2, mPaint);
-                float smallRadius=(mTopPostion-getMeasuredWidth()*bigCircleRatio)/2;
-                canvas.drawCircle(getMeasuredWidth()/2,smallRadius,smallRadius,mPaint);
-            }
+            drawHeader(canvas);
         } else {
             int radius = Math.min(Math.abs(mTopPostion), getMeasuredWidth()) / 2;
             canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() + mTopPostion / 2, radius, mPaint);
         }
         canvas.drawLine(0, getMeasuredHeight(), getMeasuredWidth(), getMeasuredHeight(), linePaint);
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        centerX = getMeasuredWidth() / 2;
+    }
+
+    private void drawHeader(Canvas canvas) {
+        bezierPath.reset();
+        if (mTopPostion < getMeasuredWidth() * bigCircleRatio) {
+            canvas.drawCircle(centerX, mTopPostion / 2, mTopPostion / 2, mPaint);
+        } else {
+            float bigCircleRadius = getMeasuredWidth() * bigCircleRatio / 2;
+            float smallRadius = (mTopPostion - getMeasuredWidth() * bigCircleRatio) / 2;
+            if (smallRadius > bigCircleRadius * smallCircleRatio) {
+                smallRadius = bigCircleRadius * smallCircleRatio;
+            }
+            canvas.drawCircle(centerX, mTopPostion - bigCircleRadius, bigCircleRadius, mPaint);
+            canvas.drawCircle(centerX, smallRadius, smallRadius, mPaint);
+            bezierPath.moveTo(centerX - smallRadius, smallRadius);
+            bezierPath.lineTo(centerX + smallRadius, smallRadius);
+            bezierPath.quadTo(centerX + (bigCircleRadius - smallRadius) / 2, (mTopPostion - bigCircleRadius + smallRadius) * 2 / 3, centerX + bigCircleRadius, mTopPostion - bigCircleRadius);
+            bezierPath.lineTo(centerX - bigCircleRadius, mTopPostion - bigCircleRadius);
+            bezierPath.quadTo(centerX - (bigCircleRadius - smallRadius) / 2, (mTopPostion - bigCircleRadius + smallRadius) * 2 / 3, centerX - smallRadius, smallRadius);
+            canvas.drawPath(bezierPath, mPaint);
+            canvas.drawPoint(centerX + (bigCircleRadius - smallRadius) / 2, (mTopPostion - bigCircleRadius + smallRadius) * 2 / 3, linePaint);
+            canvas.drawPoint(centerX - (bigCircleRadius - smallRadius) / 2, (mTopPostion - bigCircleRadius + smallRadius) * 2 / 3, linePaint);
+        }
     }
 
     @Override
@@ -149,7 +179,7 @@ public class DragViewGroup extends ViewGroup {
 
         @Override
         public int getViewVerticalDragRange(View child) {
-            return child.getMeasuredHeight();
+            return 100;
         }
 
         @Override

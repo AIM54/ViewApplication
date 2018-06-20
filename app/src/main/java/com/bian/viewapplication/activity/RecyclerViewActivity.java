@@ -23,11 +23,19 @@ public class RecyclerViewActivity extends AppCompatActivity {
     private ArrayList<BankInfo> bankInfos;
     private Button addButton, deleteButton;
     private int mBankPosition;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycler_view);
         initView();
+        testMath();
+    }
+
+    private void testMath() {
+        double angle = Math.toRadians(45);
+        CommonLog.i(String.format("Math.tan(%f):%f", angle, Math.tan(angle)));
+        CommonLog.i(Math.sin(Math.toRadians(30)));
     }
 
     private void initView() {
