@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.bian.viewapplication.view.HorizonalGroup xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
@@ -34,4 +34,4 @@
         android:layout_width="@dimen/dp150"
         android:layout_height="@dimen/dp100"
         android:text="@string/update" />
-</LinearLayout>
+</com.bian.viewapplication.view.HorizonalGroup>

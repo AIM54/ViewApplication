@@ -58,7 +58,7 @@ public class BankAdapter extends RecyclerView.Adapter<BankAdapter.MyViewHolder> 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private ImageView logoIv;
         private TextView nameTv;
-        public LinearLayout rootView;
+        public View rootView;
 
         public MyViewHolder(View itemView) {
             super(itemView);

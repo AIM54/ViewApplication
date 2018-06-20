@@ -27,8 +27,48 @@
 
     <Button
         android:id="@+id/vg_button"
-        android:text="viewgroup"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="viewgroup" />
+
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp100"
+            android:background="@drawable/textview_bg" />
+
+        <Button
+            android:id="@+id/right_button"
+            android:layout_width="@dimen/dp150"
+            android:layout_height="@dimen/dp100"
+            android:text="@string/update" />
+    </LinearLayout>
+
+    <com.bian.viewapplication.view.HorizonalGroup
+        android:id="@+id/horizonal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp100"
+            android:background="@color/green" />
+        <View
+            android:layout_width="@dimen/dp200"
+            android:layout_height="@dimen/dp100"
+            android:background="@color/colorAccent" />
+
+        <Button
+            android:id="@+id/right_menu"
+            android:layout_width="@dimen/dp150"
+            android:layout_height="@dimen/dp100"
+            android:text="@string/update" />
+    </com.bian.viewapplication.view.HorizonalGroup>
 
 </LinearLayout>
