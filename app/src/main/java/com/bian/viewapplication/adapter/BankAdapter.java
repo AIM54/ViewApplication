@@ -4,9 +4,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bian.viewapplication.R;
 import com.bian.viewapplication.bean.BankInfo;
@@ -38,6 +40,7 @@ public class BankAdapter extends RecyclerView.Adapter<BankAdapter.MyViewHolder> 
         BankInfo bankInfo = bankInfoArrayList.get(position);
         holder.nameTv.setText(bankInfo.bankName);
         holder.logoIv.setImageResource(bankInfo.bankLogo);
+        holder.rightButton.setOnClickListener(v -> Toast.makeText(holder.itemView.getContext(), String.format("现在点击了:%d个", position), Toast.LENGTH_SHORT).show());
     }
 
     @Override
@@ -59,12 +62,14 @@ public class BankAdapter extends RecyclerView.Adapter<BankAdapter.MyViewHolder> 
         private ImageView logoIv;
         private TextView nameTv;
         public View rootView;
+        private Button rightButton;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             logoIv = itemView.findViewById(R.id.bank_logo_iv);
             nameTv = itemView.findViewById(R.id.bank_name_tv);
             rootView = itemView.findViewById(R.id.root_layout);
+            rightButton = itemView.findViewById(R.id.right_button);
         }
     }
 }

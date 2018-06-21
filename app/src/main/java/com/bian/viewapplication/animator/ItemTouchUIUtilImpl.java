@@ -75,8 +75,12 @@ class ItemTouchUIUtilImpl {
         @Override
         public void onDraw(Canvas c, RecyclerView recyclerView, View view,
                            float dX, float dY, int actionState, boolean isCurrentlyActive) {
-            view.setTranslationX(dX);
-            view.setTranslationY(dY);
+            if (actionState == MyItemTouchHelper.ACTION_STATE_SWIPE) {
+                view.scrollTo((int) -dX, (int) -dY);
+            } else {
+                view.setTranslationX(dX);
+                view.setTranslationY(dY);
+            }
         }
 
         @Override

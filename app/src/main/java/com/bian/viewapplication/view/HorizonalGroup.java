@@ -34,9 +34,11 @@ public class HorizonalGroup extends ViewGroup {
                 childState = combineMeasuredStates(childState, childView.getMeasuredState());
             }
         }
-        maxHeight = Math.max(maxHeight, getSuggestedMinimumHeight());
         maxWidth = Math.max(maxWidth, getSuggestedMinimumWidth());
-        setMeasuredDimension(maxWidth, maxHeight);
+        maxHeight = Math.max(maxHeight, getSuggestedMinimumHeight());
+        setMeasuredDimension(resolveSizeAndState(maxWidth, widthMeasureSpec, childState),
+                resolveSizeAndState(maxHeight, heightMeasureSpec,
+                        childState << MEASURED_HEIGHT_STATE_SHIFT));
     }
 
     @Override

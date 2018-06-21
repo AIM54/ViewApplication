@@ -79,16 +79,19 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
     public static final int UP = 1;
 
     /**
+     *相当于2
      * Down direction, used for swipe & drag control.
      */
     public static final int DOWN = 1 << 1;
 
     /**
+     * 相当于4
      * Left direction, used for swipe & drag control.
      */
     public static final int LEFT = 1 << 2;
 
     /**
+     * 相当于8
      * Right direction, used for swipe & drag control.
      */
     public static final int RIGHT = 1 << 3;
@@ -148,7 +151,9 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
     static final int DIRECTION_FLAG_COUNT = 8;
 
     private static final int ACTION_MODE_IDLE_MASK = (1 << DIRECTION_FLAG_COUNT) - 1;
-
+    /**
+     *
+     */
     static final int ACTION_MODE_SWIPE_MASK = ACTION_MODE_IDLE_MASK << DIRECTION_FLAG_COUNT;
 
     static final int ACTION_MODE_DRAG_MASK = ACTION_MODE_SWIPE_MASK << DIRECTION_FLAG_COUNT;
@@ -322,6 +327,7 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
                         endRecoverAnimation(animation.mViewHolder, true);
                         if (mPendingCleanup.remove(animation.mViewHolder.itemView)) {
                             mCallback.clearView(mRecyclerView, animation.mViewHolder);
+                            CommonLog.i(" mCallback.clearView(mRecyclerView, animation.mViewHolder);");
                         }
                         select(animation.mViewHolder, animation.mActionState);
                         updateDxDy(event, mSelectedFlags, 0);
@@ -489,6 +495,7 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
         for (int i = recoverAnimSize - 1; i >= 0; i--) {
             final RecoverAnimation recoverAnimation = mRecoverAnimations.get(0);
             mCallback.clearView(mRecyclerView, recoverAnimation.mViewHolder);
+            CommonLog.i(" mCallback.clearView(mRecyclerView, recoverAnimation.mViewHolder);");
         }
         mRecoverAnimations.clear();
         mOverdrawChild = null;
@@ -595,7 +602,6 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
                     case END:
                         targetTranslateY = 0;
                         targetTranslateX = Math.signum(mDx) * mRecyclerView.getWidth();
-                        CommonLog.i(String.format("targetTranslateY:%f,targetTranslateX:%f,mDx:%f", targetTranslateY, targetTranslateX, mDx));
                         break;
                     case UP:
                     case DOWN:
@@ -616,6 +622,8 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
                 getSelectedDxDy(mTmpPosition);
                 final float currentTranslateX = mTmpPosition[0];
                 final float currentTranslateY = mTmpPosition[1];
+                CommonLog.i(String.format("currentTranslateX:%f,currentTranslateY:%f,targetTranslateX:%f,targetTranslateY:%f",
+                        currentTranslateX, currentTranslateY,targetTranslateX,targetTranslateY));
                 final RecoverAnimation rv = new RecoverAnimation(prevSelected, animationType,
                         prevActionState, currentTranslateX, currentTranslateY,
                         targetTranslateX, targetTranslateY) {
@@ -628,6 +636,7 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
                         if (swipeDir <= 0) {
                             // this is a drag or failed swipe. recover immediately
                             mCallback.clearView(mRecyclerView, prevSelected);
+                            CommonLog.i("mCallback.clearView(mRecyclerView, prevSelected);");
                             // full cleanup will happen on onDrawOver
                         } else {
                             // wait until remove animation is complete.
@@ -649,11 +658,13 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
                         targetTranslateX - currentTranslateX, targetTranslateY - currentTranslateY);
                 rv.setDuration(duration);
                 mRecoverAnimations.add(rv);
+                CommonLog.i(String.format("targetTranslateY:%f,targetTranslateX:%f,mDx:%f", targetTranslateY, targetTranslateX, mDx));
                 rv.start();
                 preventLayout = true;
             } else {
                 removeChildDrawingOrderCallbackIfNecessary(prevSelected.itemView);
                 mCallback.clearView(mRecyclerView, prevSelected);
+                CommonLog.i("mCallback.clearView(mRecyclerView, prevSelected);");
             }
             mSelected = null;
         }
@@ -884,6 +895,7 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
             endRecoverAnimation(holder, false); // this may push it into pending cleanup list.
             if (mPendingCleanup.remove(holder.itemView)) {
                 mCallback.clearView(mRecyclerView, holder);
+                CommonLog.i(" mCallback.clearView(mRecyclerView, holder);");
             }
         }
     }
@@ -1144,6 +1156,13 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
         return null;
     }
 
+    /**
+     * 计算划过的距离
+     *
+     * @param ev
+     * @param directionFlags
+     * @param pointerIndex
+     */
     void updateDxDy(MotionEvent ev, int directionFlags, int pointerIndex) {
         final float x = ev.getX(pointerIndex);
         final float y = ev.getY(pointerIndex);
@@ -1167,7 +1186,7 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
 
     /**
      * marked by bianmingliang
-     *
+     *  这在里判断的滑动删除是否成功
      * @param viewHolder
      * @return
      */
@@ -1188,6 +1207,7 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
                 & ACTION_MODE_SWIPE_MASK) >> (ACTION_STATE_SWIPE * DIRECTION_FLAG_COUNT);
         int swipeDir;
         if (Math.abs(mDx) > Math.abs(mDy)) {
+            CommonLog.i("swipeIfNecessary_marked by bian_flags:"+flags);
             if ((swipeDir = checkHorizontalSwipe(viewHolder, flags)) > 0) {
                 // if swipe dir is not in original flags, it should be the relative direction
                 if ((originalFlags & swipeDir) == 0) {

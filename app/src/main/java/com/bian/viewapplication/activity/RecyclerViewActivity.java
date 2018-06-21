@@ -1,8 +1,7 @@
 package com.bian.viewapplication.activity;
 
-import android.graphics.Canvas;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
@@ -23,7 +22,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
     private ArrayList<BankInfo> bankInfos;
     private Button addButton, deleteButton;
     private int mBankPosition;
-
+    private LinearLayoutManager layoutManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +60,12 @@ public class RecyclerViewActivity extends AppCompatActivity {
         @Override
         public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
             return false;
+        }
+
+        @Override
+        public void onMoved(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, int fromPos, RecyclerView.ViewHolder target, int toPos, int x, int y) {
+            super.onMoved(recyclerView, viewHolder, fromPos, target, toPos, x, y);
+            CommonLog.i(String.format("x:%d,y:%d",x,y));
         }
 
         @Override

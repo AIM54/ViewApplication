@@ -19,11 +19,23 @@
         android:layout_height="wrap_content"
         android:text="listview" />
 
-    <Button
-        android:id="@+id/recycler_bt"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="recyclerview" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/recycler_bt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="recyclerview" />
+
+        <Button
+            android:id="@+id/recycler_new_bt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="recycler" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/vg_button"
@@ -59,6 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp100"
             android:background="@color/green" />
+
         <View
             android:layout_width="@dimen/dp200"
             android:layout_height="@dimen/dp100"
