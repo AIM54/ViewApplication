@@ -6,7 +6,12 @@
     android:layout_height="match_parent"
     tools:context="com.bian.viewapplication.activity.MaterialDesignActivity">
 
-    <Button
+    <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="@drawable/main_text_bg"
+        android:text="第一个TextView"
+        android:textSize="@dimen/sp45"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

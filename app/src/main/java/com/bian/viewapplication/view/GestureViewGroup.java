@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.FrameLayout;
 import android.widget.Scroller;
 
 /**
@@ -19,7 +20,7 @@ public class GestureViewGroup extends ViewGroup {
     private GestureDetector mGestureDetector;
     private DisplayMetrics mDisplayMetrics;
     private Scroller mScroller;
-
+    private FrameLayout mFrameLayout;
     public GestureViewGroup(Context context) {
         super(context);
         initView(context);
@@ -70,7 +71,7 @@ public class GestureViewGroup extends ViewGroup {
             View childView = getChildAt(index);
             LayoutParams layoutParams = (LayoutParams) childView.getLayoutParams();
             topPos += layoutParams.topMargin;
-            childView.layout(leftPos, topPos, leftPos + childView.getMeasuredWidth(), topPos + childView.getMeasuredHeight());
+            childView.layout(leftPos+layoutParams.leftMargin, topPos, leftPos + childView.getMeasuredWidth(), topPos + childView.getMeasuredHeight());
             topPos = topPos + childView.getMeasuredHeight() + layoutParams.bottomMargin;
         }
     }
