@@ -20,7 +20,8 @@
         <activity android:name=".activity.RecyclerViewActivity" />
         <activity android:name=".activity.MaterialDesignActivity" />
         <activity android:name=".activity.NewListActivity" />
-        <activity android:name=".activity.ViewGroupActivity"></activity>
+        <activity android:name=".activity.ViewGroupActivity" />
+        <activity android:name=".activity.RefreshListActivity"></activity>
     </application>
 
 </manifest>
