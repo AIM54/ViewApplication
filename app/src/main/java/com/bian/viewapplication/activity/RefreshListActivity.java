@@ -1,7 +1,6 @@
 package com.bian.viewapplication.activity;
 
 import android.graphics.Color;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -17,7 +16,7 @@ import com.bian.viewapplication.view.RefreshContainer;
 
 import java.util.ArrayList;
 
-public class RefreshListActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class RefreshListActivity extends AppCompatActivity implements RefreshContainer.OnRefreshListener {
     private RecyclerView mRecyclerView;
     private BankAdapter bankAdapter;
     private ArrayList<BankInfo> bankInfos;
@@ -40,9 +39,11 @@ public class RefreshListActivity extends AppCompatActivity implements SwipeRefre
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         mRecyclerView.addOnItemTouchListener(new MyItemTouchListener());
         mRefreshContainer.setOnRefreshListener(this);
-        mRefreshContainer.setRefreshing(true);
-        mRefreshContainer.setColorSchemeColors(Color.YELLOW,Color.GREEN,Color.RED);
+        mRefreshContainer.setColorSchemeColors(Color.YELLOW, Color.GREEN, Color.RED);
         mRefreshContainer.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.orange));
+        mRefreshContainer.setDistanceToTriggerSync(getResources().getDimensionPixelSize(R.dimen.dp200));
+        mRefreshContainer.setProgressViewEndTarget(true, getResources().getDimensionPixelSize(R.dimen.dp200));
+        mRefreshContainer.post(()->mRefreshContainer.setRefreshing(true));
         onRefresh();
     }
 
@@ -52,4 +53,5 @@ public class RefreshListActivity extends AppCompatActivity implements SwipeRefre
             mRefreshContainer.setRefreshing(false);
         }, 3000);
     }
+
 }
