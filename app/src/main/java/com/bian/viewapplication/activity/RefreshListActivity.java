@@ -43,7 +43,8 @@ public class RefreshListActivity extends AppCompatActivity implements RefreshCon
         mRefreshContainer.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.orange));
         mRefreshContainer.setDistanceToTriggerSync(getResources().getDimensionPixelSize(R.dimen.dp200));
         mRefreshContainer.setProgressViewEndTarget(true, getResources().getDimensionPixelSize(R.dimen.dp200));
-        mRefreshContainer.post(()->mRefreshContainer.setRefreshing(true));
+        mRefreshContainer.setSize(RefreshContainer.LARGE);
+        mRefreshContainer.post(() -> mRefreshContainer.setRefreshing(true));
         onRefresh();
     }
 

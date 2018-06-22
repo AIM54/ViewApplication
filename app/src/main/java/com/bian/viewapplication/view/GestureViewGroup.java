@@ -11,16 +11,18 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.Scroller;
 
+import com.bian.viewapplication.util.CommonLog;
+
 /**
  * Created by Bianmingliang on 2018/6/14.
  */
 
 public class GestureViewGroup extends ViewGroup {
-    private int mHeight, mWidth;
     private GestureDetector mGestureDetector;
     private DisplayMetrics mDisplayMetrics;
     private Scroller mScroller;
-    private FrameLayout mFrameLayout;
+    private int verticalScrollRange;
+
     public GestureViewGroup(Context context) {
         super(context);
         initView(context);
@@ -39,21 +41,26 @@ public class GestureViewGroup extends ViewGroup {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        mHeight = 0;
-        mWidth = 0;
+        int height = 0;
+        int width = 0;
+        int childState = 0;
         int count = getChildCount();
         for (int index = 0; index < count; index++) {
             View childView = getChildAt(index);
             if (childView.getVisibility() != GONE) {
                 measureChildWithMargins(childView, widthMeasureSpec, 0, heightMeasureSpec, 0);
                 LayoutParams lp = (LayoutParams) childView.getLayoutParams();
-                mWidth = Math.max(mWidth, childView.getMeasuredWidth() + lp.leftMargin + lp.topMargin);
-                mHeight += childView.getMeasuredHeight() + lp.topMargin + lp.bottomMargin;
+                width = Math.max(width, childView.getMeasuredWidth() + lp.leftMargin + lp.topMargin);
+                height += childView.getMeasuredHeight() + lp.topMargin + lp.bottomMargin;
+                childState = combineMeasuredStates(childState, childView.getMeasuredState());
             }
         }
-        mHeight = Math.max(getSuggestedMinimumHeight(), mHeight);
-        mWidth = Math.max(getSuggestedMinimumWidth(), mWidth);
-        setMeasuredDimension(mWidth, mHeight);
+        height = Math.max(getSuggestedMinimumHeight(), height);
+        width = Math.max(getSuggestedMinimumWidth(), width);
+        verticalScrollRange = height;
+        setMeasuredDimension(resolveSizeAndState(width, widthMeasureSpec, childState),
+                resolveSizeAndState(height, heightMeasureSpec,
+                        childState << MEASURED_HEIGHT_STATE_SHIFT));
     }
 
     @Override
@@ -71,7 +78,7 @@ public class GestureViewGroup extends ViewGroup {
             View childView = getChildAt(index);
             LayoutParams layoutParams = (LayoutParams) childView.getLayoutParams();
             topPos += layoutParams.topMargin;
-            childView.layout(leftPos+layoutParams.leftMargin, topPos, leftPos + childView.getMeasuredWidth(), topPos + childView.getMeasuredHeight());
+            childView.layout(leftPos + layoutParams.leftMargin, topPos, leftPos + childView.getMeasuredWidth(), topPos + childView.getMeasuredHeight());
             topPos = topPos + childView.getMeasuredHeight() + layoutParams.bottomMargin;
         }
     }
@@ -85,10 +92,12 @@ public class GestureViewGroup extends ViewGroup {
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+            CommonLog.i(String.format("getScrollY:%d,verticalScrollRange:%d,getMeasuredHeight:%d,mDisplayMetrics.heightPixels:%d,distanceY:%f",
+                    getScrollY(), verticalScrollRange, getMeasuredHeight(), mDisplayMetrics.heightPixels, distanceY));
             if (getScrollY() <= 0 && distanceY < 0) {
                 scrollTo(0, 0);
-            } else if (getScrollY() >= getMeasuredHeight() - mDisplayMetrics.heightPixels && distanceY > 0) {
-                scrollTo(0, getMeasuredHeight() - mDisplayMetrics.heightPixels);
+            } else if (getScrollY() >= verticalScrollRange- getHeight() && distanceY > 0) {
+                scrollTo(0, verticalScrollRange-getHeight());
             } else {
                 scrollBy(0, (int) distanceY);
             }
@@ -100,8 +109,8 @@ public class GestureViewGroup extends ViewGroup {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             if (getScrollY() - velocityY / 2 <= 0 && velocityY > 0) {
                 mScroller.startScroll(0, getScrollY(), 0, -getScrollY(), 500);
-            } else if (getScrollY() - velocityY / 2 >= getMeasuredHeight() - mDisplayMetrics.heightPixels && velocityY < 0) {
-                mScroller.startScroll(0, getScrollY(), 0, getMeasuredHeight() - mDisplayMetrics.heightPixels - getScrollY(), 500);
+            } else if (getScrollY() - velocityY / 2 >= verticalScrollRange-getHeight() && velocityY < 0) {
+                mScroller.startScroll(0, getScrollY(), 0, verticalScrollRange-getHeight() - getScrollY(), 500);
             } else {
                 mScroller.startScroll(0, getScrollY(), 0, (int) (-velocityY / 2), 500);
             }

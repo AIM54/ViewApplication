@@ -6,6 +6,7 @@
     tools:context="com.bian.viewapplication.activity.ViewGroupActivity">
 
     <TextView
+        android:id="@+id/text1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp15"
@@ -16,6 +17,7 @@
         android:textSize="@dimen/sp45" />
 
     <TextView
+        android:id="@+id/text2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp15"
@@ -26,6 +28,7 @@
         android:textSize="@dimen/sp45" />
 
     <TextView
+        android:id="@+id/text3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp15"
@@ -36,6 +39,7 @@
         android:textSize="@dimen/sp45" />
 
     <TextView
+        android:id="@+id/text4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp15"
@@ -46,6 +50,7 @@
         android:textSize="@dimen/sp45" />
 
     <TextView
+        android:id="@+id/text5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp15"
@@ -56,6 +61,7 @@
         android:textSize="@dimen/sp45" />
 
     <TextView
+        android:id="@+id/text6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp15"
@@ -66,6 +72,18 @@
         android:textSize="@dimen/sp45" />
 
     <TextView
+        android:id="@+id/text7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp15"
+        android:layout_marginRight="@dimen/dp15"
+        android:layout_marginTop="@dimen/dp20"
+        android:background="@drawable/main_text_bg"
+        android:text="第一个TextView"
+        android:textSize="@dimen/sp45" />
+
+    <TextView
+        android:id="@+id/text8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp15"

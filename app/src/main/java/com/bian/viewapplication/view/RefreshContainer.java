@@ -17,6 +17,8 @@ package com.bian.viewapplication.view;/*
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
@@ -171,6 +173,9 @@ public class RefreshContainer extends ViewGroup implements NestedScrollingParent
 
     private OnChildScrollUpCallback mChildScrollUpCallback;
 
+
+    private Paint mPaint;
+
     private Animation.AnimationListener mRefreshListener = new Animation.AnimationListener() {
         @Override
         public void onAnimationStart(Animation animation) {
@@ -212,6 +217,12 @@ public class RefreshContainer extends ViewGroup implements NestedScrollingParent
         mCurrentTargetOffsetTop = mCircleView.getTop();
     }
 
+
+    @Override
+    protected void dispatchDraw(Canvas canvas) {
+        super.dispatchDraw(canvas);
+    }
+
     @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
@@ -225,6 +236,9 @@ public class RefreshContainer extends ViewGroup implements NestedScrollingParent
         super.onDetachedFromWindow();
         reset();
     }
+
+
+
 
     private void setColorViewAlpha(int targetAlpha) {
         mCircleView.getBackground().setAlpha(targetAlpha);
@@ -444,6 +458,7 @@ public class RefreshContainer extends ViewGroup implements NestedScrollingParent
     void setAnimationProgress(float progress) {
         mCircleView.setScaleX(progress);
         mCircleView.setScaleY(progress);
+        CommonLog.i("mCircleView:"+mCircleView.getLeft() + "||" + mCircleView.getTop());
     }
 
     private void setRefreshing(boolean refreshing, final boolean notify) {
@@ -467,7 +482,7 @@ public class RefreshContainer extends ViewGroup implements NestedScrollingParent
                 setAnimationProgress(1 - interpolatedTime);
             }
         };
-        if (mTarget!=null){
+        if (mTarget != null) {
             mTarget.animate().translationY(0).setDuration(SCALE_DOWN_DURATION).start();
         }
         mScaleDownAnimation.setDuration(SCALE_DOWN_DURATION);
@@ -1155,10 +1170,10 @@ public class RefreshContainer extends ViewGroup implements NestedScrollingParent
 
     void setTargetOffsetTopAndBottom(int offset) {
         CommonLog.i("offset:" + offset);
-        if (mTarget!=null){
-            CommonLog.i("mTarget.getTranslationY:"+mTarget.getTranslationY()+"||offset:"+offset);
-            if (mTarget.getTranslationY()>0||offset>=0){
-                float offSet=mTarget.getTranslationY()+offset;
+        if (mTarget != null) {
+            CommonLog.i("mTarget.getTranslationY:" + mTarget.getTranslationY() + "||offset:" + offset);
+            if (mTarget.getTranslationY() > 0 || offset >= 0) {
+                float offSet = mTarget.getTranslationY() + offset;
                 mTarget.setTranslationY(offSet);
             }
         }
