@@ -15,10 +15,12 @@ package com.bian.viewapplication.view;/*
  */
 
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
@@ -46,6 +48,7 @@ import android.view.animation.Transformation;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
+import com.bian.viewapplication.R;
 import com.bian.viewapplication.util.CommonLog;
 
 /**
@@ -88,7 +91,10 @@ public class RefreshContainer extends ViewGroup implements NestedScrollingParent
 
     private static final float DECELERATE_INTERPOLATION_FACTOR = 2f;
     private static final int INVALID_POINTER = -1;
-    private static final float DRAG_RATE = .5f;
+    /**
+     * 这个参数控制的是手指移动距离和小球下滑距离的比例
+     */
+    private static final float DRAG_RATE = 0.5f;
 
     // Max amount of circle that can be filled by progress during swipe gesture,
     // where 1.0 is a full circle
@@ -102,9 +108,7 @@ public class RefreshContainer extends ViewGroup implements NestedScrollingParent
 
     private static final int ANIMATE_TO_START_DURATION = 200;
 
-    // Default background for the progress spinner
     private static final int CIRCLE_BG_LIGHT = 0xFFFAFAFA;
-    // Default offset in dips from the top of the view to where the progress spinner should stop
     private static final int DEFAULT_CIRCLE_TARGET = 64;
 
     private View mTarget; // the target of the gesture
@@ -176,6 +180,7 @@ public class RefreshContainer extends ViewGroup implements NestedScrollingParent
 
     private Paint mPaint;
 
+
     private Animation.AnimationListener mRefreshListener = new Animation.AnimationListener() {
         @Override
         public void onAnimationStart(Animation animation) {
@@ -202,6 +207,7 @@ public class RefreshContainer extends ViewGroup implements NestedScrollingParent
             }
         }
     };
+    private float mDragDistancePercent=4;
 
     void reset() {
         mCircleView.clearAnimation();
@@ -220,7 +226,12 @@ public class RefreshContainer extends ViewGroup implements NestedScrollingParent
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
+        if (mTarget != null) {
+            canvas.drawLine(getMeasuredWidth()/2,0,getMeasuredWidth()/2,Math.min(mTarget.getTranslationY(),mCurrentTargetOffsetTop),mPaint);
+            CommonLog.i(String.format("mTarget.getTranslationY:%f||mCurrentTargetOffsetTop:%d", mTarget.getTranslationY(), mCurrentTargetOffsetTop));
+        }
         super.dispatchDraw(canvas);
+
     }
 
     @Override
@@ -236,8 +247,6 @@ public class RefreshContainer extends ViewGroup implements NestedScrollingParent
         super.onDetachedFromWindow();
         reset();
     }
-
-
 
 
     private void setColorViewAlpha(int targetAlpha) {
@@ -374,6 +383,14 @@ public class RefreshContainer extends ViewGroup implements NestedScrollingParent
         final TypedArray a = context.obtainStyledAttributes(attrs, LAYOUT_ATTRS);
         setEnabled(a.getBoolean(0, true));
         a.recycle();
+        initPaint();
+    }
+
+    private void initPaint() {
+        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setStrokeWidth(getResources().getDimensionPixelSize(R.dimen.dp4));
+        mPaint.setColor(ContextCompat.getColor(getContext(), R.color.orange));
     }
 
     @Override
@@ -458,7 +475,6 @@ public class RefreshContainer extends ViewGroup implements NestedScrollingParent
     void setAnimationProgress(float progress) {
         mCircleView.setScaleX(progress);
         mCircleView.setScaleY(progress);
-        CommonLog.i("mCircleView:"+mCircleView.getLeft() + "||" + mCircleView.getTop());
     }
 
     private void setRefreshing(boolean refreshing, final boolean notify) {
@@ -474,8 +490,7 @@ public class RefreshContainer extends ViewGroup implements NestedScrollingParent
         }
     }
 
-    void startScaleDownAnimation(Animation.AnimationListener listener) {
-        CommonLog.i("startScaleDownAnimation");
+    void startScaleDownAnimation(AnimationListener listener) {
         mScaleDownAnimation = new Animation() {
             @Override
             public void applyTransformation(float interpolatedTime, Transformation t) {
@@ -483,7 +498,15 @@ public class RefreshContainer extends ViewGroup implements NestedScrollingParent
             }
         };
         if (mTarget != null) {
-            mTarget.animate().translationY(0).setDuration(SCALE_DOWN_DURATION).start();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                mTarget.animate().translationY(0).setDuration(SCALE_DOWN_DURATION).setUpdateListener(animation -> animation.getAnimatedValue()).start();
+            } else {
+                float currentValue = mTarget.getTranslationY();
+                ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(mTarget, "translationY", currentValue, 0);
+                objectAnimator.addUpdateListener(animation -> CommonLog.i("animation.getAnimatedValue:" + animation.getAnimatedValue()));
+                objectAnimator.setDuration(SCALE_DOWN_DURATION);
+                objectAnimator.start();
+            }
         }
         mScaleDownAnimation.setDuration(SCALE_DOWN_DURATION);
         mCircleView.setAnimationListener(listener);
@@ -917,20 +940,27 @@ public class RefreshContainer extends ViewGroup implements NestedScrollingParent
         return animation != null && animation.hasStarted() && !animation.hasEnded();
     }
 
+    /**
+     * 开始移动小球
+     *
+     * @param overscrollTop
+     */
     private void moveSpinner(float overscrollTop) {
         mProgress.setArrowEnabled(true);
         float originalDragPercent = overscrollTop / mTotalDragDistance;
 
         float dragPercent = Math.min(1f, Math.abs(originalDragPercent));
         float adjustedPercent = (float) Math.max(dragPercent - .4, 0) * 5 / 3;
+        //这个参数代表了手指坐标和他刷新状态下定点坐标的差
         float extraOS = Math.abs(overscrollTop) - mTotalDragDistance;
+        CommonLog.i("extraOS:"+extraOS);
         float slingshotDist = mUsingCustomStart ? mSpinnerOffsetEnd - mOriginalOffsetTop
                 : mSpinnerOffsetEnd;
-        float tensionSlingshotPercent = Math.max(0, Math.min(extraOS, slingshotDist * 2)
+        float tensionSlingshotPercent = Math.max(0, Math.min(extraOS, slingshotDist * mDragDistancePercent)
                 / slingshotDist);
         float tensionPercent = (float) ((tensionSlingshotPercent / 4) - Math.pow(
                 (tensionSlingshotPercent / 4), 2)) * 2f;
-        float extraMove = (slingshotDist) * tensionPercent * 2;
+        float extraMove = (slingshotDist) * tensionPercent * mDragDistancePercent;
 
         int targetY = mOriginalOffsetTop + (int) ((slingshotDist * dragPercent) + extraMove);
         // where 1.0f is a full circle
@@ -963,7 +993,6 @@ public class RefreshContainer extends ViewGroup implements NestedScrollingParent
 
         float rotation = (-0.25f + .4f * adjustedPercent + tensionPercent * 2) * .5f;
         mProgress.setProgressRotation(rotation);
-        CommonLog.i(String.format("%d-%d=%d", targetY, mCurrentTargetOffsetTop, targetY - mCurrentTargetOffsetTop));
         setTargetOffsetTopAndBottom(targetY - mCurrentTargetOffsetTop);
     }
 
@@ -1169,7 +1198,6 @@ public class RefreshContainer extends ViewGroup implements NestedScrollingParent
     }
 
     void setTargetOffsetTopAndBottom(int offset) {
-        CommonLog.i("offset:" + offset);
         if (mTarget != null) {
             CommonLog.i("mTarget.getTranslationY:" + mTarget.getTranslationY() + "||offset:" + offset);
             if (mTarget.getTranslationY() > 0 || offset >= 0) {
