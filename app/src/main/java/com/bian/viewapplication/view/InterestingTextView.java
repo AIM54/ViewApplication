@@ -1,5 +1,7 @@
 package com.bian.viewapplication.view;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -29,12 +31,17 @@ public class InterestingTextView extends View {
     private float textSize;
     private String message;
     private Path tempTextPath, animalTextPath;
-    private TextView textView;
     private PathMeasure textPathMeasure;
     private float currentPostion;
     private long animalDuration;
     private Paint.FontMetrics fontMetrics;
     private int mHeight, mWidth;
+    private boolean hasFinishTextDraw = false;
+    private int waveBaseLine;
+    private int waveCount = 8;
+    private int waveBeginPostion = 0;
+    private Path wavePath;
+    private int waveHeight;
 
     public InterestingTextView(Context context) {
         this(context, null);
@@ -102,6 +109,10 @@ public class InterestingTextView extends View {
         mWidth = getMeasuredWidth();
         tempTextPath = new Path();
         animalTextPath = new Path();
+        waveBaseLine = mHeight / 2;
+        wavePath = new Path();
+        waveHeight = getHeight() / 2;
+        waveBeginPostion = -getMeasuredWidth();
         mTextPaint.getTextPath(message, 0, message.length(), mWidth / 2, (mHeight - mTextPaint.ascent() - mTextPaint.descent()) / 2, tempTextPath);
         textPathMeasure = new PathMeasure(tempTextPath, false);
         float totalPathLength = textPathMeasure.getLength();
@@ -123,8 +134,20 @@ public class InterestingTextView extends View {
             }
         }
         textPathMeasure.getSegment(0, currentPostion, animalTextPath, true);
-        canvas.drawPath(animalTextPath,mTextPaint);
-        canvas.drawLine(0, mHeight / 2, mWidth, mHeight / 2, mPaint);
+        if (hasFinishTextDraw) {
+            canvas.drawPath(tempTextPath, mTextPaint);
+            wavePath.reset();
+            int subLength = mWidth / waveCount;
+            wavePath.moveTo(waveBeginPostion, waveBaseLine);
+            for (int index = 0; index < waveCount * 2; index++) {
+                int tempPoint = index * subLength+waveBeginPostion;
+                wavePath.quadTo(tempPoint + subLength / 4, waveBaseLine + waveHeight, tempPoint + subLength / 2, waveBaseLine);
+                wavePath.quadTo(tempPoint + subLength * 3 / 4, waveBaseLine - waveHeight, tempPoint + subLength, waveBaseLine);
+            }
+            canvas.drawPath(wavePath, mPaint);
+        } else {
+            canvas.drawPath(animalTextPath, mTextPaint);
+        }
     }
 
     private void beginTextAnimal(float totalPathLength) {
@@ -134,6 +157,23 @@ public class InterestingTextView extends View {
             currentPostion = (float) animation.getAnimatedValue();
             invalidate();
         });
+        valueAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                hasFinishTextDraw = true;
+                beginLoading();
+            }
+        });
+        valueAnimator.start();
+    }
+
+    private void beginLoading() {
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(-mWidth, 0);
+        valueAnimator.addUpdateListener(animation -> {
+            waveBeginPostion = (int) animation.getAnimatedValue();
+            invalidate();
+        });
+        valueAnimator.setDuration(animalDuration);
         valueAnimator.start();
     }
 }

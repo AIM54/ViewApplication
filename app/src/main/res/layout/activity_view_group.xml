@@ -39,6 +39,10 @@
         app:duration="5000"
         app:text="@string/funcation_is_developing"
         app:textColor="@color/orange"
-        app:textSize="@dimen/sp35" />
+        app:textSize="@dimen/sp60" />
+
+    <com.bian.viewapplication.view.TestCircleView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp200" />
 
 </com.bian.viewapplication.view.GestureViewGroup>
