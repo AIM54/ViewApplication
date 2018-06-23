@@ -81,16 +81,12 @@
         android:background="@drawable/main_text_bg"
         android:text="第一个TextView"
         android:textSize="@dimen/sp45" />
-
-    <TextView
-        android:id="@+id/text8"
+    <ImageView
+        android:src="@drawable/ic_historic_ship"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <com.bian.viewapplication.view.SinView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp15"
-        android:layout_marginRight="@dimen/dp15"
-        android:layout_marginTop="@dimen/dp20"
-        android:background="@drawable/main_text_bg"
-        android:text="第一个TextView"
-        android:textSize="@dimen/sp45" />
+        android:layout_height="@dimen/dp200" />
 
 </com.bian.viewapplication.view.GestureViewGroup>

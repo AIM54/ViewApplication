@@ -186,9 +186,17 @@ public class RefreshContainer extends ViewGroup implements NestedScrollingParent
     private Point circleViewLeftPoint;
     private Point circleViewRightPoint;
     /**
-     * 这个参数是控制整个下滑距离和刷新悬浮距离之间的比例
+     * 这个参数和弹性系数有关
      */
     private float mDragDistancePercent = 2;
+    /**
+     * 大圆和小圆之间的半径比例
+     */
+    private float radioOfCircle = 1f / 4f;
+    /**
+     * 实际上手指可以拖动的距离和刷新 的时候悬浮的距离的
+     */
+    private float mRealLengthRadio=4;
 
 
     private Animation.AnimationListener mRefreshListener = new Animation.AnimationListener() {
@@ -219,7 +227,6 @@ public class RefreshContainer extends ViewGroup implements NestedScrollingParent
     };
 
 
-
     void reset() {
         mCircleView.clearAnimation();
         mProgress.stop();
@@ -237,22 +244,23 @@ public class RefreshContainer extends ViewGroup implements NestedScrollingParent
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
+        float circleRadius = 0;
         if (mTarget != null) {
             mPaint.setColor(ContextCompat.getColor(getContext(), R.color.orange));
             canvas.drawLine(getMeasuredWidth() / 2, 0, getMeasuredWidth() / 2, Math.min(mTarget.getTranslationY(), mCurrentTargetOffsetTop), mPaint);
             circleViewCenterX = getMeasuredWidth() / 2;
             circleViewCenterY = mCurrentTargetOffsetTop + mCircleView.getMeasuredHeight() / 2;
-            circleViewRightPoint=new Point((int) (circleViewCenterX+mCircleView.getMeasuredWidth()*mCircleView.getScaleX()/2),circleViewCenterY);
-            circleViewLeftPoint=new Point((int) (circleViewCenterX-mCircleView.getMeasuredWidth()*mCircleView.getScaleX()/2),circleViewCenterY);
-            CommonLog.i(String.format("mTarget.getTranslationY:%f||mCurrentTargetOffsetTop:%d", mTarget.getTranslationY(), mCurrentTargetOffsetTop));
-            CommonLog.i("mCircleView.getScaleX:" + mCircleView.getScaleX() + "||mCircleView.getScaleY:" + mCircleView.getScaleY() +
-                    "mCircle.getMeasuredWidth:" + mCircleView.getMeasuredWidth() + "||mCircleView.getMeasuredHeight:" + mCircleView.getMeasuredHeight());
+            circleRadius = mCircleView.getMeasuredWidth() * mCircleView.getScaleX() / 2;
+            circleViewRightPoint = new Point((int) (circleViewCenterX + circleRadius), circleViewCenterY);
+            circleViewLeftPoint = new Point((int) (circleViewCenterX - circleRadius), circleViewCenterY);
         }
         super.dispatchDraw(canvas);
-        mPaint.setColor(Color.RED);
-        canvas.drawCircle(circleViewCenterX, circleViewCenterY, getContext().getResources().getDimensionPixelSize(R.dimen.dp2), mPaint);
-        canvas.drawLine(circleViewCenterX,0,circleViewLeftPoint.x,circleViewLeftPoint.y,mPaint);
-        canvas.drawLine(circleViewCenterX,0,circleViewRightPoint.x,circleViewRightPoint.y,mPaint);
+        if (mTarget.getTranslationY() > 0) {
+            mPaint.setColor(Color.RED);
+            canvas.drawCircle(circleViewCenterX, circleRadius * radioOfCircle, circleRadius * radioOfCircle, mPaint);
+            canvas.drawLine(circleViewCenterX, 0, circleViewLeftPoint.x, circleViewLeftPoint.y, mPaint);
+            canvas.drawLine(circleViewCenterX, 0, circleViewRightPoint.x, circleViewRightPoint.y, mPaint);
+        }
     }
 
     @Override
@@ -410,7 +418,7 @@ public class RefreshContainer extends ViewGroup implements NestedScrollingParent
     private void initPaint() {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeWidth(getResources().getDimensionPixelSize(R.dimen.dp4));
+        mPaint.setStrokeWidth(getResources().getDimensionPixelSize(R.dimen.dp1));
     }
 
     @Override
@@ -980,8 +988,8 @@ public class RefreshContainer extends ViewGroup implements NestedScrollingParent
                 / slingshotDist);
         float tensionPercent = (float) ((tensionSlingshotPercent / 4) - Math.pow(
                 (tensionSlingshotPercent / 4), 2)) * 2f;
-        float extraMove = (slingshotDist) * tensionPercent * 8;
-
+        float extraMove = (slingshotDist) * tensionPercent * 2*mRealLengthRadio;
+        CommonLog.i(String.format("slingshotDist:%f*tensionPercent:%f*8=extraMove:%f",slingshotDist,tensionPercent,extraMove));
         int targetY = mOriginalOffsetTop + (int) ((slingshotDist * dragPercent) + extraMove);
         // where 1.0f is a full circle
         if (mCircleView.getVisibility() != View.VISIBLE) {

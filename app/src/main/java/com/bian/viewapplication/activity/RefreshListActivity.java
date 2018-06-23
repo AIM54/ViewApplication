@@ -1,11 +1,13 @@
 package com.bian.viewapplication.activity;
 
 import android.graphics.Color;
+import android.graphics.drawable.VectorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ImageView;
 
 import com.bian.viewapplication.R;
 import com.bian.viewapplication.adapter.BankAdapter;
@@ -21,7 +23,6 @@ public class RefreshListActivity extends AppCompatActivity implements RefreshCon
     private BankAdapter bankAdapter;
     private ArrayList<BankInfo> bankInfos;
     private RefreshContainer mRefreshContainer;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

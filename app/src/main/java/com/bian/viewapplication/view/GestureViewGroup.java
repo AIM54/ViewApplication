@@ -40,6 +40,11 @@ public class GestureViewGroup extends ViewGroup {
     }
 
     @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        return mGestureDetector.onTouchEvent(ev);
+    }
+
+    @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int height = 0;
         int width = 0;
@@ -96,8 +101,8 @@ public class GestureViewGroup extends ViewGroup {
                     getScrollY(), verticalScrollRange, getMeasuredHeight(), mDisplayMetrics.heightPixels, distanceY));
             if (getScrollY() <= 0 && distanceY < 0) {
                 scrollTo(0, 0);
-            } else if (getScrollY() >= verticalScrollRange- getHeight() && distanceY > 0) {
-                scrollTo(0, verticalScrollRange-getHeight());
+            } else if (getScrollY() >= verticalScrollRange - getHeight() && distanceY > 0) {
+                scrollTo(0, verticalScrollRange - getHeight());
             } else {
                 scrollBy(0, (int) distanceY);
             }
@@ -109,13 +114,18 @@ public class GestureViewGroup extends ViewGroup {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             if (getScrollY() - velocityY / 2 <= 0 && velocityY > 0) {
                 mScroller.startScroll(0, getScrollY(), 0, -getScrollY(), 500);
-            } else if (getScrollY() - velocityY / 2 >= verticalScrollRange-getHeight() && velocityY < 0) {
-                mScroller.startScroll(0, getScrollY(), 0, verticalScrollRange-getHeight() - getScrollY(), 500);
+            } else if (getScrollY() - velocityY / 2 >= verticalScrollRange - getHeight() && velocityY < 0) {
+                mScroller.startScroll(0, getScrollY(), 0, verticalScrollRange - getHeight() - getScrollY(), 500);
             } else {
                 mScroller.startScroll(0, getScrollY(), 0, (int) (-velocityY / 2), 500);
             }
             invalidate();
             return true;
+        }
+
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent e) {
+            return super.onSingleTapConfirmed(e);
         }
     }
 
