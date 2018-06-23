@@ -14,7 +14,6 @@ import android.support.annotation.Nullable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.TextView;
 
 import com.bian.viewapplication.R;
 import com.bian.viewapplication.util.CommonLog;
@@ -140,7 +139,7 @@ public class InterestingTextView extends View {
             int subLength = mWidth / waveCount;
             wavePath.moveTo(waveBeginPostion, waveBaseLine);
             for (int index = 0; index < waveCount * 2; index++) {
-                int tempPoint = index * subLength+waveBeginPostion;
+                int tempPoint = index * subLength + waveBeginPostion;
                 wavePath.quadTo(tempPoint + subLength / 4, waveBaseLine + waveHeight, tempPoint + subLength / 2, waveBaseLine);
                 wavePath.quadTo(tempPoint + subLength * 3 / 4, waveBaseLine - waveHeight, tempPoint + subLength, waveBaseLine);
             }
