@@ -21,6 +21,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Point;
 import android.os.Build;
 import android.support.annotation.ColorInt;
@@ -196,8 +197,9 @@ public class RefreshContainer extends ViewGroup implements NestedScrollingParent
     /**
      * 实际上手指可以拖动的距离和刷新 的时候悬浮的距离的
      */
-    private float mRealLengthRadio=4;
+    private float mRealLengthRadio = 4;
 
+    private Path refreshPath;
 
     private Animation.AnimationListener mRefreshListener = new Animation.AnimationListener() {
         @Override
@@ -243,6 +245,12 @@ public class RefreshContainer extends ViewGroup implements NestedScrollingParent
 
 
     @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        refreshPath = new Path();
+    }
+
+    @Override
     protected void dispatchDraw(Canvas canvas) {
         float circleRadius = 0;
         if (mTarget != null) {
@@ -257,9 +265,13 @@ public class RefreshContainer extends ViewGroup implements NestedScrollingParent
         super.dispatchDraw(canvas);
         if (mTarget.getTranslationY() > 0) {
             mPaint.setColor(Color.RED);
+            refreshPath.reset();
             canvas.drawCircle(circleViewCenterX, circleRadius * radioOfCircle, circleRadius * radioOfCircle, mPaint);
-            canvas.drawLine(circleViewCenterX, 0, circleViewLeftPoint.x, circleViewLeftPoint.y, mPaint);
-            canvas.drawLine(circleViewCenterX, 0, circleViewRightPoint.x, circleViewRightPoint.y, mPaint);
+            refreshPath.moveTo(circleViewCenterX, 0);
+            refreshPath.quadTo(circleViewCenterX, circleViewLeftPoint.y / 2, circleViewLeftPoint.x, circleViewLeftPoint.y);
+            refreshPath.lineTo(circleViewRightPoint.x, circleViewRightPoint.y);
+            refreshPath.quadTo(circleViewCenterX, circleViewRightPoint.y / 2, circleViewCenterX, 0);
+            canvas.drawPath(refreshPath, mPaint);
         }
     }
 
@@ -988,8 +1000,8 @@ public class RefreshContainer extends ViewGroup implements NestedScrollingParent
                 / slingshotDist);
         float tensionPercent = (float) ((tensionSlingshotPercent / 4) - Math.pow(
                 (tensionSlingshotPercent / 4), 2)) * 2f;
-        float extraMove = (slingshotDist) * tensionPercent * 2*mRealLengthRadio;
-        CommonLog.i(String.format("slingshotDist:%f*tensionPercent:%f*8=extraMove:%f",slingshotDist,tensionPercent,extraMove));
+        float extraMove = (slingshotDist) * tensionPercent * 2 * mRealLengthRadio;
+        CommonLog.i(String.format("slingshotDist:%f*tensionPercent:%f*8=extraMove:%f", slingshotDist, tensionPercent, extraMove));
         int targetY = mOriginalOffsetTop + (int) ((slingshotDist * dragPercent) + extraMove);
         // where 1.0f is a full circle
         if (mCircleView.getVisibility() != View.VISIBLE) {
