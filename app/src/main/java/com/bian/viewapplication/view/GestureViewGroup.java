@@ -33,6 +33,7 @@ public class GestureViewGroup extends ViewGroup {
         initView(context);
     }
 
+
     private void initView(Context context) {
         mGestureDetector = new GestureDetector(getContext(), new MyGestureListener());
         mDisplayMetrics = context.getResources().getDisplayMetrics();
@@ -41,7 +42,7 @@ public class GestureViewGroup extends ViewGroup {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        return mGestureDetector.onTouchEvent(ev);
+        return false;
     }
 
     @Override
@@ -72,6 +73,7 @@ public class GestureViewGroup extends ViewGroup {
     public boolean onTouchEvent(MotionEvent event) {
         return mGestureDetector.onTouchEvent(event);
     }
+
 
 
     @Override

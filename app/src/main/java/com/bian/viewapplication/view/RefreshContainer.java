@@ -148,7 +148,7 @@ public class RefreshContainer extends ViewGroup implements NestedScrollingParent
             android.R.attr.enabled
     };
 
-    CircleImageView mCircleView;
+    CircleImage mCircleView;
     private int mCircleViewIndex = -1;
 
     protected int mFrom;
@@ -450,7 +450,7 @@ public class RefreshContainer extends ViewGroup implements NestedScrollingParent
     }
 
     private void createProgressView() {
-        mCircleView = new CircleImageView(getContext(), CIRCLE_BG_LIGHT);
+        mCircleView = new CircleImage(getContext(), CIRCLE_BG_LIGHT);
         mProgress = new CircularProgressDrawable(getContext());
         mProgress.setStyle(CircularProgressDrawable.DEFAULT);
         mCircleView.setImageDrawable(mProgress);

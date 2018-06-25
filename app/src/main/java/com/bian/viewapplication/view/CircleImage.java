@@ -16,14 +16,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.view.animation.Animation;
-import android.widget.ImageView;
 
 /**
  * Private class created to work around issues with AnimationListeners being
  * called before the animation is actually complete and support shadows on older
  * platforms.
  */
-class CircleImageView extends android.support.v7.widget.AppCompatImageView {
+class CircleImage extends android.support.v7.widget.AppCompatImageView {
 
     private static final int KEY_SHADOW_COLOR = 0x1E000000;
     private static final int FILL_SHADOW_COLOR = 0x3D000000;
@@ -36,7 +35,7 @@ class CircleImageView extends android.support.v7.widget.AppCompatImageView {
     private Animation.AnimationListener mListener;
     int mShadowRadius;
 
-    CircleImageView(Context context, int color) {
+    CircleImage(Context context, int color) {
         super(context);
         final float density = getContext().getResources().getDisplayMetrics().density;
         final int shadowYOffset = (int) (density * Y_OFFSET);
@@ -49,7 +48,7 @@ class CircleImageView extends android.support.v7.widget.AppCompatImageView {
             circle = new ShapeDrawable(new OvalShape());
             ViewCompat.setElevation(this, SHADOW_ELEVATION * density);
         } else {
-            OvalShape oval = new CircleImageView.OvalShadow(mShadowRadius);
+            OvalShape oval = new CircleImage.OvalShadow(mShadowRadius);
             circle = new ShapeDrawable(oval);
             setLayerType(View.LAYER_TYPE_SOFTWARE, circle.getPaint());
             circle.getPaint().setShadowLayer(mShadowRadius, shadowXOffset, shadowYOffset,
@@ -130,8 +129,8 @@ class CircleImageView extends android.support.v7.widget.AppCompatImageView {
 
         @Override
         public void draw(Canvas canvas, Paint paint) {
-            final int viewWidth = CircleImageView.this.getWidth();
-            final int viewHeight = CircleImageView.this.getHeight();
+            final int viewWidth = CircleImage.this.getWidth();
+            final int viewHeight = CircleImage.this.getHeight();
             canvas.drawCircle(viewWidth / 2, viewHeight / 2, viewWidth / 2, mShadowPaint);
             canvas.drawCircle(viewWidth / 2, viewHeight / 2, viewWidth / 2 - mShadowRadius, paint);
         }
