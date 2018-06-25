@@ -42,6 +42,7 @@ public class GestureViewGroup extends ViewGroup {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
+        mGestureDetector.onTouchEvent(ev);
         return false;
     }
 
@@ -73,7 +74,6 @@ public class GestureViewGroup extends ViewGroup {
     public boolean onTouchEvent(MotionEvent event) {
         return mGestureDetector.onTouchEvent(event);
     }
-
 
 
     @Override

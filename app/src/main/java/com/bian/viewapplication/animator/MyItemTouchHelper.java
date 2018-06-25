@@ -350,6 +350,7 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
             if (mVelocityTracker != null) {
                 mVelocityTracker.addMovement(event);
             }
+            CommonLog.i("mSelected != null:"+Boolean.toString(mSelected != null));
             return mSelected != null;
         }
 

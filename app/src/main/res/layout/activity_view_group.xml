@@ -45,4 +45,10 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp200" />
 
+    <com.bian.viewapplication.view.ParabolaView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp300"
+        android:layout_marginBottom="@dimen/dp20"
+        android:layout_marginTop="@dimen/dp20" />
+
 </com.bian.viewapplication.view.GestureViewGroup>
