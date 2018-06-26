@@ -16,11 +16,6 @@ public class GuideFragment extends DialogFragment {
     private String mParam1;
     private String mParam2;
 
-
-    public GuideFragment() {
-        // Required empty public constructor
-    }
-
     public static GuideFragment newInstance(String param1, String param2) {
         GuideFragment fragment = new GuideFragment();
         Bundle args = new Bundle();
