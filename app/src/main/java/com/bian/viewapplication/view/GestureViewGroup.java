@@ -81,11 +81,13 @@ public class GestureViewGroup extends ViewGroup {
         int childCount = getChildCount();
         int leftPos = getPaddingLeft();
         int topPos = getPaddingTop();
+        int rightPos = right - getPaddingRight();
         for (int index = 0; index < childCount; index++) {
             View childView = getChildAt(index);
             LayoutParams layoutParams = (LayoutParams) childView.getLayoutParams();
             topPos += layoutParams.topMargin;
-            childView.layout(leftPos + layoutParams.leftMargin, topPos, leftPos + childView.getMeasuredWidth(), topPos + childView.getMeasuredHeight());
+            int childRightPos = Math.min(leftPos + layoutParams.leftMargin + childView.getMeasuredWidth(), rightPos);
+            childView.layout(leftPos + layoutParams.leftMargin, topPos, childRightPos, topPos + childView.getMeasuredHeight());
             topPos = topPos + childView.getMeasuredHeight() + layoutParams.bottomMargin;
         }
     }
@@ -99,14 +101,16 @@ public class GestureViewGroup extends ViewGroup {
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            CommonLog.i(String.format("getScrollY:%d,verticalScrollRange:%d,getMeasuredHeight:%d,mDisplayMetrics.heightPixels:%d,distanceY:%f",
-                    getScrollY(), verticalScrollRange, getMeasuredHeight(), mDisplayMetrics.heightPixels, distanceY));
-            if (getScrollY() <= 0 && distanceY < 0) {
-                scrollTo(0, 0);
-            } else if (getScrollY() >= verticalScrollRange - getHeight() && distanceY > 0) {
-                scrollTo(0, verticalScrollRange - getHeight());
-            } else {
-                scrollBy(0, (int) distanceY);
+            if (verticalScrollRange - getHeight() > 0) {
+                CommonLog.i(String.format("getScrollY:%d,verticalScrollRange:%d,getMeasuredHeight:%d,mDisplayMetrics.heightPixels:%d,distanceY:%f",
+                        getScrollY(), verticalScrollRange, getMeasuredHeight(), mDisplayMetrics.heightPixels, distanceY));
+                if (getScrollY() <= 0 && distanceY < 0) {
+                    scrollTo(0, 0);
+                } else if (getScrollY() >= verticalScrollRange - getHeight() && distanceY > 0) {
+                    scrollTo(0, verticalScrollRange - getHeight());
+                } else {
+                    scrollBy(0, (int) distanceY);
+                }
             }
             return true;
         }
@@ -114,15 +118,18 @@ public class GestureViewGroup extends ViewGroup {
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            if (getScrollY() - velocityY / 2 <= 0 && velocityY > 0) {
-                mScroller.startScroll(0, getScrollY(), 0, -getScrollY(), 500);
-            } else if (getScrollY() - velocityY / 2 >= verticalScrollRange - getHeight() && velocityY < 0) {
-                mScroller.startScroll(0, getScrollY(), 0, verticalScrollRange - getHeight() - getScrollY(), 500);
-            } else {
-                mScroller.startScroll(0, getScrollY(), 0, (int) (-velocityY / 2), 500);
+            if (verticalScrollRange - getHeight() > 0) {
+                if (getScrollY() - velocityY / 2 <= 0 && velocityY > 0) {
+                    mScroller.startScroll(0, getScrollY(), 0, -getScrollY(), 500);
+                } else if (getScrollY() - velocityY / 2 >= verticalScrollRange - getHeight() && velocityY < 0) {
+                    mScroller.startScroll(0, getScrollY(), 0, verticalScrollRange - getHeight() - getScrollY(), 500);
+                } else {
+                    mScroller.startScroll(0, getScrollY(), 0, (int) (-velocityY / 2), 500);
+                }
+                invalidate();
+                return true;
             }
-            invalidate();
-            return true;
+            return false;
         }
 
         @Override

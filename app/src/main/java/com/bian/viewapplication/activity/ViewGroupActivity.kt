@@ -1,5 +1,6 @@
 package com.bian.viewapplication.activity
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -11,10 +12,11 @@ class ViewGroupActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_group)
-        initView();
+        initView()
     }
 
     private fun initView() {
-        text1.setOnClickListener { Toast.makeText(applicationContext,"tomcat",Toast.LENGTH_SHORT).show() }
+        text1.setOnClickListener { Toast.makeText(applicationContext, "tomcat", Toast.LENGTH_SHORT).show() }
+        ship_iv.setOnClickListener { startActivity(Intent(applicationContext, ShapeActivity::class.java)) }
     }
 }

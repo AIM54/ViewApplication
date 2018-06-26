@@ -18,6 +18,7 @@
         android:textSize="@dimen/sp45" />
 
     <ImageView
+        android:id="@+id/ship_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_historic_ship" />
@@ -45,10 +46,16 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp200" />
 
+    <com.bian.viewapplication.view.BezierView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp200" />
+
+
     <com.bian.viewapplication.view.ParabolaView
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp300"
         android:layout_marginBottom="@dimen/dp20"
-        android:layout_marginTop="@dimen/dp20" />
+        android:layout_marginTop="@dimen/dp20"
+        android:background="@color/palegoldenrod" />
 
 </com.bian.viewapplication.view.GestureViewGroup>

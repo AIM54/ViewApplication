@@ -21,7 +21,8 @@
         <activity android:name=".activity.MaterialDesignActivity" />
         <activity android:name=".activity.NewListActivity" />
         <activity android:name=".activity.ViewGroupActivity" />
-        <activity android:name=".activity.RefreshListActivity"></activity>
+        <activity android:name=".activity.RefreshListActivity" />
+        <activity android:name=".activity.ShapeActivity"></activity>
     </application>
 
 </manifest>
