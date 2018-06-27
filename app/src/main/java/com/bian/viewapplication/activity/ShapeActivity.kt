@@ -7,32 +7,51 @@ import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.ArcShape
 import android.graphics.drawable.shapes.PathShape
 import android.os.Build
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.bian.viewapplication.R
+import com.bian.viewapplication.bean.ViewLoactionBean
+import com.bian.viewapplication.dialog.GuideFragment
+import com.bian.viewapplication.util.CommonLog
 import kotlinx.android.synthetic.main.activity_shape.*
 
 class ShapeActivity : AppCompatActivity() {
-
+    var guildeFragment: GuideFragment? = null;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shape)
         initView1()
         initView2()
         initPathView()
+        view1.setOnClickListener { v -> }
+        view1.post { showGuildeDialog(view1) }
     }
+
+    private fun showGuildeDialog(view1: View?) {
+        var location = IntArray(2)
+        view1?.let {
+            it.getLocationOnScreen(location)
+            val viewloactin = ViewLoactionBean(location[1], location[0], view1.measuredWidth, view1.measuredHeight)
+            val tempFragment = supportFragmentManager.findFragmentByTag(GuideFragment::class.java.simpleName)
+            if (tempFragment == null) {
+                guildeFragment = GuideFragment.newInstance(location, viewloactin)
+                guildeFragment?.let { it.show(supportFragmentManager, GuideFragment::class.java.simpleName) }
+            }
+        }
+    }
+
 
     private fun initPathView() {
         val testPath = Path()
-        val height=resources.getDimension(R.dimen.dp200)
-        testPath.quadTo(height/2, height/2, height, 0f)
-        val pathShape = PathShape(testPath,height,height)
+        val height = resources.getDimension(R.dimen.dp200)
+        testPath.quadTo(height / 2, height / 2, height, 0f)
+        val pathShape = PathShape(testPath, height, height)
         val shapeDrawable = ShapeDrawable()
         shapeDrawable.shape = pathShape;
         shapeDrawable.paint.color = ContextCompat.getColor(this, R.color.blueviolet)
-        setViewBackground(path_view,shapeDrawable)
+        setViewBackground(path_view, shapeDrawable)
     }
 
     private fun initView2() {
@@ -58,3 +77,4 @@ class ShapeActivity : AppCompatActivity() {
         }
     }
 }
+

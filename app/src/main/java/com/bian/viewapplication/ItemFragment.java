@@ -1,6 +1,7 @@
 package com.bian.viewapplication;
 
 import android.content.Context;
+import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -59,7 +60,7 @@ public class ItemFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_item_list, container, false);
-
+        RoundRectShape rectShape;
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();

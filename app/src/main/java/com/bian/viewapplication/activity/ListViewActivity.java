@@ -4,12 +4,14 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.AbsListView;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.bian.viewapplication.R;
 
 public class ListViewActivity extends AppCompatActivity {
     private ListView mListView;
+    private EditText editText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

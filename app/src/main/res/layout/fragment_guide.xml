@@ -1,13 +1,6 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<com.bian.viewapplication.view.NewGuildeView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/guildev_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.bian.viewapplication.dialog.GuideFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
-</FrameLayout>
+    app:guildBackgoundColor="@color/black_alpha_78" />

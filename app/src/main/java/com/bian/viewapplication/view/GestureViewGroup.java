@@ -87,6 +87,7 @@ public class GestureViewGroup extends ViewGroup {
             LayoutParams layoutParams = (LayoutParams) childView.getLayoutParams();
             topPos += layoutParams.topMargin;
             int childRightPos = Math.min(leftPos + layoutParams.leftMargin + childView.getMeasuredWidth(), rightPos);
+            CommonLog.i("leftPos+layoutParams.leftMargin:"+(leftPos+ layoutParams.leftMargin));
             childView.layout(leftPos + layoutParams.leftMargin, topPos, childRightPos, topPos + childView.getMeasuredHeight());
             topPos = topPos + childView.getMeasuredHeight() + layoutParams.bottomMargin;
         }
@@ -102,8 +103,6 @@ public class GestureViewGroup extends ViewGroup {
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
             if (verticalScrollRange - getHeight() > 0) {
-                CommonLog.i(String.format("getScrollY:%d,verticalScrollRange:%d,getMeasuredHeight:%d,mDisplayMetrics.heightPixels:%d,distanceY:%f",
-                        getScrollY(), verticalScrollRange, getMeasuredHeight(), mDisplayMetrics.heightPixels, distanceY));
                 if (getScrollY() <= 0 && distanceY < 0) {
                     scrollTo(0, 0);
                 } else if (getScrollY() >= verticalScrollRange - getHeight() && distanceY > 0) {
