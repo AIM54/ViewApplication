@@ -15,6 +15,9 @@ import com.bian.viewapplication.bean.ViewLoactionBean;
 import com.bian.viewapplication.util.CommonLog;
 import com.bian.viewapplication.view.NewGuildeView;
 
+import org.jetbrains.annotations.NotNull;
+
+
 public class GuideFragment extends DialogFragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -25,11 +28,10 @@ public class GuideFragment extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        CommonLog.i("onStart()");
         getDialog().getWindow().setDimAmount(0);
         getDialog().getWindow().getDecorView().setPadding(0, 0, 0, 0);
-
     }
+
 
     @Override
     public void onResume() {
@@ -67,7 +69,6 @@ public class GuideFragment extends DialogFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        CommonLog.i("onViewCreated");
         newGuildeView = view.findViewById(R.id.guildev_view);
         if (mParam2 != null) {
             CommonLog.i(mParam2.toString());
@@ -75,4 +76,9 @@ public class GuideFragment extends DialogFragment {
         }
     }
 
+    public void setNewLocationBean(@NotNull ViewLoactionBean viewloactin) {
+        if (newGuildeView != null) {
+            newGuildeView.setTargetView(viewloactin);
+        }
+    }
 }

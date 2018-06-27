@@ -25,19 +25,26 @@ class ShapeActivity : AppCompatActivity() {
         initView1()
         initView2()
         initPathView()
-        view1.setOnClickListener { v -> }
         view1.post { showGuildeDialog(view1) }
     }
 
     private fun showGuildeDialog(view1: View?) {
+        CommonLog.i("window.decorView.measuredHeight:${window.decorView.measuredHeight}")
         var location = IntArray(2)
         view1?.let {
-            it.getLocationOnScreen(location)
-            val viewloactin = ViewLoactionBean(location[1], location[0], view1.measuredWidth, view1.measuredHeight)
-            val tempFragment = supportFragmentManager.findFragmentByTag(GuideFragment::class.java.simpleName)
-            if (tempFragment == null) {
+            val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+            var statusBarHeight = 0
+            if (resourceId > 0) {
+                statusBarHeight = resources.getDimensionPixelSize(resourceId)
+            }
+            it.getLocationInWindow(location)
+            val viewloactin = ViewLoactionBean(location[1], location[0], view1.measuredWidth, view1.measuredHeight, statusBarHeight)
+            guildeFragment = supportFragmentManager.findFragmentByTag(GuideFragment::class.java.simpleName) as GuideFragment?
+            if (guildeFragment == null) {
                 guildeFragment = GuideFragment.newInstance(location, viewloactin)
                 guildeFragment?.let { it.show(supportFragmentManager, GuideFragment::class.java.simpleName) }
+            } else {
+                guildeFragment?.let { it.setNewLocationBean(viewloactin) }
             }
         }
     }

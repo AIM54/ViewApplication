@@ -6,12 +6,13 @@ import android.os.Parcelable
 /**
  * Created by Administrator on 2018/6/26.
  */
-data class ViewLoactionBean(val viewTopLocation: Int, val viewLeftLocation: Int, val viewWidth: Int, val viewHeight: Int) : Parcelable {
+data class ViewLoactionBean(val viewTopLocation: Int, val viewLeftLocation: Int, val viewWidth: Int, val viewHeight: Int, val statusBarHeight: Int) : Parcelable {
     override fun toString(): String {
         return "ViewLoactionBean(viewTopLocation=$viewTopLocation, viewLeftLocation=$viewLeftLocation, viewWidth=$viewWidth, viewHeight=$viewHeight)"
     }
 
     constructor(source: Parcel) : this(
+            source.readInt(),
             source.readInt(),
             source.readInt(),
             source.readInt(),
@@ -25,6 +26,7 @@ data class ViewLoactionBean(val viewTopLocation: Int, val viewLeftLocation: Int,
         writeInt(viewLeftLocation)
         writeInt(viewWidth)
         writeInt(viewHeight)
+        writeInt(statusBarHeight)
     }
 
     companion object {
