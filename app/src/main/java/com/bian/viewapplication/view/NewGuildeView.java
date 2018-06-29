@@ -73,7 +73,6 @@ public class NewGuildeView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        CommonLog.i("mWidth:" + mWidth + "||mHeight:" + mHeight);
         mPaint.setColor(Color.RED);
         canvas.drawLine(0, 0, mWidth, 0, mPaint);
         int count;

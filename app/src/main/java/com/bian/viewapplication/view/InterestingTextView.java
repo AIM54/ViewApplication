@@ -14,6 +14,7 @@ import android.support.annotation.Nullable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.TextView;
 
 import com.bian.viewapplication.R;
 import com.bian.viewapplication.util.CommonLog;
@@ -65,8 +66,10 @@ public class InterestingTextView extends View {
         mTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setColor(textColor);
         mTextPaint.setTextSize(textSize);
-        fontMetrics = mTextPaint.getFontMetrics();
+        mTextPaint.setStrokeWidth(getResources().getDimension(R.dimen.dp4));
         mTextPaint.setTextAlign(Paint.Align.CENTER);
+        mTextPaint.setStyle(Paint.Style.STROKE);
+        fontMetrics = mTextPaint.getFontMetrics();
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setColor(Color.GREEN);
@@ -118,6 +121,7 @@ public class InterestingTextView extends View {
         while (textPathMeasure.nextContour()) {
             totalPathLength += textPathMeasure.getLength();
         }
+        CommonLog.i("totalPathLength:" + totalPathLength);
         beginTextAnimal(totalPathLength);
     }
 

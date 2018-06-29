@@ -32,4 +32,9 @@
         android:layout_marginRight="@dimen/dp20"
         android:layout_marginTop="@dimen/dp20" />
 
+    <com.bian.viewapplication.view.BezierView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp200" />
+
+
 </com.bian.viewapplication.view.GestureViewGroup>

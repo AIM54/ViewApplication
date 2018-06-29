@@ -15,7 +15,7 @@
         android:layout_marginTop="@dimen/dp20"
         android:background="@drawable/main_text_bg"
         android:text="第一个TextView"
-        android:textSize="@dimen/sp45" />
+        android:textSize="@dimen/sp30" />
 
     <ImageView
         android:id="@+id/ship_iv"
@@ -43,10 +43,6 @@
         app:textSize="@dimen/sp60" />
 
     <com.bian.viewapplication.view.TestCircleView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp200" />
-
-    <com.bian.viewapplication.view.BezierView
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp200" />
 
