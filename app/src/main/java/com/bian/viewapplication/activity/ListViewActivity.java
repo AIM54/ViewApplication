@@ -1,6 +1,5 @@
 package com.bian.viewapplication.activity;
 
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.AbsListView;
@@ -14,6 +13,7 @@ public class ListViewActivity extends AppCompatActivity {
     private ListView mListView;
     private EditText editText;
     private ListPopupWindow listPopupWindow;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

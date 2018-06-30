@@ -24,6 +24,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
     private Button addButton, deleteButton;
     private int mBankPosition;
     private LinearLayoutManager layoutManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +49,9 @@ public class RecyclerViewActivity extends AppCompatActivity {
         testRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         testRecyclerView.setAdapter(bankAdapter);
         addButton.setOnClickListener(v -> addBankInfo());
-        MyItemTouchHelper itemTouchHelper = new MyItemTouchHelper(new ItemOnTouchCallback(MyItemTouchHelper.UP | MyItemTouchHelper.DOWN, MyItemTouchHelper.START | MyItemTouchHelper.END));
+        MyItemTouchHelper itemTouchHelper = new MyItemTouchHelper(new ItemOnTouchCallback(MyItemTouchHelper.UP | MyItemTouchHelper.DOWN, MyItemTouchHelper.START));
         itemTouchHelper.attachToRecyclerView(testRecyclerView);
+        itemTouchHelper.setRightMenuWidth(getResources().getDimension(R.dimen.dp150)*2);
     }
 
     public class ItemOnTouchCallback extends MyItemTouchHelper.SimpleCallback {
@@ -66,7 +68,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
         @Override
         public void onMoved(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, int fromPos, RecyclerView.ViewHolder target, int toPos, int x, int y) {
             super.onMoved(recyclerView, viewHolder, fromPos, target, toPos, x, y);
-            CommonLog.i(String.format("x:%d,y:%d",x,y));
+            CommonLog.i(String.format("x:%d,y:%d", x, y));
         }
 
         @Override

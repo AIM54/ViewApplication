@@ -23,6 +23,7 @@
         <activity android:name=".activity.ViewGroupActivity" />
         <activity android:name=".activity.RefreshListActivity" />
         <activity android:name=".activity.ShapeActivity" />
+        <activity android:name=".activity.NewViewGroupActivity"></activity>
     </application>
 
 </manifest>

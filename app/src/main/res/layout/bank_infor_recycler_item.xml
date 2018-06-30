@@ -34,4 +34,9 @@
         android:layout_width="@dimen/dp150"
         android:layout_height="@dimen/dp100"
         android:text="@string/update" />
+    <Button
+        android:id="@+id/right_button2"
+        android:layout_width="@dimen/dp150"
+        android:layout_height="@dimen/dp100"
+        android:text="@string/update" />
 </com.bian.viewapplication.view.HorizonalGroup>

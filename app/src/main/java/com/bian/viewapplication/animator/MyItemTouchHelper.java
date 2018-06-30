@@ -73,13 +73,20 @@ import java.util.List;
 public class MyItemTouchHelper extends RecyclerView.ItemDecoration
         implements RecyclerView.OnChildAttachStateChangeListener {
 
+
+    private float rightMenuWidth;
+
+    public void setRightMenuWidth(float rightMenuWidth) {
+        this.rightMenuWidth = rightMenuWidth;
+    }
+
     /**
      * Up direction, used for swipe & drag control.
      */
     public static final int UP = 1;
 
     /**
-     *相当于2
+     * 相当于2
      * Down direction, used for swipe & drag control.
      */
     public static final int DOWN = 1 << 1;
@@ -350,7 +357,7 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
             if (mVelocityTracker != null) {
                 mVelocityTracker.addMovement(event);
             }
-            CommonLog.i("mSelected != null:"+Boolean.toString(mSelected != null));
+            CommonLog.i("mSelected != null:" + Boolean.toString(mSelected != null));
             return mSelected != null;
         }
 
@@ -602,12 +609,12 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
                     case START:
                     case END:
                         targetTranslateY = 0;
-                        targetTranslateX = Math.signum(mDx) * mRecyclerView.getWidth();
+                        targetTranslateX = Math.signum(mDx) * rightMenuWidth;
                         break;
                     case UP:
                     case DOWN:
                         targetTranslateX = 0;
-                        targetTranslateY = Math.signum(mDy) * mRecyclerView.getHeight();
+                        targetTranslateY = Math.signum(mDy) * rightMenuWidth;
                         break;
                     default:
                         targetTranslateX = 0;
@@ -624,7 +631,7 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
                 final float currentTranslateX = mTmpPosition[0];
                 final float currentTranslateY = mTmpPosition[1];
                 CommonLog.i(String.format("currentTranslateX:%f,currentTranslateY:%f,targetTranslateX:%f,targetTranslateY:%f",
-                        currentTranslateX, currentTranslateY,targetTranslateX,targetTranslateY));
+                        currentTranslateX, currentTranslateY, targetTranslateX, targetTranslateY));
                 final RecoverAnimation rv = new RecoverAnimation(prevSelected, animationType,
                         prevActionState, currentTranslateX, currentTranslateY,
                         targetTranslateX, targetTranslateY) {
@@ -1187,7 +1194,8 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
 
     /**
      * marked by bianmingliang
-     *  这在里判断的滑动删除是否成功
+     * 这在里判断的滑动删除是否成功
+     *
      * @param viewHolder
      * @return
      */
@@ -1208,7 +1216,7 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
                 & ACTION_MODE_SWIPE_MASK) >> (ACTION_STATE_SWIPE * DIRECTION_FLAG_COUNT);
         int swipeDir;
         if (Math.abs(mDx) > Math.abs(mDy)) {
-            CommonLog.i("swipeIfNecessary_marked by bian_flags:"+flags);
+            CommonLog.i("swipeIfNecessary_marked by bian_flags:" + flags);
             if ((swipeDir = checkHorizontalSwipe(viewHolder, flags)) > 0) {
                 // if swipe dir is not in original flags, it should be the relative direction
                 if ((originalFlags & swipeDir) == 0) {

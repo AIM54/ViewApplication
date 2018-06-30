@@ -9,4 +9,12 @@
     <declare-styleable name="NewGuildeView">
         <attr name="guildBackgoundColor" format="color|reference" />
     </declare-styleable>
+    <declare-styleable name="VerticalScrollView">
+        <attr name="android:layout_gravity" />
+        <attr name="layout_position">
+            <enum name="middle" value="0" />
+            <enum name="left" value="1" />
+            <enum name="right" value="2" />
+        </attr>
+    </declare-styleable>
 </resources>
