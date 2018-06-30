@@ -120,6 +120,7 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
     /**
      * ItemTouchHelper is in idle state. At this state, either there is no related motion event by
      * the user or latest motion events have not yet triggered a swipe or drag.
+     * 这个状态就是我们常说的挂机的状态
      */
     public static final int ACTION_STATE_IDLE = 0;
 
@@ -357,7 +358,6 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
             if (mVelocityTracker != null) {
                 mVelocityTracker.addMovement(event);
             }
-            CommonLog.i("mSelected != null:" + Boolean.toString(mSelected != null));
             return mSelected != null;
         }
 
@@ -578,7 +578,7 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
         if (selected == mSelected && actionState == mActionState) {
             return;
         }
-        mDragScrollStartTimeInMs = Long.MIN_VALUE;
+        CommonLog.i(String.format("mSelected==null:%b||selected==null:%b",mSelected==null,selected==null));        mDragScrollStartTimeInMs = Long.MIN_VALUE;
         final int prevActionState = mActionState;
         // prevent duplicate animations
         endRecoverAnimation(selected, true);
@@ -593,6 +593,7 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
         int actionStateMask = (1 << (DIRECTION_FLAG_COUNT + DIRECTION_FLAG_COUNT * actionState))
                 - 1;
         boolean preventLayout = false;
+        CommonLog.i(String.format("mSelected==null:%b||selected==null:%b",mSelected==null,selected==null));
 
         if (mSelected != null) {
             final RecyclerView.ViewHolder prevSelected = mSelected;
@@ -682,6 +683,7 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
                             >> (mActionState * DIRECTION_FLAG_COUNT);
             mSelectedStartX = selected.itemView.getLeft();
             mSelectedStartY = selected.itemView.getTop();
+            //选定要进行滑动的Item的位置 marked by bianmingliang
             mSelected = selected;
 
             if (actionState == ACTION_STATE_DRAG) {
@@ -695,7 +697,7 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
         if (!preventLayout) {
             mRecyclerView.getLayoutManager().requestSimpleAnimationsInNextLayout();
         }
-        mCallback.onSelectedChanged(mSelected, mActionState);
+        CommonLog.i(String.format("mSelected==null:%b||selected==null:%b",mSelected==null,selected==null));        mCallback.onSelectedChanged(mSelected, mActionState);
         mRecyclerView.invalidate();
     }
 

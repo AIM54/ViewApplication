@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.view.View;
 public class GuideView extends View {
     private Paint mPaint;
     private int mWidth, mHeight;
+    private RectF mRect;
 
     public GuideView(Context context) {
         this(context, null);
