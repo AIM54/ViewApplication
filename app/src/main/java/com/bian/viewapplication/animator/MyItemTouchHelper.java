@@ -152,7 +152,7 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
 
     static final String TAG = "ItemTouchHelper";
 
-    static final boolean DEBUG = false;
+    static final boolean DEBUG = true;
 
     static final int ACTIVE_POINTER_ID_NONE = -1;
 
@@ -322,14 +322,19 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
                 Log.d(TAG, "intercept: x:" + event.getX() + ",y:" + event.getY() + ", " + event);
             }
             final int action = event.getActionMasked();
+            final RecoverAnimation animation = findAnimation(event);
             if (action == MotionEvent.ACTION_DOWN) {
                 mActivePointerId = event.getPointerId(0);
                 mInitialTouchX = event.getX();
                 mInitialTouchY = event.getY();
                 obtainVelocityTracker();
-                if (mSelected == null) {
-                    final RecoverAnimation animation = findAnimation(event);
-                    if (animation != null) {
+
+            } else if (mSelected == null && action == MotionEvent.ACTION_MOVE&&animation!=null) {
+                float touchX=event.getX();
+                float touchY=event.getY();
+                float distanceX=touchX-mInitialTouchX;
+                float distanceY=touchY-mInitialTouchY;
+                if (Math.abs(distanceX)>Math.abs(distanceY)&&Math.abs(distanceX)>rightMenuWidth/10){
                         mInitialTouchX -= animation.mX;
                         mInitialTouchY -= animation.mY;
                         endRecoverAnimation(animation.mViewHolder, true);
@@ -339,9 +344,10 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
                         }
                         select(animation.mViewHolder, animation.mActionState);
                         updateDxDy(event, mSelectedFlags, 0);
-                    }
+
                 }
-            } else if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP) {
+            }
+            else if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP) {
                 mActivePointerId = ACTIVE_POINTER_ID_NONE;
                 select(null, ACTION_STATE_IDLE);
             } else if (mActivePointerId != ACTIVE_POINTER_ID_NONE) {
@@ -379,13 +385,12 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
             if (activePointerIndex >= 0) {
                 checkSelectForSwipe(action, event, activePointerIndex);
             }
-            RecyclerView.ViewHolder viewHolder = mSelected;
-            if (viewHolder == null) {
-                return;
-            }
+            RecyclerView.ViewHolder viewHolder ;
             switch (action) {
                 case MotionEvent.ACTION_MOVE: {
+                    viewHolder=mSelected;
                     // Find the index of the active pointer and fetch its position
+
                     if (activePointerIndex >= 0) {
                         updateDxDy(event, mSelectedFlags, activePointerIndex);
                         moveIfNecessary(viewHolder);
@@ -716,6 +721,9 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
                     if ((animator == null || !animator.isRunning(null))
                             && !hasRunningRecoverAnim()) {
                         mCallback.onSwiped(anim.mViewHolder, swipeDir);
+                        if (mRecoverAnimations.contains(anim)){
+                            CommonLog.i("mRecoverAnimations.contains(anim);");
+                        }
                     } else {
                         mRecyclerView.post(this);
                     }
