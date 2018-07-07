@@ -71,5 +71,13 @@ public class BankAdapter extends RecyclerView.Adapter<BankAdapter.MyViewHolder> 
             rootView = itemView.findViewById(R.id.root_layout);
             rightButton = itemView.findViewById(R.id.right_button);
         }
+
+        public void onFling(float velocityX, float velocityY) {
+
+        }
+
+        public void onScroll(float distanceX, float distanceY) {
+
+        }
     }
 }
