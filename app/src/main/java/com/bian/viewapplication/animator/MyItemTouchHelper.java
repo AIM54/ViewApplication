@@ -925,6 +925,7 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
      * Returns the animation type or 0 if cannot be found.
      */
     int endRecoverAnimation(RecyclerView.ViewHolder viewHolder, boolean override) {
+        CommonLog.i("endRecoverAnimation");
         final int recoverAnimSize = mRecoverAnimations.size();
         for (int i = recoverAnimSize - 1; i >= 0; i--) {
             final RecoverAnimation anim = mRecoverAnimations.get(i);

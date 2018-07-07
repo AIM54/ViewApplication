@@ -49,7 +49,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
         testRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         testRecyclerView.setAdapter(bankAdapter);
         addButton.setOnClickListener(v -> addBankInfo());
-        MyItemTouchHelper itemTouchHelper = new MyItemTouchHelper(new ItemOnTouchCallback(MyItemTouchHelper.UP | MyItemTouchHelper.DOWN, MyItemTouchHelper.START));
+        MyItemTouchHelper itemTouchHelper = new MyItemTouchHelper(new ItemOnTouchCallback(MyItemTouchHelper.UP | MyItemTouchHelper.DOWN, MyItemTouchHelper.START|MyItemTouchHelper.END));
         itemTouchHelper.attachToRecyclerView(testRecyclerView);
         itemTouchHelper.setRightMenuWidth(getResources().getDimension(R.dimen.dp150)*2);
     }
