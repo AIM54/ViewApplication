@@ -44,4 +44,9 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp200" />
 
+    <com.bian.viewapplication.view.RoundView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp300" />
+
+
 </com.bian.viewapplication.view.GestureViewGroup>
