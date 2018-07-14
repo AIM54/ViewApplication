@@ -2,9 +2,11 @@ package com.bian.viewapplication.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.widget.Button;
 
 import com.bian.viewapplication.R;
@@ -14,6 +16,7 @@ import com.bian.viewapplication.animator.MyItemTouchHelper;
 import com.bian.viewapplication.bean.BankInfo;
 import com.bian.viewapplication.util.CommonLog;
 import com.bian.viewapplication.util.Contant;
+import com.bian.viewapplication.view.MyRecyclerItemDecoration;
 
 import java.util.ArrayList;
 
@@ -24,7 +27,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
     private Button addButton, deleteButton;
     private int mBankPosition;
     private LinearLayoutManager layoutManager;
-
+   private ItemTouchHelper itemTouchHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,10 +51,11 @@ public class RecyclerViewActivity extends AppCompatActivity {
         testRecyclerView.setItemAnimator(new MyItemAnimator());
         testRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         testRecyclerView.setAdapter(bankAdapter);
+        testRecyclerView.addItemDecoration(new MyRecyclerItemDecoration(this, LinearLayoutManager.VERTICAL, getResources().getDimensionPixelSize(R.dimen.dp20)));
         addButton.setOnClickListener(v -> addBankInfo());
-        MyItemTouchHelper itemTouchHelper = new MyItemTouchHelper(new ItemOnTouchCallback(MyItemTouchHelper.UP | MyItemTouchHelper.DOWN, MyItemTouchHelper.START|MyItemTouchHelper.END));
+        MyItemTouchHelper itemTouchHelper = new MyItemTouchHelper(new ItemOnTouchCallback(MyItemTouchHelper.UP | MyItemTouchHelper.DOWN, MyItemTouchHelper.START));
         itemTouchHelper.attachToRecyclerView(testRecyclerView);
-        itemTouchHelper.setRightMenuWidth(getResources().getDimension(R.dimen.dp150)*2);
+        itemTouchHelper.setRightMenuWidth(getResources().getDimension(R.dimen.dp150) * 2);
     }
 
     public class ItemOnTouchCallback extends MyItemTouchHelper.SimpleCallback {

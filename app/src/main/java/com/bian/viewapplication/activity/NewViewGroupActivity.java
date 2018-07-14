@@ -1,12 +1,13 @@
 package com.bian.viewapplication.activity;
 
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RoundRectShape;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.bian.viewapplication.R;
 
 public class NewViewGroupActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

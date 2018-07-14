@@ -7,9 +7,11 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
@@ -18,6 +20,8 @@ import android.widget.TextView;
 
 import com.bian.viewapplication.R;
 import com.bian.viewapplication.util.CommonLog;
+
+import java.util.ArrayList;
 
 
 /**
@@ -38,10 +42,11 @@ public class InterestingTextView extends View {
     private int mHeight, mWidth;
     private boolean hasFinishTextDraw = false;
     private int waveBaseLine;
-    private int waveCount = 8;
+    private int waveCount = 16;
     private int waveBeginPostion = 0;
     private Path wavePath;
     private int waveHeight;
+    private ArrayList<String> strings;
 
     public InterestingTextView(Context context) {
         this(context, null);
@@ -51,6 +56,9 @@ public class InterestingTextView extends View {
         super(context, attrs);
         initAttrs(attrs);
         initPaint();
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            setLayerType(LAYER_TYPE_SOFTWARE, null);
+        }
     }
 
     private void initAttrs(AttributeSet attrs) {
@@ -66,16 +74,18 @@ public class InterestingTextView extends View {
         mTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setColor(textColor);
         mTextPaint.setTextSize(textSize);
-        mTextPaint.setStrokeWidth(getResources().getDimension(R.dimen.dp4));
+        mTextPaint.setStrokeWidth(getResources().getDimension(R.dimen.dp2));
         mTextPaint.setTextAlign(Paint.Align.CENTER);
-        mTextPaint.setStyle(Paint.Style.STROKE);
+        mTextPaint.setStyle(Paint.Style.FILL);
         fontMetrics = mTextPaint.getFontMetrics();
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setColor(Color.GREEN);
-        mPaint.setStrokeWidth(getResources().getDimension(R.dimen.dp3));
-        CommonLog.i(mTextPaint.ascent() + "" + mTextPaint.descent());
+        mPaint.setStrokeWidth(getResources().getDimension(R.dimen.dp1));
+        CommonLog.i("mTextPaint.ascent:"+mTextPaint.ascent() + "||mTextPaint.descent:" + mTextPaint.descent());
     }
+
+
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -121,7 +131,6 @@ public class InterestingTextView extends View {
         while (textPathMeasure.nextContour()) {
             totalPathLength += textPathMeasure.getLength();
         }
-        CommonLog.i("totalPathLength:" + totalPathLength);
         beginTextAnimal(totalPathLength);
     }
 

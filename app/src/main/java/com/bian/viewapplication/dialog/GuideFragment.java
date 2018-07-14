@@ -2,9 +2,11 @@ package com.bian.viewapplication.dialog;
 
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.text.StaticLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +26,7 @@ public class GuideFragment extends DialogFragment {
     private int[] mParam1;
     private ViewLoactionBean mParam2;
     private NewGuildeView newGuildeView;
+    private StaticLayout staticLayout;
 
     @Override
     public void onStart() {
@@ -70,10 +73,15 @@ public class GuideFragment extends DialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         newGuildeView = view.findViewById(R.id.guildev_view);
-        if (mParam2 != null) {
-            CommonLog.i(mParam2.toString());
-            newGuildeView.setTargetView(mParam2);
-        }
+        new Handler().post(() -> {
+         int activityHeight=getActivity().getWindow().getDecorView().getMeasuredHeight();
+         int dialogHeight=getDialog().getWindow().getDecorView().getMeasuredHeight();
+         CommonLog.i(String.format("activityHeight:%d,dialogHeight:%d",activityHeight,dialogHeight));
+            if (mParam2 != null) {
+                CommonLog.i(mParam2.toString());
+                newGuildeView.setTargetView(mParam2);
+            }
+        });
     }
 
     public void setNewLocationBean(@NotNull ViewLoactionBean viewloactin) {

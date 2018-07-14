@@ -582,7 +582,6 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
         if (selected == mSelected && actionState == mActionState) {
             return;
         }
-        CommonLog.i(String.format("mSelected==null:%b||selected==null:%b", mSelected == null, selected == null));
         mDragScrollStartTimeInMs = Long.MIN_VALUE;
         final int prevActionState = mActionState;
         // prevent duplicate animations
@@ -620,7 +619,7 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
                     case UP:
                     case DOWN:
                         targetTranslateX = 0;
-                        targetTranslateY = Math.signum(mDy) * rightMenuWidth;
+                        targetTranslateY = Math.signum(mDy) *  mRecyclerView.getHeight();
                         break;
                     default:
                         targetTranslateX = 0;
@@ -649,6 +648,7 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
                         }
                         if (swipeDir <= 0) {
                             // this is a drag or failed swipe. recover immediately
+                            CommonLog.i("clearView");
                             mCallback.clearView(mRecyclerView, prevSelected);
                             CommonLog.i("mCallback.clearView(mRecyclerView, prevSelected);");
                             // full cleanup will happen on onDrawOver
@@ -659,6 +659,7 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
                             if (swipeDir > 0) {
                                 // Animation might be ended by other animators during a layout.
                                 // We defer callback to avoid editing adapter during a layout.
+                                CommonLog.i("postDispatchSwipe");
                                 postDispatchSwipe(this, swipeDir);
                             }
                         }
@@ -721,6 +722,7 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
                     // animations. Instead, we wait and batch.
                     if ((animator == null || !animator.isRunning(null))
                             && !hasRunningRecoverAnim()) {
+                        CommonLog.i("onSwiped");
                         mCallback.onSwiped(anim.mViewHolder, swipeDir);
                         if (mRecoverAnimations.contains(anim)) {
                             CommonLog.i("mRecoverAnimations.contains(anim);");
@@ -1231,6 +1233,7 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
         int swipeDir;
         if (Math.abs(mDx) > Math.abs(mDy)) {
             CommonLog.i("swipeIfNecessary_marked by bian_flags:" + flags);
+            CommonLog.i("swipeDir = :"+checkHorizontalSwipe(viewHolder, flags));
             if ((swipeDir = checkHorizontalSwipe(viewHolder, flags)) > 0) {
                 // if swipe dir is not in original flags, it should be the relative direction
                 if ((originalFlags & swipeDir) == 0) {
@@ -1271,6 +1274,10 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
     private int checkHorizontalSwipe(RecyclerView.ViewHolder viewHolder, int flags) {
         if ((flags & (LEFT | RIGHT)) != 0) {
             final int dirFlag = mDx > 0 ? RIGHT : LEFT;
+            CommonLog.i("viewHolder.itemView.getScrollX:"+viewHolder.itemView.getTranslationX()+"rightMenuWidth:"+rightMenuWidth);
+           if (viewHolder.itemView.getScrollX()==rightMenuWidth){
+               CommonLog.i("should close rightMenu");
+           }
             if (mVelocityTracker != null && mActivePointerId > -1) {
                 mVelocityTracker.computeCurrentVelocity(PIXELS_PER_SECOND,
                         mCallback.getSwipeVelocityThreshold(mMaxSwipeVelocity));
@@ -1284,6 +1291,7 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
                     return velDirFlag;
                 }
             }
+
 
             final float threshold = mRecyclerView.getWidth() * mCallback
                     .getSwipeThreshold(viewHolder);

@@ -8,6 +8,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
@@ -36,7 +37,13 @@ public class NewGuildeView extends View {
     private RectF originRectF;
     private RectF targetRectF;
     private RectF bottomRectF;
-
+    public static final int CENTER = 1;
+    public static final int START = 2;
+    public static final int END = 3;
+    private int guildeTipAlign;
+    private float guildeLineLength;
+    private Path guildePath;
+    private boolean mDrawPath;
 
     public NewGuildeView(Context context) {
         this(context, null);
@@ -54,12 +61,14 @@ public class NewGuildeView extends View {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         mPaint.setStrokeWidth(getResources().getDimension(R.dimen.dp1));
-
     }
 
     private void initAttrs(AttributeSet attrs) {
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.NewGuildeView);
         guildBackgoundColor = typedArray.getColor(R.styleable.NewGuildeView_guildBackgoundColor, Color.parseColor("#66000000"));
+        guildeTipAlign = typedArray.getInt(R.styleable.NewGuildeView_tip_align, CENTER);
+        guildeLineLength = typedArray.getDimension(R.styleable.NewGuildeView_guilde_lenth, 100f);
+        typedArray.recycle();
     }
 
     @Override
@@ -69,6 +78,7 @@ public class NewGuildeView extends View {
         viewRectF = new RectF(0, 0, mWidth, mHeight);
         clearMode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
         bottomRectF = new RectF();
+        guildePath = new Path();
     }
 
     @Override
@@ -87,6 +97,9 @@ public class NewGuildeView extends View {
             canvas.drawRoundRect(targetRectF, 20, 20, mPaint);
             canvas.restoreToCount(count);
             mPaint.setXfermode(null);
+        }
+        if (mDrawPath) {
+            canvas.drawPath(guildePath,mPaint);
         }
         canvas.drawRect(bottomRectF, mPaint);
     }
@@ -108,7 +121,31 @@ public class NewGuildeView extends View {
             zoomRectF(factor);
             invalidate();
         });
+        valueAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                beginLineAnimal();
+            }
+        });
         valueAnimator.start();
+    }
+
+    private void beginLineAnimal() {
+        mDrawPath = true;
+        float beginX;
+        switch (guildeTipAlign) {
+            case 1:
+                beginX = (targetRectF.right + targetRectF.left) / 2;
+                break;
+            case 2:
+                beginX = targetRectF.left;
+                break;
+            default:
+                beginX = targetRectF.right;
+                break;
+        }
+        guildePath.moveTo(beginX, targetRectF.bottom);
+        guildePath.lineTo(beginX, targetRectF.bottom + guildeLineLength);
     }
 
     /**

@@ -6,13 +6,20 @@ import android.os.Bundle
 import android.widget.Toast
 
 import com.bian.viewapplication.R
+import com.bian.viewapplication.util.CommonLog
 import kotlinx.android.synthetic.main.activity_view_group.*
 
 class ViewGroupActivity : AppCompatActivity() {
+    private var stringList: ArrayList<String>? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_group)
         initView()
+        if (stringList?.isNotEmpty() == true) {
+            CommonLog.i("stringList is NotEmpty")
+        } else {
+            CommonLog.i("stringList is Empty")
+        }
     }
 
     private fun initView() {
