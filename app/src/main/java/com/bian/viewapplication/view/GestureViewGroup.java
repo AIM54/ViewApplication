@@ -62,8 +62,8 @@ public class GestureViewGroup extends ViewGroup {
                 childState = combineMeasuredStates(childState, childView.getMeasuredState());
             }
         }
-        height = Math.max(getSuggestedMinimumHeight(), height);
-        width = Math.max(getSuggestedMinimumWidth(), width);
+        height = Math.max(getSuggestedMinimumHeight(), height+getPaddingTop()+getPaddingBottom());
+        width = Math.max(getSuggestedMinimumWidth(), width+getPaddingLeft()+getPaddingRight());
         verticalScrollRange = height;
         setMeasuredDimension(resolveSizeAndState(width, widthMeasureSpec, childState),
                 resolveSizeAndState(height, heightMeasureSpec,
@@ -91,6 +91,12 @@ public class GestureViewGroup extends ViewGroup {
             childView.layout(leftPos + layoutParams.leftMargin, topPos, childRightPos, topPos + childView.getMeasuredHeight());
             topPos = topPos + childView.getMeasuredHeight() + layoutParams.bottomMargin;
         }
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        CommonLog.i("verticalScrollRange:"+verticalScrollRange+"||getMeasuredHeight"+getMeasuredHeight());
     }
 
     private class MyGestureListener extends GestureDetector.SimpleOnGestureListener {

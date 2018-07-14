@@ -35,11 +35,13 @@
     <com.bian.viewapplication.view.BezierView
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp200" />
-    <com.bian.viewapplication.view.MyTextView
-        app:myText="@string/funcation_is_developing"
-        app:myTextSize="@dimen/sp35"
+
+    <com.bian.viewapplication.view.LinearView
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp200" />
 
+    <com.bian.viewapplication.view.CircleView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp200" />
 
 </com.bian.viewapplication.view.GestureViewGroup>

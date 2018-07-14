@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.TextView;
 
 import com.bian.viewapplication.R;
 
@@ -18,13 +19,14 @@ import com.bian.viewapplication.R;
  * Created by Administrator on 2018/7/9.
  */
 
-public class MyTextView extends View {
+public class MyTextView extends TextView {
     String message;
     private float textSize;
     private Paint textPaint;
     private float defaultTextSize;
     private LinearGradient mLinear;
-    private int mWidth,mHeight;
+    private int mWidth, mHeight;
+    private Paint.FontMetrics fontMetrics;
 
     public MyTextView(Context context) {
         super(context);
@@ -40,11 +42,13 @@ public class MyTextView extends View {
         initPaint();
     }
 
+
     private void initPaint() {
         textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setStyle(Paint.Style.FILL);
         textPaint.setTextSize(textSize);
-        mLinear = new LinearGradient(0, 0, 0, textPaint.descent() - textPaint.ascent(), Color.YELLOW, Color.CYAN, Shader.TileMode.MIRROR);
+        fontMetrics = textPaint.getFontMetrics();
+        mLinear = new LinearGradient(0, 0, 0, textPaint.descent() - textPaint.ascent(), Color.YELLOW, Color.RED, Shader.TileMode.MIRROR);
         textPaint.setShader(mLinear);
         textPaint.setTextAlign(Paint.Align.CENTER);
     }
@@ -57,12 +61,13 @@ public class MyTextView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        mWidth=getMeasuredWidth();
-        mHeight=getMeasuredHeight();
+        mWidth = getMeasuredWidth();
+        mHeight = getMeasuredHeight();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-      canvas.drawText(message,mWidth/2,mHeight/2,textPaint);
+        super.onDraw(canvas);
+        canvas.drawText(message, mWidth / 2, mHeight / 2, textPaint);
     }
 }

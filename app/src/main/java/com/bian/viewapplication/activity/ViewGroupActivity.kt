@@ -3,6 +3,7 @@ package com.bian.viewapplication.activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.widget.Toast
 
 import com.bian.viewapplication.R
@@ -25,5 +26,8 @@ class ViewGroupActivity : AppCompatActivity() {
     private fun initView() {
         text1.setOnClickListener { Toast.makeText(applicationContext, "tomcat", Toast.LENGTH_SHORT).show() }
         ship_iv.setOnClickListener { startActivity(Intent(applicationContext, ShapeActivity::class.java)) }
+        val textPaint=text1.paint
+        textPaint.strokeWidth=resources.getDimension(R.dimen.dp10)
+        textPaint.color=ContextCompat.getColor(this,R.color.crimson)
     }
 }
