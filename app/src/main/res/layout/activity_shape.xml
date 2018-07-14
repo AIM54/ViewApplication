@@ -15,6 +15,16 @@
         android:layout_marginRight="@dimen/dp40"
         android:layout_marginTop="@dimen/dp20" />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="@dimen/dp50"
+        android:layout_height="@dimen/dp50"
+        android:layout_marginLeft="@dimen/dp50"
+        android:background="@drawable/round_button_bg"
+        android:gravity="center"
+        android:text="点击"
+        android:textSize="@dimen/sp11" />
+
     <View
         android:id="@+id/view2"
         android:layout_width="match_parent"
@@ -45,6 +55,10 @@
         android:layout_height="@dimen/dp200" />
 
     <com.bian.viewapplication.view.RoundView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp300" />
+
+    <com.bian.viewapplication.view.SweepView
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp300" />
 

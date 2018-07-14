@@ -27,4 +27,11 @@
             <enum name="right" value="2" />
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="GradientTextView">
+        <attr name="gradient_text" format="string|reference" />
+        <attr name="gradient_textSize" format="dimension|reference" />
+        <attr name="gradient_startColor" format="color|reference"/>
+        <attr name="gradient_endColor" format="color|reference"/>
+    </declare-styleable>
 </resources>

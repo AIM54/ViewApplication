@@ -54,4 +54,11 @@
         android:layout_marginTop="@dimen/dp20"
         android:background="@color/palegoldenrod" />
 
+    <com.bian.viewapplication.view.GradientTextView
+        android:background="@color/wheat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:gradient_text="共产党必然倒台的原因"
+        app:gradient_textSize="35sp" />
+
 </com.bian.viewapplication.view.GestureViewGroup>

@@ -1,5 +1,6 @@
 package com.bian.viewapplication.activity
 
+import android.content.Intent
 import android.graphics.Path
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.PaintDrawable
@@ -11,6 +12,7 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.widget.Toast
 import com.bian.viewapplication.R
 import com.bian.viewapplication.bean.ViewLoactionBean
 import com.bian.viewapplication.dialog.GuideFragment
@@ -26,6 +28,9 @@ class ShapeActivity : AppCompatActivity() {
         initView2()
         initPathView()
         view1.post { showGuildeDialog(view1) }
+        textView.setOnClickListener {
+           startActivity(Intent(this,TextActivity::class.java))
+        }
     }
 
     private fun showGuildeDialog(view1: View?) {
