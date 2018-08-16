@@ -24,7 +24,11 @@
         <activity android:name=".activity.RefreshListActivity" />
         <activity android:name=".activity.ShapeActivity" />
         <activity android:name=".activity.NewViewGroupActivity" />
-        <activity android:name=".activity.TextActivity"></activity>
+        <activity android:name=".activity.TextActivity" />
+        <activity
+            android:name=".activity.ToolbarActivity"
+            android:label="@string/title_activity_toolbar"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

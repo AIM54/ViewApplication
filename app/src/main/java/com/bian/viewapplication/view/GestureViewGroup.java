@@ -87,7 +87,6 @@ public class GestureViewGroup extends ViewGroup {
             LayoutParams layoutParams = (LayoutParams) childView.getLayoutParams();
             topPos += layoutParams.topMargin;
             int childRightPos = Math.min(leftPos + layoutParams.leftMargin + childView.getMeasuredWidth(), rightPos);
-            CommonLog.i("leftPos+layoutParams.leftMargin:"+(leftPos+ layoutParams.leftMargin));
             childView.layout(leftPos + layoutParams.leftMargin, topPos, childRightPos, topPos + childView.getMeasuredHeight());
             topPos = topPos + childView.getMeasuredHeight() + layoutParams.bottomMargin;
         }
@@ -96,7 +95,6 @@ public class GestureViewGroup extends ViewGroup {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        CommonLog.i("verticalScrollRange:"+verticalScrollRange+"||getMeasuredHeight"+getMeasuredHeight());
     }
 
     private class MyGestureListener extends GestureDetector.SimpleOnGestureListener {

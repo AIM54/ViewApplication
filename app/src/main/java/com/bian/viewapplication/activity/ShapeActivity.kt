@@ -2,6 +2,7 @@ package com.bian.viewapplication.activity
 
 import android.content.Intent
 import android.graphics.Path
+import android.graphics.RectF
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.PaintDrawable
 import android.graphics.drawable.ShapeDrawable
@@ -12,15 +13,16 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.widget.Toast
 import com.bian.viewapplication.R
 import com.bian.viewapplication.bean.ViewLoactionBean
 import com.bian.viewapplication.dialog.GuideFragment
+import com.bian.viewapplication.shape.MyRoundShape
 import com.bian.viewapplication.util.CommonLog
+import com.bian.viewapplication.util.Util
 import kotlinx.android.synthetic.main.activity_shape.*
 
 class ShapeActivity : AppCompatActivity() {
-    var guildeFragment: GuideFragment? = null;
+    var guildeFragment: GuideFragment? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shape)
@@ -29,8 +31,28 @@ class ShapeActivity : AppCompatActivity() {
         initPathView()
         view1.post { showGuildeDialog(view1) }
         textView.setOnClickListener {
-           startActivity(Intent(this,TextActivity::class.java))
+            startActivity(Intent(this, TextActivity::class.java))
         }
+        testRound()
+    }
+
+    /**
+     * 实验Shape
+     */
+    private fun testRound() {
+        val outerRadius = Util.dip2px(this, 40.toFloat()).toFloat()
+        val padding = Util.dip2px(this, 20.toFloat()).toFloat()
+        val outerRadiusArrays = floatArrayOf(outerRadius, outerRadius, outerRadius, outerRadius,
+                outerRadius, outerRadius, outerRadius, outerRadius)
+        val innerRadiusArrays = floatArrayOf(outerRadius, outerRadius, outerRadius, outerRadius,
+                outerRadius, outerRadius, outerRadius, outerRadius)
+        val paddingRectF = RectF(padding, padding, padding, padding)
+        val roundRectShape = MyRoundShape(outerRadiusArrays, paddingRectF, innerRadiusArrays,this)
+        val shapeDrawable = ShapeDrawable()
+        shapeDrawable.shape = roundRectShape
+        shapeDrawable.setPadding(Util.dip2px(this, 30.toFloat()), Util.dip2px(this, 30.toFloat()), Util.dip2px(this, 30.toFloat()), Util.dip2px(this, 30.toFloat()))
+        setViewBackground(testview, shapeDrawable)
+        setViewBackground(textview,shapeDrawable)
     }
 
     private fun showGuildeDialog(view1: View?) {
@@ -61,7 +83,7 @@ class ShapeActivity : AppCompatActivity() {
         testPath.quadTo(height / 2, height / 2, height, 0f)
         val pathShape = PathShape(testPath, height, height)
         val shapeDrawable = ShapeDrawable()
-        shapeDrawable.shape = pathShape;
+        shapeDrawable.shape = pathShape
         shapeDrawable.paint.color = ContextCompat.getColor(this, R.color.blueviolet)
         setViewBackground(path_view, shapeDrawable)
     }
@@ -69,7 +91,7 @@ class ShapeActivity : AppCompatActivity() {
     private fun initView2() {
         val myshape = ArcShape(0f, 270f)
         val shapeDrawable = ShapeDrawable()
-        shapeDrawable.shape = myshape;
+        shapeDrawable.shape = myshape
         shapeDrawable.paint.color = ContextCompat.getColor(this, R.color.lightgreen);
         setViewBackground(view2, shapeDrawable)
     }

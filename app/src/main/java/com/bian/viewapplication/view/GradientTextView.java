@@ -58,8 +58,8 @@ public class GradientTextView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        textHeight = fontMetrics.bottom - fontMetrics.top;
-        textWidth = textPaint.measureText(gradientText);
+        textHeight = fontMetrics.bottom - fontMetrics.top+getPaddingTop()+getPaddingBottom();
+        textWidth = textPaint.measureText(gradientText)+getPaddingLeft()+getPaddingRight();
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);

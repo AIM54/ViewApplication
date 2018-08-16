@@ -62,5 +62,23 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp300" />
 
+    <com.bian.viewapplication.view.ShadowView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp300" />
+
+    <com.bian.viewapplication.view.GradientTextView
+        android:id="@+id/testview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:gradient_text="12345"
+        app:gradient_textSize="200sp" />
+
+    <TextView
+        android:id="@+id/textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12345"
+        android:textSize="200sp" />
+
 
 </com.bian.viewapplication.view.GestureViewGroup>

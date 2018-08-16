@@ -55,10 +55,22 @@
         android:background="@color/palegoldenrod" />
 
     <com.bian.viewapplication.view.GradientTextView
-        android:background="@color/wheat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:gradient_text="共产党必然倒台的原因"
-        app:gradient_textSize="35sp" />
+        android:background="@color/wheat"
+        app:gradient_text="123456"
+        app:gradient_textSize="200sp" />
+
+    <com.bian.viewapplication.view.ClipCanvasView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp300" />
+
+    <com.bian.viewapplication.view.TestRoundShapeView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp300"
+        android:paddingBottom="@dimen/dp10"
+        android:paddingLeft="@dimen/dp20"
+        android:paddingRight="@dimen/dp20"
+        android:paddingTop="@dimen/dp10" />
 
 </com.bian.viewapplication.view.GestureViewGroup>
