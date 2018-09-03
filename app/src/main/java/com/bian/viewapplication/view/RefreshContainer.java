@@ -296,34 +296,6 @@ public class RefreshContainer extends ViewGroup implements NestedScrollingParent
     }
 
     /**
-     * The refresh indicator starting and resting position is always positioned
-     * near the top of the refreshing content. This position is a consistent
-     * location, but can be adjusted in either direction based on whether or not
-     * there is a toolbar or actionbar present.
-     * <p>
-     * <strong>Note:</strong> Calling this will reset the position of the refresh indicator to
-     * <code>start</code>.
-     * </p>
-     *
-     * @param scale Set to true if there is no view at a higher z-order than where the progress
-     *              spinner is set to appear. Setting it to true will cause indicator to be scaled
-     *              up rather than clipped.
-     * @param start The offset in pixels from the top of this view at which the
-     *              progress spinner should appear.
-     * @param end   The offset in pixels from the top of this view at which the
-     *              progress spinner should come to rest after a successful swipe
-     *              gesture.
-     */
-    public void setProgressViewOffset(boolean scale, int start, int end) {
-        mScale = scale;
-        mOriginalOffsetTop = start;
-        mSpinnerOffsetEnd = end;
-        mUsingCustomStart = true;
-        reset();
-        mRefreshing = false;
-    }
-
-    /**
      * @return The offset in pixels from the top of this view at which the progress spinner should
      * appear.
      */

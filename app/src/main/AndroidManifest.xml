@@ -21,7 +21,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.ListViewActivity" />
-        <activity android:name=".activity.RecyclerViewActivity" />
         <activity android:name=".activity.MaterialDesignActivity" />
         <activity android:name=".activity.NewListActivity" />
         <activity android:name=".activity.ViewGroupActivity" />
