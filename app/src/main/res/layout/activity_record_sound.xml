@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.RecordSoundActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp" />
+
+
+    <ImageView
+        android:id="@+id/delete_record_sound_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/record_sound_main_iv"
+        android:layout_alignTop="@+id/record_sound_main_iv"
+        android:layout_marginRight="40dp"
+        android:layout_toLeftOf="@+id/record_sound_main_iv"
+        android:src="@drawable/ic_record_sound_delete_large"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/record_sound_main_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/record_sound_main_tv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="13dp"
+        android:src="@drawable/ic_prepare_record_sound" />
+
+    <TextView
+        android:id="@+id/record_sound_main_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="49dp" />
+
+    <ImageView
+        android:id="@+id/stop_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/record_sound_main_iv"
+        android:layout_alignTop="@+id/record_sound_main_iv"
+        android:layout_marginLeft="40dp"
+        android:layout_toRightOf="@+id/record_sound_main_iv"
+        android:src="@drawable/ic_record_sound_pause_small"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/record_sound_total_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/record_sound_main_iv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="26dp"
+        tools:text="总长:00:12" />
+
+    <TextView
+        android:id="@+id/record_sound_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/record_sound_total_time_tv"
+        android:layout_centerHorizontal="true"
+        android:textSize="25sp"
+        tools:text="00:09" />
+</RelativeLayout>
+

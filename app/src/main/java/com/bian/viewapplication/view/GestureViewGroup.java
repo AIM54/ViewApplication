@@ -22,6 +22,7 @@ public class GestureViewGroup extends ViewGroup {
     private DisplayMetrics mDisplayMetrics;
     private Scroller mScroller;
     private int verticalScrollRange;
+    private boolean shouldIntercept;
 
     public GestureViewGroup(Context context) {
         super(context);
@@ -43,7 +44,7 @@ public class GestureViewGroup extends ViewGroup {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         mGestureDetector.onTouchEvent(ev);
-        return false;
+        return shouldIntercept;
     }
 
     @Override
@@ -62,8 +63,8 @@ public class GestureViewGroup extends ViewGroup {
                 childState = combineMeasuredStates(childState, childView.getMeasuredState());
             }
         }
-        height = Math.max(getSuggestedMinimumHeight(), height+getPaddingTop()+getPaddingBottom());
-        width = Math.max(getSuggestedMinimumWidth(), width+getPaddingLeft()+getPaddingRight());
+        height = Math.max(getSuggestedMinimumHeight(), height + getPaddingTop() + getPaddingBottom());
+        width = Math.max(getSuggestedMinimumWidth(), width + getPaddingLeft() + getPaddingRight());
         verticalScrollRange = height;
         setMeasuredDimension(resolveSizeAndState(width, widthMeasureSpec, childState),
                 resolveSizeAndState(height, heightMeasureSpec,
@@ -101,11 +102,13 @@ public class GestureViewGroup extends ViewGroup {
 
         @Override
         public boolean onDown(MotionEvent e) {
+            shouldIntercept=false;
             return true;
         }
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+            shouldIntercept=true;
             if (verticalScrollRange - getHeight() > 0) {
                 if (getScrollY() <= 0 && distanceY < 0) {
                     scrollTo(0, 0);
@@ -121,6 +124,7 @@ public class GestureViewGroup extends ViewGroup {
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            shouldIntercept=true;
             if (verticalScrollRange - getHeight() > 0) {
                 if (getScrollY() - velocityY / 2 <= 0 && velocityY > 0) {
                     mScroller.startScroll(0, getScrollY(), 0, -getScrollY(), 500);
