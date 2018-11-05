@@ -31,6 +31,11 @@ public class TestCircleView extends View {
         initPaint();
     }
 
+    @Override
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
+    }
+
     private void initPaint() {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStyle(Paint.Style.STROKE);

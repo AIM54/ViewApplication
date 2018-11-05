@@ -80,5 +80,15 @@
         android:text="12345"
         android:textSize="200sp" />
 
+    <View
+        android:id="@+id/bottom_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp200" />
+
+    <View
+        android:id="@+id/bottom_view1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp200" />
+
 
 </com.bian.viewapplication.view.GestureViewGroup>

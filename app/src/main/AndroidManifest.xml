@@ -21,18 +21,20 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.ListViewActivity" />
-        <activity android:name=".activity.MaterialDesignActivity" />
         <activity android:name=".activity.NewListActivity" />
         <activity android:name=".activity.ViewGroupActivity" />
         <activity android:name=".activity.RefreshListActivity" />
         <activity android:name=".activity.ShapeActivity" />
-        <activity android:name=".activity.NewViewGroupActivity" />
-        <activity android:name=".activity.TextActivity" />
         <activity
             android:name=".activity.ToolbarActivity"
             android:label="@string/title_activity_toolbar"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.RecordSoundActivity" />
+        <activity android:name=".activity.BehaviorActivity" />
+        <activity
+            android:name=".activity.ScrollingActivity"
+            android:label="@string/title_activity_scrolling"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

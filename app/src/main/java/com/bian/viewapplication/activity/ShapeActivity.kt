@@ -1,11 +1,9 @@
 package com.bian.viewapplication.activity
 
-import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Path
 import android.graphics.RectF
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.PaintDrawable
-import android.graphics.drawable.ShapeDrawable
+import android.graphics.drawable.*
 import android.graphics.drawable.shapes.ArcShape
 import android.graphics.drawable.shapes.PathShape
 import android.os.Build
@@ -13,12 +11,14 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.widget.Toast
 import com.bian.viewapplication.R
 import com.bian.viewapplication.bean.ViewLoactionBean
 import com.bian.viewapplication.dialog.GuideFragment
 import com.bian.viewapplication.shape.MyRoundShape
 import com.bian.viewapplication.util.CommonLog
 import com.bian.viewapplication.util.Util
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_shape.*
 
 class ShapeActivity : AppCompatActivity() {
@@ -30,10 +30,36 @@ class ShapeActivity : AppCompatActivity() {
         initView2()
         initPathView()
         view1.post { showGuildeDialog(view1) }
-        textView.setOnClickListener {
-            startActivity(Intent(this, TextActivity::class.java))
-        }
         testRound()
+        testStateDrawable()
+        testGradientDrawable()
+    }
+
+    private fun testGradientDrawable() {
+        val gradientDraweble = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT,
+                intArrayOf(ContextCompat.getColor(this, R.color.lightgreen),
+                        ContextCompat.getColor(this, R.color.greenyellow),
+                        ContextCompat.getColor(this, R.color.orange)))
+        gradientDraweble.cornerRadius = Util.dip2px(this, 25.toFloat()).toFloat()
+        setViewBackground(bottom_view1,gradientDraweble)
+    }
+
+    private fun testStateDrawable() {
+        val stateDrawable = StateListDrawable()
+        var drawable2 = GradientDrawable()
+        drawable2.setColor(ContextCompat.getColor(this, R.color.darkturquoise))
+        drawable2.cornerRadius = Util.dip2px(this, 20.toFloat()).toFloat()
+        drawable2.setStroke(Util.dip2px(this, 5.toFloat()), ContextCompat.getColor(this, R.color.plum))
+        stateDrawable.addState(intArrayOf(android.R.attr.state_enabled, -android.R.attr.state_pressed), drawable2)
+        var drawable1 = GradientDrawable()
+        drawable1.setColor(ContextCompat.getColor(this, R.color.chartreuse))
+        drawable1.cornerRadius = Util.dip2px(this, 20.toFloat()).toFloat()
+        drawable1.setStroke(Util.dip2px(this, 5.toFloat()), ContextCompat.getColor(this, R.color.orange))
+        stateDrawable.addState(intArrayOf(android.R.attr.state_enabled, android.R.attr.state_pressed), drawable1)
+        setViewBackground(bottom_view, stateDrawable)
+        bottom_view.setOnClickListener {
+            Toast.makeText(this, "反对某些邪恶的东西", Toast.LENGTH_SHORT).show()
+        }
     }
 
     /**
@@ -47,12 +73,12 @@ class ShapeActivity : AppCompatActivity() {
         val innerRadiusArrays = floatArrayOf(outerRadius, outerRadius, outerRadius, outerRadius,
                 outerRadius, outerRadius, outerRadius, outerRadius)
         val paddingRectF = RectF(padding, padding, padding, padding)
-        val roundRectShape = MyRoundShape(outerRadiusArrays, paddingRectF, innerRadiusArrays,this)
+        val roundRectShape = MyRoundShape(outerRadiusArrays, paddingRectF, innerRadiusArrays, this)
         val shapeDrawable = ShapeDrawable()
         shapeDrawable.shape = roundRectShape
         shapeDrawable.setPadding(Util.dip2px(this, 30.toFloat()), Util.dip2px(this, 30.toFloat()), Util.dip2px(this, 30.toFloat()), Util.dip2px(this, 30.toFloat()))
         setViewBackground(testview, shapeDrawable)
-        setViewBackground(textview,shapeDrawable)
+        setViewBackground(textview, shapeDrawable)
     }
 
     private fun showGuildeDialog(view1: View?) {

@@ -38,8 +38,8 @@ public class BankAdapter extends RecyclerView.Adapter<BankAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         BankInfo bankInfo = bankInfoArrayList.get(position);
-        holder.nameTv.setText(bankInfo.bankName);
-        holder.logoIv.setImageResource(bankInfo.bankLogo);
+        holder.nameTv.setText(bankInfo.getBankName());
+        holder.logoIv.setImageResource(bankInfo.getBankLogo());
         holder.rightButton.setOnClickListener(v -> Toast.makeText(holder.itemView.getContext(), String.format("现在点击了:%d个", position), Toast.LENGTH_SHORT).show());
     }
 
