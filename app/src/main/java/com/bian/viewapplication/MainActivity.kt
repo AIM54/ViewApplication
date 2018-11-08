@@ -27,9 +27,11 @@ class MainActivity : AppCompatActivity() {
         listview_bt.setOnClickListener {
             startActivity(Intent(applicationContext, NewListActivity::class.java))
         }
-        vg_button.setOnClickListener { startActivity(Intent(applicationContext, ViewGroupActivity::class.java)) }
-        refresh_button.setOnClickListener { startActivity(Intent(applicationContext, RefreshListActivity::class.java)) }
-        behavior_bt.setOnClickListener { startActivity(Intent(applicationContext, BehaviorActivity::class.java)) }
-        bianView.setOnClickListener { startActivity(Intent(applicationContext, ToolbarActivity::class.java)) }
+        vg_button.setOnClickListener { startActivity(Intent(this, ViewGroupActivity::class.java)) }
+        refresh_button.setOnClickListener { startActivity(Intent(this, RefreshListActivity::class.java)) }
+        behavior_bt.setOnClickListener { startActivity(Intent(this, BehaviorActivity::class.java)) }
+        bianView.setOnClickListener { startActivity(Intent(this, ToolbarActivity::class.java)) }
+        bt_eyepetizer.setOnClickListener{startActivity(Intent(this,EyepetizerActivity::class.java))}
+        bt_multi_type.setOnClickListener { startActivity(Intent(this,MultiItemActivity::class.java)) }
     }
 }

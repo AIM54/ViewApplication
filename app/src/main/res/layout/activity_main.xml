@@ -74,21 +74,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp100"
-            android:background="@color/green" />
-
-        <View
-            android:layout_width="@dimen/dp200"
-            android:layout_height="@dimen/dp100"
-            android:background="@color/colorAccent" />
-
         <Button
-            android:id="@+id/right_menu"
-            android:layout_width="@dimen/dp150"
-            android:layout_height="@dimen/dp100"
-            android:text="@string/update" />
+            android:id="@+id/bt_eyepetizer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开眼效果" />
+        <Button
+            android:id="@+id/bt_multi_type"
+            android:text="multiType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
     </com.bian.viewapplication.view.HorizonalGroup>
 
 </LinearLayout>

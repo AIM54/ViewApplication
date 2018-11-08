@@ -12,6 +12,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.bian.viewapplication.util.CommonLog;
+
 /**
  * Created by Administrator on 2018/11/2.
  */
@@ -75,17 +77,8 @@ public class HeaderBehavior extends CoordinatorLayout.Behavior<ImageView> {
     }
 
     @Override
-    public boolean onNestedFling(@NonNull CoordinatorLayout coordinatorLayout, @NonNull ImageView child, @NonNull View target, float velocityX, float velocityY, boolean consumed) {
-        return super.onNestedFling(coordinatorLayout, child, target, velocityX, velocityY, consumed);
-    }
-
-    @Override
-    public boolean onNestedPreFling(@NonNull CoordinatorLayout coordinatorLayout, @NonNull ImageView child, @NonNull View target, float velocityX, float velocityY) {
-        return super.onNestedPreFling(coordinatorLayout, child, target, velocityX, velocityY);
-    }
-
-    @Override
     public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull ImageView child, @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type) {
         super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type);
+        CommonLog.i("onNestedScroll");
     }
 }

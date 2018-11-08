@@ -10,6 +10,7 @@ import java.util.ArrayList;
  */
 
 public class Contant {
+    public static final int TYPE_BANK=110;
     public static ArrayList<BankInfo> getBankInfoList() {
         ArrayList<BankInfo> bankInfos = new ArrayList<>();
         bankInfos.add(new BankInfo("中国工商银行", R.drawable.logo_icbc));

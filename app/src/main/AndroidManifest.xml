@@ -35,6 +35,8 @@
             android:name=".activity.ScrollingActivity"
             android:label="@string/title_activity_scrolling"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.EyepetizerActivity" />
+        <activity android:name=".activity.MultiItemActivity"></activity>
     </application>
 
 </manifest>
