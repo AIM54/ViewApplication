@@ -1,28 +1,29 @@
 package com.bian.viewapplication.activity;
 
-import android.graphics.Color;
-import android.graphics.drawable.VectorDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.ImageView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.bian.viewapplication.R;
 import com.bian.viewapplication.adapter.BankAdapter;
-import com.bian.viewapplication.animator.MyItemTouchListener;
 import com.bian.viewapplication.bean.BankInfo;
+import com.bian.viewapplication.util.CommonLog;
 import com.bian.viewapplication.util.Contant;
-import com.bian.viewapplication.view.RefreshContainer;
+import com.bian.viewapplication.view.NestedScrollLinearLayout;
 
 import java.util.ArrayList;
 
-public class RefreshListActivity extends AppCompatActivity implements RefreshContainer.OnRefreshListener {
+
+public class RefreshListActivity extends AppCompatActivity  {
     private RecyclerView mRecyclerView;
     private BankAdapter bankAdapter;
     private ArrayList<BankInfo> bankInfos;
-    private RefreshContainer mRefreshContainer;
+    private NestedScrollLinearLayout nestedScrollLinearLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,28 +33,16 @@ public class RefreshListActivity extends AppCompatActivity implements RefreshCon
 
     private void initView() {
         mRecyclerView = findViewById(R.id.recycler_view);
-        mRefreshContainer = findViewById(R.id.refresh_container);
+        nestedScrollLinearLayout=findViewById(R.id.nsll_root);
         bankInfos = Contant.getBankInfoList();
         bankAdapter = new BankAdapter(bankInfos);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(bankAdapter);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        mRecyclerView.addOnItemTouchListener(new MyItemTouchListener());
-        mRefreshContainer.setOnRefreshListener(this);
-        mRefreshContainer.setColorSchemeColors(Color.YELLOW, Color.GREEN, Color.RED);
-        mRefreshContainer.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.orange));
-        mRefreshContainer.setDistanceToTriggerSync(getResources().getDimensionPixelSize(R.dimen.dp100));
-        mRefreshContainer.setProgressViewEndTarget(true, getResources().getDimensionPixelSize(R.dimen.dp100));
-        mRefreshContainer.setSize(RefreshContainer.LARGE);
-        mRefreshContainer.post(() -> mRefreshContainer.setRefreshing(true));
-        onRefresh();
+        addHeadView();
     }
-
-    @Override
-    public void onRefresh() {
-        mRecyclerView.postDelayed(() -> {
-            mRefreshContainer.setRefreshing(false);
-        }, 3000);
+    private void addHeadView() {
+        View headView= LayoutInflater.from(this).inflate(R.layout.v_refresh_header,null);
+        nestedScrollLinearLayout.setmRefreshHeaderView(headView);
     }
-
 }

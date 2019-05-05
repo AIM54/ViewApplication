@@ -2,6 +2,7 @@ package com.bian.viewapplication.view;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v4.view.NestedScrollingChild2;
 import android.support.v4.view.NestedScrollingChildHelper;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -14,9 +15,8 @@ import com.bian.viewapplication.util.CommonLog;
  * Created by Administrator on 2018/11/6.
  */
 
-public class NestedScrollListView extends ListView implements NestedScrollingChild {
+public class NestedScrollListView extends ListView implements NestedScrollingChild2 {
     private NestedScrollingChildHelper nestedScrollingChildHelper;
-
     public NestedScrollListView(Context context) {
         super(context);
         nestedScrollingChildHelper = new NestedScrollingChildHelper(this);
@@ -39,7 +39,6 @@ public class NestedScrollListView extends ListView implements NestedScrollingChi
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        CommonLog.i("getChildCount:" + getChildCount() + "\ngetFirstVisiblePosition:" + getFirstVisiblePosition() + "\ngetLastVisiblePosition" + getLastVisiblePosition());
         return super.onTouchEvent(ev);
     }
 
@@ -86,5 +85,30 @@ public class NestedScrollListView extends ListView implements NestedScrollingChi
     @Override
     public boolean dispatchNestedPreFling(float velocityX, float velocityY) {
         return nestedScrollingChildHelper.dispatchNestedPreFling(velocityX, velocityY);
+    }
+
+    @Override
+    public boolean startNestedScroll(int axes, int type) {
+        return false;
+    }
+
+    @Override
+    public void stopNestedScroll(int type) {
+
+    }
+
+    @Override
+    public boolean hasNestedScrollingParent(int type) {
+        return false;
+    }
+
+    @Override
+    public boolean dispatchNestedScroll(int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, @Nullable int[] offsetInWindow, int type) {
+        return false;
+    }
+
+    @Override
+    public boolean dispatchNestedPreScroll(int dx, int dy, @Nullable int[] consumed, @Nullable int[] offsetInWindow, int type) {
+        return false;
     }
 }

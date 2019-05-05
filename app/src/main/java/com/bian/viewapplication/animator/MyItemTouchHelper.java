@@ -258,23 +258,6 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
     RecyclerView mRecyclerView;
 
     /**
-     * When user drags a view to the edge, we start scrolling the LayoutManager as long as View
-     * is partially out of bounds.
-     */
-    final Runnable mScrollRunnable = new Runnable() {
-        @Override
-        public void run() {
-            if (mSelected != null && scrollIfNecessary()) {
-                if (mSelected != null) { //it might be lost during scrolling
-                    moveIfNecessary(mSelected);
-                }
-                mRecyclerView.removeCallbacks(mScrollRunnable);
-                ViewCompat.postOnAnimation(mRecyclerView, this);
-            }
-        }
-    };
-
-    /**
      * Used for detecting fling swipe
      */
     VelocityTracker mVelocityTracker;
@@ -392,9 +375,6 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
 
                     if (activePointerIndex >= 0) {
                         updateDxDy(event, mSelectedFlags, activePointerIndex);
-                        moveIfNecessary(viewHolder);
-                        mRecyclerView.removeCallbacks(mScrollRunnable);
-                        mScrollRunnable.run();
                         mRecyclerView.invalidate();
                     }
                     break;
@@ -860,44 +840,6 @@ public class MyItemTouchHelper extends RecyclerView.ItemDecoration
         return mSwapTargets;
     }
 
-    /**
-     * Checks if we should swap w/ another view holder.
-     */
-    void moveIfNecessary(RecyclerView.ViewHolder viewHolder) {
-        if (mRecyclerView.isLayoutRequested()) {
-            return;
-        }
-        if (mActionState != ACTION_STATE_DRAG) {
-            return;
-        }
-
-        final float threshold = mCallback.getMoveThreshold(viewHolder);
-        final int x = (int) (mSelectedStartX + mDx);
-        final int y = (int) (mSelectedStartY + mDy);
-        if (Math.abs(y - viewHolder.itemView.getTop()) < viewHolder.itemView.getHeight() * threshold
-                && Math.abs(x - viewHolder.itemView.getLeft())
-                < viewHolder.itemView.getWidth() * threshold) {
-            return;
-        }
-        List<RecyclerView.ViewHolder> swapTargets = findSwapTargets(viewHolder);
-        if (swapTargets.size() == 0) {
-            return;
-        }
-        // may swap.
-        RecyclerView.ViewHolder target = mCallback.chooseDropTarget(viewHolder, swapTargets, x, y);
-        if (target == null) {
-            mSwapTargets.clear();
-            mDistances.clear();
-            return;
-        }
-        final int toPosition = target.getAdapterPosition();
-        final int fromPosition = viewHolder.getAdapterPosition();
-        if (mCallback.onMove(mRecyclerView, viewHolder, target)) {
-            // keep target visible
-            mCallback.onMoved(mRecyclerView, viewHolder, fromPosition,
-                    target, toPosition, x, y);
-        }
-    }
 
     @Override
     public void onChildViewAttachedToWindow(View view) {

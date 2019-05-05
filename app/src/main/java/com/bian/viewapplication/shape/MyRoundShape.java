@@ -27,7 +27,6 @@ public class MyRoundShape extends RoundRectShape {
     public void draw(Canvas canvas, Paint paint) {
         paint.setShader(new LinearGradient(0, 0, 0, getHeight(), Color.GREEN, Color.YELLOW, Shader.TileMode.REPEAT));
         super.draw(canvas, paint);
-
     }
 
 }

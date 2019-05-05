@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="main_page_function">
+        <item>@string/pull_able_recyclerview</item>
+        <item>@string/swipe_able_recyclerview</item>
+        <item>@string/simple_view</item>
+        <item>@string/simple_shape</item>
+        <item>@string/test_dialogfragment</item>
+    </string-array>
+
+</resources>

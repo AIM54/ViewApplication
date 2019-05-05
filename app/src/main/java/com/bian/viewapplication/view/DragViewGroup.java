@@ -23,7 +23,6 @@ import com.bian.viewapplication.R;
 
 public class DragViewGroup extends ViewGroup {
     private ViewDragHelper mViewDragHelper;
-    private DisplayMetrics mDisplayMetrics;
     private int mRvScrolledLength;
     private int mTopPostion;
     private Paint mPaint;
@@ -70,7 +69,6 @@ public class DragViewGroup extends ViewGroup {
 
     private void initGroup(Context context) {
         mViewDragHelper = ViewDragHelper.create(this, new MyCallBack());
-        mDisplayMetrics = context.getResources().getDisplayMetrics();
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setColor(Color.GREEN);

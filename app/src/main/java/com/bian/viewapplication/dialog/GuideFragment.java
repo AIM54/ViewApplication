@@ -26,8 +26,6 @@ public class GuideFragment extends DialogFragment {
     private int[] mParam1;
     private ViewLoactionBean mParam2;
     private NewGuildeView newGuildeView;
-    private StaticLayout staticLayout;
-
     @Override
     public void onStart() {
         super.onStart();

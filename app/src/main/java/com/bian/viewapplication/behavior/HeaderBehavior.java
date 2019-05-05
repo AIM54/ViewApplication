@@ -41,7 +41,6 @@ public class HeaderBehavior extends CoordinatorLayout.Behavior<ImageView> {
                 onLinearNestedPreScroll(child, layoutManager, dx, dy, consumed, recyclerView.getAdapter().getItemCount());
             } else if (recyclerView.getLayoutManager() instanceof GridLayoutManager) {
                 GridLayoutManager gridLayoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
-
             } else if (recyclerView.getLayoutManager() instanceof StaggeredGridLayoutManager) {
                 StaggeredGridLayoutManager staggeredGridLayoutManager = (StaggeredGridLayoutManager) recyclerView.getLayoutManager();
 
