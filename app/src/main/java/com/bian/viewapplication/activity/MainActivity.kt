@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
     private fun skipToShapePage() {
         val shapeIt = Intent(this, ShapeActivity::class.java);
         startActivity(shapeIt)
+        supportFragmentManager.executePendingTransactions();
     }
 
     private fun skipToViewPage() {

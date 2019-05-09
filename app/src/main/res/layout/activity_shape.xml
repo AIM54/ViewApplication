@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.bian.viewapplication.view.GestureViewGroup xmlns:android="http://schemas.android.com/apk/res/android"
+<com.bian.viewapplication.view.VerticalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -91,4 +91,4 @@
         android:layout_height="@dimen/dp200" />
 
 
-</com.bian.viewapplication.view.GestureViewGroup>
+</com.bian.viewapplication.view.VerticalScrollView>

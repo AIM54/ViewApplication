@@ -1,5 +1,8 @@
 package com.bian.viewapplication.activity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BitmapRegionDecoder;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -29,6 +32,7 @@ public class RefreshListActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_refresh_list);
         initView();
+        BitmapRegionDecoder bitmapRegionDecoder;
     }
 
     private void initView() {

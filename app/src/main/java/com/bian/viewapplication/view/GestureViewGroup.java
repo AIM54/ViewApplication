@@ -108,17 +108,20 @@ public class GestureViewGroup extends ViewGroup {
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            shouldIntercept=true;
-            if (verticalScrollRange - getHeight() > 0) {
-                if (getScrollY() <= 0 && distanceY < 0) {
-                    scrollTo(0, 0);
-                } else if (getScrollY() >= verticalScrollRange - getHeight() && distanceY > 0) {
-                    scrollTo(0, verticalScrollRange - getHeight());
-                } else {
-                    scrollBy(0, (int) distanceY);
+            if (verticalScrollRange>getHeight()){
+                shouldIntercept=true;
+                if (verticalScrollRange - getHeight() > 0) {
+                    if (getScrollY() <= 0 && distanceY < 0) {
+                        scrollTo(0, 0);
+                    } else if (getScrollY() >= verticalScrollRange - getHeight() && distanceY > 0) {
+                        scrollTo(0, verticalScrollRange - getHeight());
+                    } else {
+                        scrollBy(0, (int) distanceY);
+                    }
                 }
+                return true;
             }
-            return true;
+           return false;
         }
 
 

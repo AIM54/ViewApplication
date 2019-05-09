@@ -127,6 +127,9 @@ class ShapeActivity : AppCompatActivity() {
         paintDrawable.setPadding(10, 20, 10, 20)
         paintDrawable.setCornerRadius(resources.getDimension(R.dimen.dp20))
         setViewBackground(view1, paintDrawable)
+        view1.setOnClickListener {
+            Toast.makeText(this,"li害了",Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun setViewBackground(view1: View?, paintDrawable: Drawable) {
