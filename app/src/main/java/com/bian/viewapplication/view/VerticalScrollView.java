@@ -91,7 +91,7 @@ public class VerticalScrollView extends ViewGroup {
                 float yVelocity = mVelocityTracker.getYVelocity();
                 releaseVelocityTracker();
                 CommonLog.i("xVelocity:" + xVelocity + "||yVelocity:" + yVelocity);
-                if (shallFling(xVelocity, yVelocity)) {
+                if (shallFling(xVelocity, yVelocity)&&verticalScrollRange>getMeasuredHeight()) {
                     onFling(yVelocity);
                 }
                 break;
@@ -100,12 +100,14 @@ public class VerticalScrollView extends ViewGroup {
     }
 
     private void onScroll(float distanceY) {
-        if (getScrollY() + distanceY <= 0) {
-            scrollTo(0, 0);
-        } else if (getScrollY() + distanceY >= verticalScrollRange-getMeasuredHeight()) {
-            scrollTo(0, verticalScrollRange-getMeasuredHeight());
-        } else {
-            scrollBy(0, (int) distanceY);
+        if (verticalScrollRange>getMeasuredHeight()){
+            if (getScrollY() + distanceY <= 0) {
+                scrollTo(0, 0);
+            } else if (getScrollY() + distanceY >= verticalScrollRange-getMeasuredHeight()) {
+                scrollTo(0, verticalScrollRange-getMeasuredHeight());
+            } else {
+                scrollBy(0, (int) distanceY);
+            }
         }
 
     }
@@ -147,7 +149,7 @@ public class VerticalScrollView extends ViewGroup {
     }
 
     private boolean shallScrollVertical(float distanceX, float distanceY) {
-        return Math.abs(distanceY) > Math.abs(distanceX) && Math.abs(distanceY) > mViewConfiguration.getScaledTouchSlop();
+        return Math.abs(distanceY) > Math.abs(distanceX) && Math.abs(distanceY) > mViewConfiguration.getScaledTouchSlop()&&verticalScrollRange>getMeasuredHeight();
     }
 
     @Override
