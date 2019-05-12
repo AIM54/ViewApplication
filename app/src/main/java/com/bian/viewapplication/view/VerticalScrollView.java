@@ -2,6 +2,7 @@ package com.bian.viewapplication.view;
 
 
 import android.content.Context;
+import android.support.v4.widget.NestedScrollView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -23,7 +24,6 @@ public class VerticalScrollView extends ViewGroup {
     private ViewConfiguration mViewConfiguration;
     private float previousY, previousX;
     private Scroller mScroller;
-    private ScrollView mScrollView;
     /**
      * The unit we are using to track velocity
      */

@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.bian.viewapplication.R;
 import com.bian.viewapplication.adapter.BankAdapter;
@@ -27,6 +28,7 @@ public class RefreshListActivity extends AppCompatActivity  {
     private BankAdapter bankAdapter;
     private ArrayList<BankInfo> bankInfos;
     private NestedScrollLinearLayout nestedScrollLinearLayout;
+    private ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +45,12 @@ public class RefreshListActivity extends AppCompatActivity  {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(bankAdapter);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+            }
+        });
         addHeadView();
     }
     private void addHeadView() {
