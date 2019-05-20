@@ -14,8 +14,12 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
+import android.view.ViewConfiguration;
 
 import com.bian.viewapplication.util.CommonLog;
+
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class MeterView extends View implements ScaleGestureDetector.OnScaleGestureListener {
     private Paint mPaint;
@@ -23,7 +27,8 @@ public class MeterView extends View implements ScaleGestureDetector.OnScaleGestu
     private ScaleGestureDetector mScaleGestureDetector;
     private Point mPoint;
     private int radius;
-
+    private ReentrantLock mReentrantLock;
+    private ViewConfiguration mViewConfiguration;
     public MeterView(Context context) {
         this(context, null);
     }
@@ -38,8 +43,14 @@ public class MeterView extends View implements ScaleGestureDetector.OnScaleGestu
         initScaleDesture();
     }
 
-    private void initScaleDesture() {
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        return super.dispatchTouchEvent(event);
+    }
 
+    private void initScaleDesture() {
+        mReentrantLock = new ReentrantLock();
+        mReentrantLock.lock();
     }
 
     private void initPaint() {
@@ -47,24 +58,42 @@ public class MeterView extends View implements ScaleGestureDetector.OnScaleGestu
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setColor(Color.GREEN);
         mPaint.setStrokeWidth(20);
+        mViewConfiguration=ViewConfiguration.get(getContext());
+        mViewConfiguration.getScaledEdgeSlop();
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        CommonLog.i("MotionEvent.getAction:"+event.getAction());
-        switch (event.getAction()) {
+       CommonLog.i("event.Pressure:"+event.getPressure());
+        switch (event.getAction() & MotionEvent.ACTION_MASK) {
+            case MotionEvent.ACTION_POINTER_DOWN:
+                CommonLog.i("ACTION_POINTER_DOWN:" + event.getActionIndex());
+                event.getEdgeFlags();
+                break;
+            case MotionEvent.ACTION_POINTER_UP:
+                CommonLog.i("ACTION_POINTER_UP:" + event.getActionIndex());
+                break;
             case MotionEvent.ACTION_DOWN:
                 break;
             case MotionEvent.ACTION_MOVE:
-                mPoint.x= (int) event.getX();
-                mPoint.y= (int) event.getY();
+                mPoint.x = (int) event.getX();
+                mPoint.y = (int) event.getY();
+                getFingerIndexInView(event);
                 invalidate();
                 break;
             case MotionEvent.ACTION_SCROLL:
-                CommonLog.i("ACTION_SCROLL_PointerCount:"+event.getX());
+                CommonLog.i("ACTION_SCROLL_PointerCount:" + event.getX());
                 break;
+
         }
         return true;
+    }
+
+    private void getFingerIndexInView(MotionEvent event) {
+        int fingerCount = event.getPointerCount();
+        for (int index = 0; index < fingerCount; index++) {
+            CommonLog.i("第" + index + "根手指的坐标:" + event.getX(index) + "||" + event.getY(index));
+        }
     }
 
     @Override
@@ -76,20 +105,26 @@ public class MeterView extends View implements ScaleGestureDetector.OnScaleGestu
         mPath2 = new Path();
         mPath2.moveTo(0, getHeight() / 2);
         mPath2.lineTo(getWidth(), getHeight() / 2);
-        radius=10;
-        mPoint=new Point();
-        mPoint.x=getWidth()/2;
-        mPoint.y=getHeight()/2;
+        radius = 10;
+        mPoint = new Point();
+        mPoint.x = getWidth() / 2;
+        mPoint.y = getHeight() / 2;
+    }
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        CommonLog.i("onMeasure("+widthMeasureSpec+","+heightMeasureSpec+")");
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        CommonLog.i("onDraw");
         canvas.drawPath(mPath1, mPaint);
         mPaint.setColor(Color.YELLOW);
         canvas.drawPath(mPath2, mPaint);
-        canvas.drawCircle(mPoint.x,mPoint.y,radius,mPaint);
+        canvas.drawCircle(mPoint.x, mPoint.y, radius, mPaint);
     }
 
 

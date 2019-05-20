@@ -9,11 +9,10 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.EdgeEffect;
 import android.widget.OverScroller;
-import android.widget.ScrollView;
 
 import com.bian.viewapplication.util.CommonLog;
 
-public class NewVerticalScrollView extends VerticalScrollView {
+public class NewVerticalScrollView extends ViewGroup {
     private int verticalScrollRange;
     private ViewConfiguration mViewConfiguration;
     private float previousY, previousX;
@@ -27,7 +26,6 @@ public class NewVerticalScrollView extends VerticalScrollView {
     private OverScroller mScroller;
     private EdgeEffect mEdgeGlowTop;
     private EdgeEffect mEdgeGlowBottom;
-    private ScrollView scrollView;
     private int mMinimumVelocity;
     private int mMaximumVelocity;
 
@@ -45,6 +43,7 @@ public class NewVerticalScrollView extends VerticalScrollView {
     }
 
     private void initView() {
+        setWillNotDraw(false);
         mViewConfiguration = ViewConfiguration.get(getContext());
         mVelocityTracker = VelocityTracker.obtain();
         mOverflingDistance = mViewConfiguration.getScaledOverflingDistance();
@@ -52,6 +51,8 @@ public class NewVerticalScrollView extends VerticalScrollView {
         mMinimumVelocity = mViewConfiguration.getScaledMinimumFlingVelocity();
         mMaximumVelocity = mViewConfiguration.getScaledMaximumFlingVelocity();
         mScroller = new OverScroller(getContext());
+        setVerticalScrollBarEnabled(true);
+
     }
 
     @Override
@@ -76,10 +77,12 @@ public class NewVerticalScrollView extends VerticalScrollView {
         setMeasuredDimension(resolveSizeAndState(width, widthMeasureSpec, childState),
                 resolveSizeAndState(height, heightMeasureSpec,
                         childState << MEASURED_HEIGHT_STATE_SHIFT));
+        CommonLog.i("onMeasure()");
     }
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        CommonLog.i("onLayout");
         int childCount = getChildCount();
         int leftPos = getPaddingLeft();
         int topPos = getPaddingTop();
@@ -106,7 +109,6 @@ public class NewVerticalScrollView extends VerticalScrollView {
             case MotionEvent.ACTION_MOVE:
                 float distanceX = ev.getX() - previousX;
                 float distanceY = ev.getY() - previousY;
-                CommonLog.i(distanceX + "||" + distanceY);
                 shallIntercept = shallScrollVertical(distanceX, distanceY);
                 previousX = ev.getX();
                 previousY = ev.getY();
@@ -134,7 +136,6 @@ public class NewVerticalScrollView extends VerticalScrollView {
                 float xVelocity = mVelocityTracker.getXVelocity();
                 float yVelocity = mVelocityTracker.getYVelocity();
                 releaseVelocityTracker();
-                CommonLog.i("xVelocity:" + xVelocity + "||yVelocity:" + yVelocity);
                 if (shallFling(xVelocity, yVelocity) && verticalScrollRange > getMeasuredHeight()) {
                     onFling(-yVelocity);
                 }else{
@@ -152,7 +153,6 @@ public class NewVerticalScrollView extends VerticalScrollView {
     }
 
     private void onFling(float velocityY) {
-        CommonLog.i("onFling("+velocityY+")");
         mScroller.fling(getScrollX(), getScrollY(), 0, (int) velocityY, 0, 0, 0, verticalScrollRange, 0, getHeight()/2);
         postInvalidateOnAnimation();
     }
@@ -160,10 +160,6 @@ public class NewVerticalScrollView extends VerticalScrollView {
     private void onScroll(float distanceY) {
         overScrollBy(0, (int) distanceY, getScrollX(), getScrollY(), 0, getScrollRange(), 0, mOverscrollDistance, true);
     }
-
-
-
-
 
     @Override
     public void setOverScrollMode(int mode) {
@@ -189,7 +185,7 @@ public class NewVerticalScrollView extends VerticalScrollView {
         }
         int scrollRange = verticalScrollRange;
         final int scrollY = getScrollY();
-        final int overscrollBottom = Math.max(0, scrollRange - contentHeight);
+        final int overscrollBottom = getScrollRange();
         if (scrollY < 0) {
             scrollRange -= scrollY;
         } else if (scrollY > overscrollBottom) {
@@ -198,11 +194,11 @@ public class NewVerticalScrollView extends VerticalScrollView {
         return scrollRange;
     }
 
+
     @Override
     protected void onOverScrolled(int scrollX, int scrollY,
                                   boolean clampedX, boolean clampedY) {
         // Treat animating scrolls differently; see #computeScroll() for why.
-        CommonLog.i("onOverScrolled");
         if (!mScroller.isFinished()) {
             final int oldX = getScrollX();
             final int oldY = getScrollY();
@@ -216,9 +212,10 @@ public class NewVerticalScrollView extends VerticalScrollView {
         } else {
             super.scrollTo(scrollX, scrollY);
         }
-
         awakenScrollBars();
     }
+
+
 
     @Override
     public void computeScroll() {
@@ -269,5 +266,40 @@ public class NewVerticalScrollView extends VerticalScrollView {
 
     private boolean shallScrollVertical(float distanceX, float distanceY) {
         return Math.abs(distanceY) > Math.abs(distanceX) && Math.abs(distanceY) > mViewConfiguration.getScaledTouchSlop() && verticalScrollRange > getMeasuredHeight();
+    }
+    @Override
+    public LayoutParams generateLayoutParams(AttributeSet attrs) {
+        return new LayoutParams(getContext(), attrs);
+    }
+
+    @Override
+    protected LayoutParams generateDefaultLayoutParams() {
+        return new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+    }
+
+    @Override
+    protected ViewGroup.LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
+        return new LayoutParams(p);
+    }
+
+    @Override
+    protected boolean checkLayoutParams(ViewGroup.LayoutParams p) {
+        return p instanceof LayoutParams;
+    }
+    /**
+     * Custom per-child layout information.
+     */
+    public static class LayoutParams extends MarginLayoutParams {
+        public LayoutParams(Context c, AttributeSet attrs) {
+            super(c, attrs);
+        }
+
+        public LayoutParams(int width, int height) {
+            super(width, height);
+        }
+
+        public LayoutParams(ViewGroup.LayoutParams source) {
+            super(source);
+        }
     }
 }

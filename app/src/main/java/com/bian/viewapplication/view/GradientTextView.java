@@ -8,6 +8,7 @@ import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Shader;
 import android.support.annotation.Nullable;
+import android.text.BoringLayout;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
@@ -52,7 +53,6 @@ public class GradientTextView extends View {
         textPaint.setTextSize(textSize);
         textPaint.setTextAlign(Paint.Align.CENTER);
         fontMetrics = textPaint.getFontMetrics();
-        recordLog();
     }
 
     @Override
@@ -72,6 +72,12 @@ public class GradientTextView extends View {
     }
 
     @Override
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
+        getBackground();
+    }
+
+    @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         mHeight = getMeasuredHeight();
@@ -85,11 +91,4 @@ public class GradientTextView extends View {
         canvas.drawText(gradientText, 0, gradientText.length(), mWidth / 2, (mHeight - textPaint.ascent() - textPaint.descent()) / 2, textPaint);
     }
 
-    private void recordLog() {
-        CommonLog.i("fontMetrics.top:" + fontMetrics.top);
-        CommonLog.i("fontMetrics.leading:" + fontMetrics.leading);
-        CommonLog.i("fontMetrics.ascent:" + fontMetrics.ascent);
-        CommonLog.i("fontMetrics.descent:" + fontMetrics.descent);
-        CommonLog.i("fontMetrics.bottom:" + fontMetrics.bottom);
-    }
 }

@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -43,7 +44,6 @@ public class HeaderBehavior extends CoordinatorLayout.Behavior<ImageView> {
                 GridLayoutManager gridLayoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
             } else if (recyclerView.getLayoutManager() instanceof StaggeredGridLayoutManager) {
                 StaggeredGridLayoutManager staggeredGridLayoutManager = (StaggeredGridLayoutManager) recyclerView.getLayoutManager();
-
             }
         }
     }
@@ -73,6 +73,11 @@ public class HeaderBehavior extends CoordinatorLayout.Behavior<ImageView> {
             }
         }
 
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(CoordinatorLayout parent, ImageView child, MotionEvent ev) {
+        return super.onInterceptTouchEvent(parent, child, ev);
     }
 
     @Override

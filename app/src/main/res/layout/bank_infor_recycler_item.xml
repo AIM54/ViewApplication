@@ -10,8 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:paddingBottom="@dimen/dp15"
-        android:paddingTop="@dimen/dp15">
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp">
 
         <ImageView
             android:id="@+id/bank_logo_iv"
@@ -25,18 +25,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp15"
-            android:textSize="@dimen/sp20"
+            android:textSize="20sp"
             tools:text="中国农业银行" />
     </LinearLayout>
 
     <Button
         android:id="@+id/right_button"
         android:layout_width="@dimen/dp150"
-        android:layout_height="@dimen/dp100"
+        android:layout_height="100dp"
         android:text="@string/update" />
     <Button
         android:id="@+id/right_button2"
         android:layout_width="@dimen/dp150"
-        android:layout_height="@dimen/dp100"
+        android:layout_height="100dp"
         android:text="@string/update" />
 </com.bian.viewapplication.view.HorizonalGroup>

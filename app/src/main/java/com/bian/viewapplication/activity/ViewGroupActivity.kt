@@ -18,7 +18,7 @@ class ViewGroupActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        text1.setOnClickListener { Toast.makeText(applicationContext, "tomcat", Toast.LENGTH_SHORT).show() }
+        text1.setOnClickListener { nsv_root.requestLayout()}
         val textPaint=text1.paint
         textPaint.strokeWidth=resources.getDimension(R.dimen.dp10)
         textPaint.color=ContextCompat.getColor(this,R.color.crimson)

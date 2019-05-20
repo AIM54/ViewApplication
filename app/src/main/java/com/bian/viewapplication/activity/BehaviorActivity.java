@@ -21,6 +21,7 @@ public class BehaviorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_behavior);
         initData();
+        getWindow().getDecorView();
     }
 
 

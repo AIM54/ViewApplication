@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.bian.viewapplication.view.VerticalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.bian.viewapplication.view.NewVerticalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nsv_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -20,4 +21,4 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp300" />
 
-</com.bian.viewapplication.view.VerticalScrollView>
+</com.bian.viewapplication.view.NewVerticalScrollView>

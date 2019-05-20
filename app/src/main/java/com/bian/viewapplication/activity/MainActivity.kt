@@ -24,11 +24,17 @@ class MainActivity : AppCompatActivity() {
         listview?.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             when (position) {
                 0 -> skipToRefreshPage();
+                1 -> skipToListPage()
                 2 -> skipToViewPage()
                 3 -> skipToShapePage()
-                4 ->   Handler().postDelayed({testDialogFragment()},10000)
+                4 -> startActivity(Intent(this,GridManagerActivity::class.java))
             }
         }
+    }
+
+    private fun skipToListPage() {
+        val listIt=Intent(this,ListViewActivity::class.java)
+        startActivity(listIt)
     }
 
     private fun testDialogFragment() {

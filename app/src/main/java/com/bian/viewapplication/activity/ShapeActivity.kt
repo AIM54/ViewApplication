@@ -35,6 +35,7 @@ class ShapeActivity : AppCompatActivity() {
         testGradientDrawable()
     }
 
+
     private fun testGradientDrawable() {
         val gradientDraweble = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT,
                 intArrayOf(ContextCompat.getColor(this, R.color.lightgreen),
@@ -79,6 +80,9 @@ class ShapeActivity : AppCompatActivity() {
         shapeDrawable.setPadding(Util.dip2px(this, 30.toFloat()), Util.dip2px(this, 30.toFloat()), Util.dip2px(this, 30.toFloat()), Util.dip2px(this, 30.toFloat()))
         setViewBackground(testview, shapeDrawable)
         setViewBackground(textview, shapeDrawable)
+        testview.setOnClickListener {
+            it.invalidate()
+        }
     }
 
     private fun showGuildeDialog(view1: View?) {

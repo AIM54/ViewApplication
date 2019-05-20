@@ -29,4 +29,8 @@ public class MyRoundShape extends RoundRectShape {
         super.draw(canvas, paint);
     }
 
+    @Override
+    protected void onResize(float w, float h) {
+        super.onResize(w, h);
+    }
 }

@@ -6,10 +6,6 @@
         <attr name="textColor" format="color|reference" />
         <attr name="duration" format="integer|reference" />
     </declare-styleable>
-    <declare-styleable name="MyTextView">
-        <attr name="myText" format="string|reference" />
-        <attr name="myTextSize" format="dimension|reference" />
-    </declare-styleable>
     <declare-styleable name="NewGuildeView">
         <attr name="guildBackgoundColor" format="color|reference" />
         <attr name="tip_align">

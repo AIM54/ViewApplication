@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ListView;
 
 import com.bian.viewapplication.R;
 import com.bian.viewapplication.bean.ViewLoactionBean;
@@ -26,6 +27,7 @@ public class GuideFragment extends DialogFragment {
     private int[] mParam1;
     private ViewLoactionBean mParam2;
     private NewGuildeView newGuildeView;
+    private ListView mListView;
     @Override
     public void onStart() {
         super.onStart();

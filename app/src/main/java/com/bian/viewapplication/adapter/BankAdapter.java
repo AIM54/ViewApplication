@@ -15,6 +15,7 @@ import com.bian.viewapplication.bean.BankInfo;
 import com.bian.viewapplication.util.CommonLog;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -22,9 +23,9 @@ import java.util.ArrayList;
  */
 
 public class BankAdapter extends RecyclerView.Adapter<BankAdapter.MyViewHolder> {
-    private ArrayList<BankInfo> bankInfoArrayList;
+    private List<BankInfo> bankInfoArrayList;
 
-    public BankAdapter(ArrayList<BankInfo> bankInfos) {
+    public BankAdapter(List<BankInfo> bankInfos) {
         this.bankInfoArrayList = bankInfos;
     }
 
