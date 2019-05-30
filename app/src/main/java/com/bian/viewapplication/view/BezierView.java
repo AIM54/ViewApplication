@@ -5,13 +5,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.support.annotation.Nullable;
-import android.text.SpannableString;
+import androidx.annotation.Nullable;
+
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.bian.viewapplication.R;
-import com.bian.viewapplication.util.CommonLog;
 
 /**
  * Created by bianmingliang on 2018/6/26.

@@ -1,6 +1,5 @@
 package com.bian.viewapplication.adapter.inter;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.bian.viewapplication.adapter.BaseViewHolder;

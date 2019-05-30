@@ -1,15 +1,19 @@
 package com.bian.viewapplication.activity;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.dynamicanimation.animation.FloatValueHolder;
+import androidx.dynamicanimation.animation.SpringAnimation;
+import androidx.dynamicanimation.animation.SpringForce;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bian.viewapplication.R;
 import com.bian.viewapplication.adapter.GridTextAdapter;
 
 public class GridManagerActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
+    private SpringForce springForce;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +24,8 @@ public class GridManagerActivity extends AppCompatActivity {
         GridTextAdapter textAdapter=new GridTextAdapter(items);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this,3));
         mRecyclerView.setAdapter(textAdapter);
+        SpringAnimation springAnimation=new SpringAnimation(new FloatValueHolder());
+
     }
     private void initStringArray(String[] items) {
         for (int index = 0; index < 1000; index++) {

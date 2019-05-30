@@ -1,15 +1,11 @@
 package com.bian.viewapplication.adapter.viewholder;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AbsListView;
 
 import com.bian.viewapplication.R;
 import com.bian.viewapplication.adapter.BaseViewHolder;
 import com.bian.viewapplication.adapter.inter.TypeFactory;
-import com.bian.viewapplication.adapter.inter.Visitable;
 import com.bian.viewapplication.bean.BankInfo;
-import com.bian.viewapplication.util.Contant;
 
 
 /**

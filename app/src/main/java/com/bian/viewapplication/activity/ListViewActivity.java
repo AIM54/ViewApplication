@@ -1,9 +1,9 @@
 package com.bian.viewapplication.activity;
 
 import android.os.Bundle;
-import android.support.animation.SpringAnimation;
-import android.support.animation.SpringForce;
-import android.support.v7.app.AppCompatActivity;
+import androidx.dynamicanimation.animation.SpringAnimation;
+import androidx.dynamicanimation.animation.SpringForce;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.widget.ArrayAdapter;

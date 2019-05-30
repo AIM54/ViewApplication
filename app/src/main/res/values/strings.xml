@@ -19,6 +19,7 @@
     <string name="simple_view">简单的view</string>
     <string name="simple_shape">简单的shape</string>
     <string name="test_dialogfragment">测试对话框</string>
+    <string name="edit_text_dialog">可输入对话框</string>
     <string name="refresh_header">刷新头部</string>
     <string name="refresh_footer">刷新尾部</string>
 </resources>

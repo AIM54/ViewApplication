@@ -2,7 +2,7 @@ package com.bian.viewapplication.view;
 
 
 import android.content.Context;
-import android.support.v4.widget.NestedScrollView;
+import androidx.core.widget.NestedScrollView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.ScrollView;
 import android.widget.Scroller;
 
 import com.bian.viewapplication.util.CommonLog;
@@ -190,6 +189,16 @@ public class VerticalScrollView extends ViewGroup {
             childView.layout(leftPos + layoutParams.leftMargin, topPos, childRightPos, topPos + childView.getMeasuredHeight());
             topPos = topPos + childView.getMeasuredHeight() + layoutParams.bottomMargin;
         }
+    }
+
+    @Override
+    protected int computeVerticalScrollExtent() {
+        return super.computeVerticalScrollExtent();
+    }
+
+    @Override
+    protected int computeVerticalScrollOffset() {
+        return super.computeVerticalScrollOffset();
     }
 
     @Override

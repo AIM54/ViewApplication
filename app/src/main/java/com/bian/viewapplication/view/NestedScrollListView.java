@@ -1,15 +1,13 @@
 package com.bian.viewapplication.view;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
-import android.support.v4.view.NestedScrollingChild2;
-import android.support.v4.view.NestedScrollingChildHelper;
+import androidx.annotation.Nullable;
+import androidx.core.view.NestedScrollingChild2;
+import androidx.core.view.NestedScrollingChildHelper;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.ListView;
-import android.support.v4.view.NestedScrollingChild;
-
-import com.bian.viewapplication.util.CommonLog;
+import androidx.core.view.NestedScrollingChild;
 
 /**
  * Created by Administrator on 2018/11/6.

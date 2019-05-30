@@ -1,13 +1,12 @@
 package com.bian.viewapplication.activity;
 
-import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapRegionDecoder;
 import android.graphics.Rect;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import android.widget.LinearLayout;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.widget.ListView;
 import android.widget.ScrollView;
 

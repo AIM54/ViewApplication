@@ -3,13 +3,11 @@ package com.bian.viewapplication.view;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
-import android.graphics.PointF;
-import android.graphics.RectF;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -18,7 +16,7 @@ import android.view.ViewConfiguration;
 
 import com.bian.viewapplication.util.CommonLog;
 
-import java.util.concurrent.locks.Lock;
+import java.util.TreeSet;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class MeterView extends View implements ScaleGestureDetector.OnScaleGestureListener {
@@ -29,6 +27,8 @@ public class MeterView extends View implements ScaleGestureDetector.OnScaleGestu
     private int radius;
     private ReentrantLock mReentrantLock;
     private ViewConfiguration mViewConfiguration;
+
+    private TreeSet<String> treeSet;
     public MeterView(Context context) {
         this(context, null);
     }

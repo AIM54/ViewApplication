@@ -1,6 +1,7 @@
 package com.bian.viewapplication.view;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -9,6 +10,7 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.EdgeEffect;
 import android.widget.OverScroller;
+import android.widget.ScrollView;
 
 import com.bian.viewapplication.util.CommonLog;
 
@@ -28,6 +30,8 @@ public class NewVerticalScrollView extends ViewGroup {
     private EdgeEffect mEdgeGlowBottom;
     private int mMinimumVelocity;
     private int mMaximumVelocity;
+
+    private ScrollView mScrollView;
 
     public NewVerticalScrollView(Context context) {
         this(context, null);
@@ -52,7 +56,7 @@ public class NewVerticalScrollView extends ViewGroup {
         mMaximumVelocity = mViewConfiguration.getScaledMaximumFlingVelocity();
         mScroller = new OverScroller(getContext());
         setVerticalScrollBarEnabled(true);
-
+        setWillNotDraw(false);
     }
 
     @Override
@@ -77,7 +81,14 @@ public class NewVerticalScrollView extends ViewGroup {
         setMeasuredDimension(resolveSizeAndState(width, widthMeasureSpec, childState),
                 resolveSizeAndState(height, heightMeasureSpec,
                         childState << MEASURED_HEIGHT_STATE_SHIFT));
-        CommonLog.i("onMeasure()");
+    }
+
+    @Override
+    public void requestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+        if (disallowIntercept) {
+            releaseVelocityTracker();
+        }
+        super.requestDisallowInterceptTouchEvent(disallowIntercept);
     }
 
     @Override
@@ -100,6 +111,9 @@ public class NewVerticalScrollView extends ViewGroup {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         boolean shallIntercept = false;
+        if (getScrollY() == 0 && !canScrollVertically(1)) {
+            return false;
+        }
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 previousX = ev.getX();
@@ -126,10 +140,13 @@ public class NewVerticalScrollView extends ViewGroup {
                 if (shallScrollVertical(distanceX, distanceY)) {
                     initVelocityTracker();
                     mVelocityTracker.addMovement(event);
-                    mVelocityTracker.computeCurrentVelocity(PIXELS_PER_SECOND,mMaximumVelocity);
+                    mVelocityTracker.computeCurrentVelocity(PIXELS_PER_SECOND, mMaximumVelocity);
                     onScroll(distanceY);
                     previousX = event.getX();
                     previousY = event.getY();
+                    if (getScrollRange() < 0) {
+
+                    }
                 }
                 break;
             case MotionEvent.ACTION_UP:
@@ -138,8 +155,8 @@ public class NewVerticalScrollView extends ViewGroup {
                 releaseVelocityTracker();
                 if (shallFling(xVelocity, yVelocity) && verticalScrollRange > getMeasuredHeight()) {
                     onFling(-yVelocity);
-                }else{
-                    if (mScroller.springBack(getScrollX(), getScrollY(), 0, 0, 0, getScrollRange())){
+                } else {
+                    if (mScroller.springBack(getScrollX(), getScrollY(), 0, 0, 0, getScrollRange())) {
                         postInvalidateOnAnimation();
                     }
                 }
@@ -148,12 +165,13 @@ public class NewVerticalScrollView extends ViewGroup {
         return true;
     }
 
+
     private int getScrollRange() {
-        return Math.max(0,verticalScrollRange-getHeight());
+        return Math.max(0, verticalScrollRange - getHeight());
     }
 
     private void onFling(float velocityY) {
-        mScroller.fling(getScrollX(), getScrollY(), 0, (int) velocityY, 0, 0, 0, verticalScrollRange, 0, getHeight()/2);
+        mScroller.fling(getScrollX(), getScrollY(), 0, (int) velocityY, 0, 0, 0, verticalScrollRange, 0, getHeight() / 2);
         postInvalidateOnAnimation();
     }
 
@@ -206,15 +224,14 @@ public class NewVerticalScrollView extends ViewGroup {
             setScrollY(scrollY);
             onScrollChanged(getScrollX(), getScrollY(), oldX, oldY);
             if (clampedY) {
-               if (mScroller.springBack(getScrollX(), getScrollY(), 0, 0, 0, getScrollRange()))
-                postInvalidateOnAnimation();
+                if (mScroller.springBack(getScrollX(), getScrollY(), 0, 0, 0, getScrollRange()))
+                    postInvalidateOnAnimation();
             }
         } else {
             super.scrollTo(scrollX, scrollY);
         }
         awakenScrollBars();
     }
-
 
 
     @Override
@@ -250,7 +267,7 @@ public class NewVerticalScrollView extends ViewGroup {
     }
 
     private boolean shallFling(float xVelocity, float yVelocity) {
-        return Math.abs(xVelocity) < Math.abs(yVelocity) && Math.abs(yVelocity) >mMinimumVelocity;
+        return Math.abs(xVelocity) < Math.abs(yVelocity) && Math.abs(yVelocity) > mMinimumVelocity;
     }
 
     private void initVelocityTracker() {
@@ -267,6 +284,7 @@ public class NewVerticalScrollView extends ViewGroup {
     private boolean shallScrollVertical(float distanceX, float distanceY) {
         return Math.abs(distanceY) > Math.abs(distanceX) && Math.abs(distanceY) > mViewConfiguration.getScaledTouchSlop() && verticalScrollRange > getMeasuredHeight();
     }
+
     @Override
     public LayoutParams generateLayoutParams(AttributeSet attrs) {
         return new LayoutParams(getContext(), attrs);
@@ -286,6 +304,7 @@ public class NewVerticalScrollView extends ViewGroup {
     protected boolean checkLayoutParams(ViewGroup.LayoutParams p) {
         return p instanceof LayoutParams;
     }
+
     /**
      * Custom per-child layout information.
      */

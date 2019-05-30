@@ -1,12 +1,13 @@
 package com.bian.viewapplication.dialog;
 
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.text.StaticLayout;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,12 @@ import com.bian.viewapplication.R;
 import com.bian.viewapplication.bean.ViewLoactionBean;
 import com.bian.viewapplication.util.CommonLog;
 import com.bian.viewapplication.view.NewGuildeView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -88,5 +95,23 @@ public class GuideFragment extends DialogFragment {
         if (newGuildeView != null) {
             newGuildeView.setTargetView(viewloactin);
         }
+    }
+
+
+    public void initOption(){
+        RequestOptions options2 = RequestOptions.bitmapTransform(new RoundedCorners(6))
+                .centerCrop()
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .dontAnimate();
+        Glide.with(getContext())
+                .load("file:///android_asset/ic_image.jpg")
+                .apply(options2)
+                .into(new SimpleTarget<Drawable>() {
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+
+                    }
+                });
     }
 }

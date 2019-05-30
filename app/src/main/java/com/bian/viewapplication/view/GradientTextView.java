@@ -7,14 +7,13 @@ import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Shader;
-import android.support.annotation.Nullable;
-import android.text.BoringLayout;
+import androidx.annotation.Nullable;
+
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.bian.viewapplication.R;
-import com.bian.viewapplication.util.CommonLog;
 
 /**
  * Created by Administrator on 2018/7/14.

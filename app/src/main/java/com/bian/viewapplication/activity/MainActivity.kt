@@ -3,7 +3,7 @@ package com.bian.viewapplication.activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.bian.viewapplication.R
@@ -27,20 +27,21 @@ class MainActivity : AppCompatActivity() {
                 1 -> skipToListPage()
                 2 -> skipToViewPage()
                 3 -> skipToShapePage()
-                4 -> startActivity(Intent(this,GridManagerActivity::class.java))
+                4 -> startActivity(Intent(this, GridManagerActivity::class.java))
+                5 -> showEditDialog()
             }
         }
     }
 
+    private fun showEditDialog() {
+
+    }
+
     private fun skipToListPage() {
-        val listIt=Intent(this,ListViewActivity::class.java)
+        val listIt = Intent(this, ListViewActivity::class.java)
         startActivity(listIt)
     }
 
-    private fun testDialogFragment() {
-        val simpleDialog = SimpleDialogFragment()
-        simpleDialog.show(supportFragmentManager, SimpleDialogFragment::class.java.name)
-    }
 
     private fun skipToShapePage() {
         val shapeIt = Intent(this, ShapeActivity::class.java);

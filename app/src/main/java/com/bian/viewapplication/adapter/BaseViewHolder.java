@@ -4,7 +4,7 @@ package com.bian.viewapplication.adapter;
  * Created by Administrator on 2018/11/8.
  */
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder {

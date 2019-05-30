@@ -1,14 +1,10 @@
 package com.bian.viewapplication.activity;
 
 import android.os.Bundle;
-import android.os.Messenger;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.WindowManager;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.widget.Button;
 
 import com.bian.viewapplication.R;
@@ -17,7 +13,6 @@ import com.bian.viewapplication.bean.BankInfo;
 import com.bian.viewapplication.util.CommonLog;
 import com.bian.viewapplication.util.Contant;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -30,7 +25,10 @@ public class RefreshListActivity extends AppCompatActivity {
     private Button addButton;
     private Button deleteButton;
     private Button updateButton;
+    private Button testButton;
+    private Button testLayoutButton;
     private Random random;
+
     private int index;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +37,12 @@ public class RefreshListActivity extends AppCompatActivity {
         initView();
         CommonLog.i("onCreate()");
         initEvent();
-        WindowManager windowManager = getWindowManager();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        CommonLog.i("onDestroy");
+        CommonLog.i("onDestroy()");
     }
 
     private void initView() {
@@ -54,8 +51,10 @@ public class RefreshListActivity extends AppCompatActivity {
         addButton = findViewById(R.id.bt_insert);
         deleteButton = findViewById(R.id.bt_delete);
         updateButton=findViewById(R.id.bt_update);
+        testButton=findViewById(R.id.bt_test);
+        testLayoutButton=findViewById(R.id.bt_test_layout);
         bankInfos =new LinkedList<>();
-        bankInfos.add(Contant.getBankInfoList().get(0));
+        bankInfos.addAll(Contant.getBankInfoList().subList(0,6));
         bankAdapter = new BankAdapter(bankInfos);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
@@ -79,6 +78,17 @@ public class RefreshListActivity extends AppCompatActivity {
             index++;
             bankInfos.get(0).setBankName("Android"+index);
             bankAdapter.notifyItemChanged(0);
+        });
+
+        testButton.setOnClickListener(v -> {
+            mRecyclerView.computeVerticalScrollExtent();
+            mRecyclerView.computeVerticalScrollOffset();
+            mRecyclerView.computeVerticalScrollRange();
+        });
+        testLayoutButton.setOnClickListener(v -> {
+            int previousSize=bankInfos.size();
+            bankInfos.add(new BankInfo("djla",R.drawable.logo_abc,2));
+            bankAdapter.notifyItemInserted(previousSize);
         });
     }
 

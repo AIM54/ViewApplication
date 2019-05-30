@@ -8,8 +8,8 @@ import android.graphics.drawable.shapes.ArcShape
 import android.graphics.drawable.shapes.PathShape
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
 import com.bian.viewapplication.R
@@ -18,6 +18,9 @@ import com.bian.viewapplication.dialog.GuideFragment
 import com.bian.viewapplication.shape.MyRoundShape
 import com.bian.viewapplication.util.CommonLog
 import com.bian.viewapplication.util.Util
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_shape.*
 
@@ -33,6 +36,7 @@ class ShapeActivity : AppCompatActivity() {
         testRound()
         testStateDrawable()
         testGradientDrawable()
+        initGlide()
     }
 
 
@@ -42,7 +46,7 @@ class ShapeActivity : AppCompatActivity() {
                         ContextCompat.getColor(this, R.color.greenyellow),
                         ContextCompat.getColor(this, R.color.orange)))
         gradientDraweble.cornerRadius = Util.dip2px(this, 25.toFloat()).toFloat()
-        setViewBackground(bottom_view1,gradientDraweble)
+        setViewBackground(bottom_view1, gradientDraweble)
     }
 
     private fun testStateDrawable() {
@@ -132,7 +136,7 @@ class ShapeActivity : AppCompatActivity() {
         paintDrawable.setCornerRadius(resources.getDimension(R.dimen.dp20))
         setViewBackground(view1, paintDrawable)
         view1.setOnClickListener {
-            Toast.makeText(this,"li害了",Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "li害了", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -142,6 +146,16 @@ class ShapeActivity : AppCompatActivity() {
         } else {
             view1?.setBackgroundDrawable(paintDrawable)
         }
+    }
+
+    private fun initGlide() {
+        val options = RequestOptions()
+        options.centerCrop()
+                .transform(RoundedCorners(60))
+        Glide.with(this)
+                .load("file:///android_asset/ic_image.jpg")
+                .apply(options)
+                .into(iv_main)
     }
 }
 

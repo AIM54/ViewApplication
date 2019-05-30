@@ -5,13 +5,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.bian.viewapplication.R;
-
-import java.text.NumberFormat;
 
 /**
  * Created by bian on 18-6-16.

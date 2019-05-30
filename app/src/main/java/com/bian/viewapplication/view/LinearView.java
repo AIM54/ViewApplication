@@ -6,10 +6,11 @@ import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Shader;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.bian.viewapplication.R;
 
@@ -24,6 +25,7 @@ public class LinearView extends View {
     private LinearGradient linearGradient;
     private int colorsArrays[];
     private float[] rageArrays;
+    private LinearLayout mLinear;
 
 
     public LinearView(Context context) {
