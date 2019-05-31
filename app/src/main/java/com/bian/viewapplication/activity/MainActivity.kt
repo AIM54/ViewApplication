@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun skipToListPage() {
         val listIt = Intent(this, ListViewActivity::class.java)
+        listIt.putExtra("tomcat","in order to defeat cpc,we need to kill")
         startActivity(listIt)
     }
 

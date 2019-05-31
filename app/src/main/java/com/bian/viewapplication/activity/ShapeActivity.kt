@@ -1,6 +1,5 @@
 package com.bian.viewapplication.activity
 
-import android.content.res.ColorStateList
 import android.graphics.Path
 import android.graphics.RectF
 import android.graphics.drawable.*
@@ -8,10 +7,10 @@ import android.graphics.drawable.shapes.ArcShape
 import android.graphics.drawable.shapes.PathShape
 import android.os.Build
 import android.os.Bundle
-import androidx.core.content.ContextCompat
-import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.bian.viewapplication.R
 import com.bian.viewapplication.bean.ViewLoactionBean
 import com.bian.viewapplication.dialog.GuideFragment
@@ -21,7 +20,6 @@ import com.bian.viewapplication.util.Util
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_shape.*
 
 class ShapeActivity : AppCompatActivity() {
@@ -71,6 +69,16 @@ class ShapeActivity : AppCompatActivity() {
      * 实验Shape
      */
     private fun testRound() {
+        setViewBackground(testview, getViewBackGround())
+        setViewBackground(testview1,  getViewBackGround())
+        setViewBackground(textview,  getViewBackGround())
+        setViewBackground(v_with_background, getViewBackGround())
+        testview1.setOnClickListener {
+            it.invalidate()
+        }
+    }
+
+    private fun getViewBackGround(): Drawable {
         val outerRadius = Util.dip2px(this, 40.toFloat()).toFloat()
         val padding = Util.dip2px(this, 20.toFloat()).toFloat()
         val outerRadiusArrays = floatArrayOf(outerRadius, outerRadius, outerRadius, outerRadius,
@@ -82,11 +90,7 @@ class ShapeActivity : AppCompatActivity() {
         val shapeDrawable = ShapeDrawable()
         shapeDrawable.shape = roundRectShape
         shapeDrawable.setPadding(Util.dip2px(this, 30.toFloat()), Util.dip2px(this, 30.toFloat()), Util.dip2px(this, 30.toFloat()), Util.dip2px(this, 30.toFloat()))
-        setViewBackground(testview, shapeDrawable)
-        setViewBackground(textview, shapeDrawable)
-        testview.setOnClickListener {
-            it.invalidate()
-        }
+        return shapeDrawable
     }
 
     private fun showGuildeDialog(view1: View?) {

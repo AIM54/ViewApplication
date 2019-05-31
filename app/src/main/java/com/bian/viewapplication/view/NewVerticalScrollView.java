@@ -2,6 +2,7 @@ package com.bian.viewapplication.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -195,6 +196,16 @@ public class NewVerticalScrollView extends ViewGroup {
     }
 
     @Override
+    protected int computeVerticalScrollOffset() {
+        return super.computeVerticalScrollOffset();
+    }
+
+    @Override
+    protected int computeVerticalScrollExtent() {
+        return super.computeVerticalScrollExtent();
+    }
+
+    @Override
     protected int computeVerticalScrollRange() {
         final int count = getChildCount();
         final int contentHeight = getHeight() - getPaddingBottom() - getPaddingTop();
@@ -277,8 +288,10 @@ public class NewVerticalScrollView extends ViewGroup {
     }
 
     private void releaseVelocityTracker() {
-        mVelocityTracker.recycle();
-        mVelocityTracker = null;
+        if (mVelocityTracker!=null){
+            mVelocityTracker.recycle();
+            mVelocityTracker = null;
+        }
     }
 
     private boolean shallScrollVertical(float distanceX, float distanceY) {

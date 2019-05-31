@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.bian.viewapplication.R;
+import com.bian.viewapplication.util.CommonLog;
 
 public class ListViewActivity extends AppCompatActivity implements ScaleGestureDetector.OnScaleGestureListener {
     private ListView mListView;
@@ -43,6 +44,8 @@ public class ListViewActivity extends AppCompatActivity implements ScaleGestureD
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
         mListView.setAdapter(arrayAdapter);
         mScaleGestureDetector=new ScaleGestureDetector(this,this);
+        String killCommunistParty=getIntent().getStringExtra("tomcat");
+        CommonLog.i("currentActivity:"+this+"||killCommunistParty:"+killCommunistParty);
     }
 
     /**

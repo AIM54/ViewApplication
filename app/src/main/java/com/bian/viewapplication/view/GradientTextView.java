@@ -12,8 +12,10 @@ import androidx.annotation.Nullable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.ScrollView;
 
 import com.bian.viewapplication.R;
+import com.bian.viewapplication.util.CommonLog;
 
 /**
  * Created by Administrator on 2018/7/14.
@@ -46,6 +48,24 @@ public class GradientTextView extends View {
         initPaint();
     }
 
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        CommonLog.i("onAttachedToWindow");
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        CommonLog.i("onDetachedFromWindow");
+    }
+
+    @Override
+    protected void onWindowVisibilityChanged(int visibility) {
+        super.onWindowVisibilityChanged(visibility);
+    }
+
+
     private void initPaint() {
         textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setStyle(Paint.Style.FILL);
@@ -70,11 +90,6 @@ public class GradientTextView extends View {
         setMeasuredDimension(viewWidth, viewHeight);
     }
 
-    @Override
-    public void draw(Canvas canvas) {
-        super.draw(canvas);
-        getBackground();
-    }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
