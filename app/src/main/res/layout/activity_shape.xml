@@ -102,4 +102,9 @@
         android:layout_width="match_parent"
         android:layout_height="400dp" />
 
+    <com.bian.viewapplication.view.MyCameraView
+        android:id="@+id/mycamera_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp280" />
+
 </com.bian.viewapplication.view.NewVerticalScrollView>

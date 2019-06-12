@@ -30,4 +30,7 @@
         <attr name="gradient_startColor" format="color|reference"/>
         <attr name="gradient_endColor" format="color|reference"/>
     </declare-styleable>
+    <declare-styleable name="MyCameraView">
+        <attr name="img_src" format="reference"/>
+    </declare-styleable>
 </resources>

@@ -6,29 +6,21 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
-
-import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
-import android.view.ViewConfiguration;
 
 import com.bian.viewapplication.util.CommonLog;
 
-import java.util.TreeSet;
-import java.util.concurrent.locks.ReentrantLock;
+import androidx.annotation.Nullable;
 
 public class MeterView extends View implements ScaleGestureDetector.OnScaleGestureListener {
     private Paint mPaint;
     private Path mPath1, mPath2;
-    private ScaleGestureDetector mScaleGestureDetector;
     private Point mPoint;
     private int radius;
-    private ReentrantLock mReentrantLock;
-    private ViewConfiguration mViewConfiguration;
-
-    private TreeSet<String> treeSet;
+    private ScaleGestureDetector scaleGestureDetector;
     public MeterView(Context context) {
         this(context, null);
     }
@@ -41,6 +33,7 @@ public class MeterView extends View implements ScaleGestureDetector.OnScaleGestu
         super(context, attrs, defStyleAttr);
         initPaint();
         initScaleDesture();
+
     }
 
     @Override
@@ -49,8 +42,7 @@ public class MeterView extends View implements ScaleGestureDetector.OnScaleGestu
     }
 
     private void initScaleDesture() {
-        mReentrantLock = new ReentrantLock();
-        mReentrantLock.lock();
+        scaleGestureDetector=new ScaleGestureDetector(getContext(),this);
     }
 
     private void initPaint() {
@@ -58,35 +50,11 @@ public class MeterView extends View implements ScaleGestureDetector.OnScaleGestu
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setColor(Color.GREEN);
         mPaint.setStrokeWidth(20);
-        mViewConfiguration=ViewConfiguration.get(getContext());
-        mViewConfiguration.getScaledEdgeSlop();
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-       CommonLog.i("event.Pressure:"+event.getPressure());
-        switch (event.getAction() & MotionEvent.ACTION_MASK) {
-            case MotionEvent.ACTION_POINTER_DOWN:
-                CommonLog.i("ACTION_POINTER_DOWN:" + event.getActionIndex());
-                event.getEdgeFlags();
-                break;
-            case MotionEvent.ACTION_POINTER_UP:
-                CommonLog.i("ACTION_POINTER_UP:" + event.getActionIndex());
-                break;
-            case MotionEvent.ACTION_DOWN:
-                break;
-            case MotionEvent.ACTION_MOVE:
-                mPoint.x = (int) event.getX();
-                mPoint.y = (int) event.getY();
-                getFingerIndexInView(event);
-                invalidate();
-                break;
-            case MotionEvent.ACTION_SCROLL:
-                CommonLog.i("ACTION_SCROLL_PointerCount:" + event.getX());
-                break;
-
-        }
-        return true;
+       return scaleGestureDetector.onTouchEvent(event);
     }
 
     private void getFingerIndexInView(MotionEvent event) {
@@ -130,16 +98,20 @@ public class MeterView extends View implements ScaleGestureDetector.OnScaleGestu
 
     @Override
     public boolean onScale(ScaleGestureDetector detector) {
+        CommonLog.i("onScale:"+detector.getCurrentSpanX());
+        detector.getFocusY();
+        detector.getFocusX();
         return true;
     }
 
     @Override
     public boolean onScaleBegin(ScaleGestureDetector detector) {
-        return false;
+        CommonLog.i("onScaleBegin:"+detector.getCurrentSpanX());
+        return true;
     }
 
     @Override
     public void onScaleEnd(ScaleGestureDetector detector) {
-
+        CommonLog.i("onScaleEnd:"+detector.getCurrentSpanX());
     }
 }

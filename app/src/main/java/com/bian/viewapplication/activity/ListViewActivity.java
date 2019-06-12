@@ -1,5 +1,6 @@
 package com.bian.viewapplication.activity;
 
+import android.app.DownloadManager;
 import android.os.Bundle;
 import androidx.dynamicanimation.animation.SpringAnimation;
 import androidx.dynamicanimation.animation.SpringForce;
@@ -14,9 +15,8 @@ import com.bian.viewapplication.util.CommonLog;
 
 public class ListViewActivity extends AppCompatActivity implements ScaleGestureDetector.OnScaleGestureListener {
     private ListView mListView;
-    private SpringAnimation springAnimation;
-    private SpringForce springForce;
-    private ScaleGestureDetector mScaleGestureDetector;
+
+    private DownloadManager mDownloadManager;
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -43,7 +43,6 @@ public class ListViewActivity extends AppCompatActivity implements ScaleGestureD
         initStringArray(items);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
         mListView.setAdapter(arrayAdapter);
-        mScaleGestureDetector=new ScaleGestureDetector(this,this);
         String killCommunistParty=getIntent().getStringExtra("tomcat");
         CommonLog.i("currentActivity:"+this+"||killCommunistParty:"+killCommunistParty);
     }

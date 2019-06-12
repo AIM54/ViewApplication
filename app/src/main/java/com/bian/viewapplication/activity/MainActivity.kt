@@ -2,12 +2,10 @@ package com.bian.viewapplication.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import androidx.appcompat.app.AppCompatActivity
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatActivity
 import com.bian.viewapplication.R
-import com.bian.viewapplication.dialog.SimpleDialogFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -29,8 +27,20 @@ class MainActivity : AppCompatActivity() {
                 3 -> skipToShapePage()
                 4 -> startActivity(Intent(this, GridManagerActivity::class.java))
                 5 -> showEditDialog()
+                6 -> gotoPdfPage()
+                7-> gotoLayoutMangerPage()
             }
         }
+    }
+
+    private fun gotoLayoutMangerPage() {
+        val layoutIt=Intent(this,MyLayoutMangerActivity::class.java)
+        startActivity(layoutIt)
+    }
+
+    private fun gotoPdfPage() {
+        val it = Intent(this, PdfReaderActivity::class.java)
+        startActivity(it)
     }
 
     private fun showEditDialog() {
@@ -39,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun skipToListPage() {
         val listIt = Intent(this, ListViewActivity::class.java)
-        listIt.putExtra("tomcat","in order to defeat cpc,we need to kill")
+        listIt.putExtra("tomcat", "in order to defeat cpc,we need to kill")
         startActivity(listIt)
     }
 

@@ -6,6 +6,9 @@
         <item>@string/simple_view</item>
         <item>@string/simple_shape</item>
         <item>@string/test_dialogfragment</item>
+        <item>@string/edit_text_dialog</item>
+        <item>@string/test_pdf</item>
+        <item>@string/test_layout_manger</item>
     </string-array>
 
 </resources>

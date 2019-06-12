@@ -35,6 +35,12 @@ class ShapeActivity : AppCompatActivity() {
         testStateDrawable()
         testGradientDrawable()
         initGlide()
+        initCameraView()
+
+    }
+
+    private fun initCameraView() {
+        mycamera_view.setImageResource(R.drawable.mount)
     }
 
 

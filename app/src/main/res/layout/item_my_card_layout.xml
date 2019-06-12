@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp180"
+    android:background="@drawable/card_item_bg"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/dp15"
+    android:paddingTop="@dimen/dp25"
+    android:paddingRight="@dimen/dp15"
+    android:paddingBottom="@dimen/dp25">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="目前的布局还是挺麻烦的"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp15" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp25"
+        tools:text="第1张图片" />
+
+</LinearLayout>

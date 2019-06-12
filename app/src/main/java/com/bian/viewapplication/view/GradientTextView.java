@@ -87,7 +87,7 @@ public class GradientTextView extends View {
         int viewHeight = heightMode == MeasureSpec.EXACTLY ? heightSize : (int) textHeight;
         viewWidth = Math.max(viewWidth, getSuggestedMinimumWidth());
         viewHeight = Math.max(viewHeight, getSuggestedMinimumHeight());
-        setMeasuredDimension(viewWidth, viewHeight);
+        setMeasuredDimension(resolveSize(viewWidth,widthMeasureSpec), resolveSize(viewHeight,heightMeasureSpec));
     }
 
 
