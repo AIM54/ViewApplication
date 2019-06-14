@@ -24,4 +24,5 @@
     <string name="edit_text_dialog">可输入对话框</string>
     <string name="refresh_header">刷新头部</string>
     <string name="refresh_footer">刷新尾部</string>
+    <string name="get_child_count">获取子View数量</string>
 </resources>

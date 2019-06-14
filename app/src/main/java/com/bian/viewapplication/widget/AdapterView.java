@@ -17,6 +17,7 @@ package com.bian.viewapplication.widget;
 
 import android.content.Context;
 import android.database.DataSetObserver;
+import android.graphics.Canvas;
 import android.os.Parcelable;
 import android.os.SystemClock;
 import android.util.AttributeSet;
@@ -860,6 +861,11 @@ public abstract class AdapterView<T extends Adapter> extends ViewGroup {
         public void clearSavedState() {
             mInstanceState = null;
         }
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
     }
 
     @Override

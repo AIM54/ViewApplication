@@ -17,6 +17,7 @@ import com.bian.viewapplication.adapter.BankAdapter;
 import com.bian.viewapplication.bean.BankInfo;
 import com.bian.viewapplication.util.CommonLog;
 import com.bian.viewapplication.util.Contant;
+import com.bian.viewapplication.view.layout_manager.MyLinearLayoutManager;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -60,12 +61,10 @@ public class RefreshListActivity extends AppCompatActivity {
         bankInfos = new LinkedList<>();
         bankInfos.addAll(Contant.getBankInfoList().subList(0, 6));
         bankAdapter = new BankAdapter(bankInfos);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        MyLinearLayoutManager layoutManager=new MyLinearLayoutManager(this,mRecyclerView);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(bankAdapter);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        int childCount=mRecyclerView.getChildCount();
-
     }
 
     private void initEvent() {

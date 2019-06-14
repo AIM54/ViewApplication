@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 
+import com.bian.viewapplication.util.CommonLog;
+
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -19,7 +21,7 @@ import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class NewLinearLayoutManager extends RecyclerView.LayoutManager implements
+public class MyLinearLayoutManager extends RecyclerView.LayoutManager implements
         ItemTouchHelper.ViewDropHandler, RecyclerView.SmoothScroller.ScrollVectorProvider {
 
     private static final String TAG = "LinearLayoutManager";
@@ -56,7 +58,7 @@ public class NewLinearLayoutManager extends RecyclerView.LayoutManager implement
 
     /**
      * Many calculations are made depending on orientation. To keep it clean, this interface
-     * helps {@link NewLinearLayoutManager} make those decisions.
+     * helps {@link MyLinearLayoutManager} make those decisions.
      */
     OrientationHelper mOrientationHelper;
 
@@ -129,7 +131,7 @@ public class NewLinearLayoutManager extends RecyclerView.LayoutManager implement
             new ViewBoundsCheck.Callback() {
                 @Override
                 public int getChildCount() {
-                    return NewLinearLayoutManager.this.getChildCount();
+                    return MyLinearLayoutManager.this.getChildCount();
                 }
 
                 @Override
@@ -139,7 +141,7 @@ public class NewLinearLayoutManager extends RecyclerView.LayoutManager implement
 
                 @Override
                 public View getChildAt(int index) {
-                    return NewLinearLayoutManager.this.getChildAt(index);
+                    return MyLinearLayoutManager.this.getChildAt(index);
                 }
 
                 @Override
@@ -175,7 +177,7 @@ public class NewLinearLayoutManager extends RecyclerView.LayoutManager implement
             new ViewBoundsCheck.Callback() {
                 @Override
                 public int getChildCount() {
-                    return NewLinearLayoutManager.this.getChildCount();
+                    return MyLinearLayoutManager.this.getChildCount();
                 }
 
                 @Override
@@ -185,7 +187,7 @@ public class NewLinearLayoutManager extends RecyclerView.LayoutManager implement
 
                 @Override
                 public View getChildAt(int index) {
-                    return NewLinearLayoutManager.this.getChildAt(index);
+                    return MyLinearLayoutManager.this.getChildAt(index);
                 }
 
                 @Override
@@ -222,7 +224,7 @@ public class NewLinearLayoutManager extends RecyclerView.LayoutManager implement
      *
      * @param context Current context, will be used to access resources.
      */
-    public NewLinearLayoutManager(Context context, RecyclerView recyclerView) {
+    public MyLinearLayoutManager(Context context, RecyclerView recyclerView) {
         this(context, RecyclerView.VERTICAL, false);
         mRecyclerView = recyclerView;
     }
@@ -233,8 +235,8 @@ public class NewLinearLayoutManager extends RecyclerView.LayoutManager implement
      *                      #VERTICAL}.
      * @param reverseLayout When set to true, layouts from end to start.
      */
-    public NewLinearLayoutManager(Context context, @RecyclerView.Orientation int orientation,
-                                  boolean reverseLayout) {
+    public MyLinearLayoutManager(Context context, @RecyclerView.Orientation int orientation,
+                                 boolean reverseLayout) {
         setOrientation(orientation);
         setReverseLayout(reverseLayout);
     }
@@ -247,8 +249,8 @@ public class NewLinearLayoutManager extends RecyclerView.LayoutManager implement
      * @attr ref androidx.recyclerview.R.styleable#RecyclerView_reverseLayout
      * @attr ref androidx.recyclerview.R.styleable#RecyclerView_stackFromEnd
      */
-    public NewLinearLayoutManager(Context context, AttributeSet attrs, int defStyleAttr,
-                                  int defStyleRes) {
+    public MyLinearLayoutManager(Context context, AttributeSet attrs, int defStyleAttr,
+                                 int defStyleRes) {
         RecyclerView.LayoutManager.Properties properties = getProperties(context, attrs, defStyleAttr, defStyleRes);
         setOrientation(properties.orientation);
         setReverseLayout(properties.reverseLayout);
@@ -399,7 +401,7 @@ public class NewLinearLayoutManager extends RecyclerView.LayoutManager implement
     }
 
     /**
-     * Sets the orientation of the layout. {@link NewLinearLayoutManager}
+     * Sets the orientation of the layout. {@link MyLinearLayoutManager}
      * will do its best to keep scroll position.
      *
      * @param orientation {@link #HORIZONTAL} or {@link #VERTICAL}
@@ -491,7 +493,7 @@ public class NewLinearLayoutManager extends RecyclerView.LayoutManager implement
     /**
      * <p>Returns the amount of extra space that should be laid out by LayoutManager.</p>
      *
-     * <p>By default, {@link NewLinearLayoutManager} lays out 1 extra page
+     * <p>By default, {@link MyLinearLayoutManager} lays out 1 extra page
      * of items while smooth scrolling and 0 otherwise. You can override this method to implement
      * your custom layout pre-cache logic.</p>
      *
@@ -766,6 +768,7 @@ public class NewLinearLayoutManager extends RecyclerView.LayoutManager implement
 
     /**
      * If necessary, layouts new items for predictive animations
+     * fjasfo
      */
     private void layoutForPredictiveAnimations(RecyclerView.Recycler recycler,
                                                RecyclerView.State state, int startOffset,
@@ -1417,7 +1420,6 @@ public class NewLinearLayoutManager extends RecyclerView.LayoutManager implement
             if (getChildCount() > 2) {
                 View secondView = getChildAt(1);
                 if (mOrientationHelper.getDecoratedStart(secondView) == mOrientationHelper.getStartAfterPadding()) {
-
                 }
             }
         }
@@ -1491,6 +1493,9 @@ public class NewLinearLayoutManager extends RecyclerView.LayoutManager implement
                 if (mOrientationHelper.getDecoratedEnd(child) > limit
                         || mOrientationHelper.getTransformedEndWithDecoration(child) > limit) {
                     // stop here
+                    if (i != 0) {
+                        CommonLog.i("mOrientationHelper.getDecoratedEnd(" + i + "):" + mOrientationHelper.getDecoratedEnd(child) + "\nlimit:" + limit);
+                    }
                     recycleChildren(recycler, 0, i);
                     return;
                 }
@@ -1565,7 +1570,7 @@ public class NewLinearLayoutManager extends RecyclerView.LayoutManager implement
 
     /**
      * The magic functions :). Fills the given layout, defined by the layoutState. This is fairly
-     * independent from the rest of the {@link NewLinearLayoutManager}
+     * independent from the rest of the {@link MyLinearLayoutManager}
      * and with little change, can be made publicly available as a helper class.
      *
      * @param recycler        Current recycler that is attached to RecyclerView
@@ -2088,13 +2093,11 @@ public class NewLinearLayoutManager extends RecyclerView.LayoutManager implement
      * Logs the internal representation of children to default logger.
      */
     private void logChildren() {
-        Log.d(TAG, "internal representation of views on the screen");
         for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
             Log.d(TAG, "item " + getPosition(child) + ", coord:"
                     + mOrientationHelper.getDecoratedStart(child));
         }
-        Log.d(TAG, "==============");
     }
 
     /**
@@ -2362,11 +2365,6 @@ public class NewLinearLayoutManager extends RecyclerView.LayoutManager implement
                 }
             }
             return closest;
-        }
-
-        void log() {
-            Log.d(TAG, "avail:" + mAvailable + ", ind:" + mCurrentPosition + ", dir:"
-                    + mItemDirection + ", offset:" + mOffset + ", layoutDir:" + mLayoutDirection);
         }
     }
 

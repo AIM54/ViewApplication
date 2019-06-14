@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MyLayoutMangerActivity"></activity>
+        <activity android:name=".activity.MyLayoutMangerActivity" />
         <activity android:name=".activity.PdfReaderActivity" />
         <activity android:name=".activity.GridManagerActivity" />
         <activity android:name=".activity.ListViewActivity" />
