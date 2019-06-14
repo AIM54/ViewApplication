@@ -56,12 +56,17 @@ public class MyLayoutManger extends RecyclerView.LayoutManager {
      * 用户手动划过了一定的距离，我们要在这里更新下布局的状态，进行状态的变更
      *
      * @param abs
+     * @param state
      */
-    private void udpateLayoutState(int abs) {
+    private void udpateLayoutState(int abs, RecyclerView.State state) {
         if (mLayoutScrollDiretaion == LAYOUT_DERATION_TAIL) {
             layoutState.mCurrentPosition = getChildClosestToEnd() == null ? 0 : getPosition(getChildClosestToEnd()) + mLayoutScrollDiretaion;
             layoutState.offSet = orientationHelper.getDecoratedEnd(getChildClosestToEnd());
             layoutState.scrollDistance = layoutState.offSet - orientationHelper.getEndAfterPadding();
+            if (layoutState.mCurrentPosition >= state.getItemCount()) {
+                int lastItemoffert = orientationHelper.getDecoratedStart(getChildClosestToEnd());
+                layoutState.scrollDistance = Math.min(lastItemoffert, abs);
+            }
         } else {
             layoutState.mCurrentPosition = getChildClosestToStart() == null ? 0 : getPosition(getChildClosestToStart()) + mLayoutScrollDiretaion;
             layoutState.offSet = orientationHelper.getStartAfterPadding();
@@ -153,7 +158,7 @@ public class MyLayoutManger extends RecyclerView.LayoutManager {
     public int scrollVerticallyBy(int dy, RecyclerView.Recycler recycler, RecyclerView.State state) {
         mLayoutScrollDiretaion = dy > 0 ? LAYOUT_DERATION_TAIL : LAYOUT_DERATION_HEAD;
         int absDy = Math.abs(dy);
-        udpateLayoutState(absDy);
+        udpateLayoutState(absDy, state);
         layoutState.scrollDistance += fillContent(recycler, state);
         if (layoutState.scrollDistance < 0) {
             return 0;

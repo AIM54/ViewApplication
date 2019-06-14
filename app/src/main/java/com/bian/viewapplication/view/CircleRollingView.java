@@ -62,6 +62,6 @@ public class CircleRollingView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawRect(mRectf,mRectPaint);
+
     }
 }
