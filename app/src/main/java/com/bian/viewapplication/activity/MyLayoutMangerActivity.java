@@ -42,9 +42,7 @@ public class MyLayoutMangerActivity extends AppCompatActivity {
 
     private void initData() {
         bankInfos = new ArrayList<>();
-        for (int index = 0; index < 100; index++) {
-            bankInfos.addAll(Contant.getBankInfoList());
-        }
+        bankInfos.addAll(Contant.getBankInfoList());
         bankAdapter = new MyViewAdapter(bankInfos);
         MyLayoutManger myLayoutManger = new MyLayoutManger();
         mRecyclerView.setLayoutManager(myLayoutManger);

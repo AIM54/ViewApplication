@@ -253,7 +253,7 @@ public class MyLayoutManger extends RecyclerView.LayoutManager {
         if (beginIndex == endIndex) {
             return;
         }
-        for (int index = beginIndex ; index < endIndex; index++) {
+        for (int index = beginIndex; index < endIndex; index++) {
             removeAndRecycleView(getChildAt(index), recycler);
         }
     }
@@ -292,7 +292,7 @@ public class MyLayoutManger extends RecyclerView.LayoutManager {
         public static final int NOT_SCROLL_AT_ALL = Integer.MIN_VALUE;
 
         public boolean hasMore(RecyclerView.State state) {
-            return mCurrentPosition >= 0 && mCurrentPosition <= state.getItemCount();
+            return mCurrentPosition >= 0 && mCurrentPosition < state.getItemCount();
         }
     }
 }

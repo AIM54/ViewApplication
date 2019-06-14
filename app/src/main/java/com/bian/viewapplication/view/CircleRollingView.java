@@ -8,7 +8,6 @@ import android.graphics.Path;
 import android.graphics.PathDashPathEffect;
 import android.graphics.PathEffect;
 import android.graphics.RectF;
-import androidx.annotation.Nullable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -16,15 +15,17 @@ import android.view.View;
 
 import com.bian.viewapplication.util.CommonLog;
 
+import androidx.annotation.Nullable;
+
 public class CircleRollingView extends View {
-    private Paint mPaint;
-    private int circleRadius;
-    private RectF circleRectF;
     private PathEffect pathEffect;
-    private Path trianglePath;
     private Paint mRectPaint;
-    private RectF mRectF;
-    private TextPaint textPaint;
+    private String mMessage;
+    private Path mTextPath;
+    private TextPaint mTextPaint;
+    private RectF mRectf;
+
+
     public CircleRollingView(Context context) {
         this(context, null);
     }
@@ -39,14 +40,14 @@ public class CircleRollingView extends View {
     }
 
     private void initPaint() {
-        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaint.setStyle(Paint.Style.FILL);
-        trianglePath = new Path();
-        trianglePath.moveTo(0, 20);
-        trianglePath.lineTo(14, 20);
-        trianglePath.lineTo(7, 0);
-        trianglePath.close();
-        pathEffect = new PathDashPathEffect(trianglePath, 40, 40, PathDashPathEffect.Style.MORPH);
+        mTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+        mTextPaint.setColor(Color.GREEN);
+        mTextPaint.setStyle(Paint.Style.FILL);
+        mTextPaint.setTextSize(50);
+        mTextPath = new Path();
+        mMessage = "常星是傻逼";
+        mTextPaint.getTextPath(mMessage, 0, mMessage.length(), 0, mTextPaint.getTextSize(), mTextPath);
+        pathEffect = new PathDashPathEffect(mTextPath, mTextPaint.measureText(mMessage), 40, PathDashPathEffect.Style.MORPH);
         mRectPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mRectPaint.setColor(Color.MAGENTA);
         mRectPaint.setStyle(Paint.Style.STROKE);
@@ -55,35 +56,12 @@ public class CircleRollingView extends View {
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        CommonLog.i(getClass().getSimpleName() + ":" + isInCircleRegion(event));
-        if (isInCircleRegion(event)) {
-            getParent().requestDisallowInterceptTouchEvent(true);
-            return true;
-        }
-        return super.onTouchEvent(event);
-
-    }
-
-    private boolean isInCircleRegion(MotionEvent event) {
-        return Math.sqrt(Math.pow(event.getX() - getWidth() / 2, 2) + Math.pow(event.getY() - getHeight() / 2, 2)) < circleRadius;
-    }
-
-    @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        circleRadius = Math.min(getWidth(), getHeight()) / 2;
-        circleRectF = new RectF(getWidth() / 2 - circleRadius, getHeight() / 2 - circleRadius, getWidth() / 2 + circleRadius, getHeight() / 2 + circleRadius);
-        mRectF = new RectF(0, 0, getWidth(), getHeight());
+        mRectf=new RectF(0,0,getWidth(),getHeight());
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        mPaint.setColor(Color.WHITE);
-        canvas.drawArc(circleRectF, 0, 120, true, mPaint);
-        mPaint.setColor(Color.BLUE);
-        canvas.drawArc(circleRectF, 120, 120, true, mPaint);
-        mPaint.setColor(Color.RED);
-        canvas.drawArc(circleRectF, 240, 120, true, mPaint);
-        canvas.drawRect(mRectF, mRectPaint);
+        canvas.drawRect(mRectf,mRectPaint);
     }
 }
