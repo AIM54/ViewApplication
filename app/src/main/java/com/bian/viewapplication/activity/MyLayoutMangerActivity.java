@@ -19,10 +19,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyLayoutMangerActivity extends AppCompatActivity {
-    private List<BankInfo> bankInfos;
     private RecyclerView mRecyclerView;
     private MyViewAdapter bankAdapter;
     private Button getChildCountBt;
+    private List<String>mStringList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +42,11 @@ public class MyLayoutMangerActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        bankInfos = new ArrayList<>();
-        bankInfos.addAll(Contant.getBankInfoList());
-        bankAdapter = new MyViewAdapter(bankInfos);
+        mStringList=new ArrayList<>(100);
+        for (int index=0;index<100;index++){
+            mStringList.add("这是第"+index+"张图");
+        }
+        bankAdapter = new MyViewAdapter(mStringList);
         MyLayoutManger myLayoutManger = new MyLayoutManger();
         mRecyclerView.setLayoutManager(myLayoutManger);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, RecyclerView.VERTICAL));

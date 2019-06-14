@@ -103,7 +103,7 @@ public class MyLayoutManger extends RecyclerView.LayoutManager {
             if (layoutState.aviableSpace < 0) {
                 layoutState.scrollDistance += layoutState.aviableSpace;
             }
-            recyclerViewsFromContent(layoutState.scrollDistance, recycler);
+            recyclerViewsFromContent(recycler);
         }
         while (layoutState.hasMore(state) && layoutState.aviableSpace > 0) {
             View itemView = recycler.getViewForPosition(layoutState.mCurrentPosition);
@@ -126,7 +126,7 @@ public class MyLayoutManger extends RecyclerView.LayoutManager {
             if (layoutState.aviableSpace > 0) {
                 layoutState.mCurrentPosition += mLayoutScrollDiretaion;
             }
-            recyclerViewsFromContent(layoutState.scrollDistance, recycler);
+            recyclerViewsFromContent(recycler);
         }
         return startValue - layoutState.aviableSpace;
     }
@@ -165,6 +165,7 @@ public class MyLayoutManger extends RecyclerView.LayoutManager {
         }
         int consumedY = mLayoutScrollDiretaion * Math.min(absDy, Math.abs(layoutState.scrollDistance));
         offsetChilds(-consumedY);
+        recyclerViewsFromContent(recycler);
         return consumedY;
     }
 
@@ -197,21 +198,20 @@ public class MyLayoutManger extends RecyclerView.LayoutManager {
      * @param dy
      * @param recycler
      */
-    private void recyclerViewsFromContent(int dy, RecyclerView.Recycler recycler) {
+    private void recyclerViewsFromContent(RecyclerView.Recycler recycler) {
         if (mLayoutScrollDiretaion == LAYOUT_DERATION_TAIL) {
-            recyclerViewFromHead(dy, recycler);
+            recyclerViewFromHead(recycler);
         } else {
-            recyclerViewsFromTail(dy, recycler);
+            recyclerViewsFromTail(recycler);
         }
     }
 
     /**
      * 从布局的底部回收看不到的View;
      *
-     * @param dy
      * @param recycler
      */
-    private void recyclerViewsFromTail(int dy, RecyclerView.Recycler recycler) {
+    private void recyclerViewsFromTail(RecyclerView.Recycler recycler) {
         int endIndex = getChildCount() - 1;
         int startIndex;
         for (startIndex = endIndex; startIndex >= 0; startIndex--) {
@@ -231,10 +231,9 @@ public class MyLayoutManger extends RecyclerView.LayoutManager {
     /**
      * 从布局的顶部回收看不到View
      *
-     * @param dy
      * @param recycler
      */
-    private void recyclerViewFromHead(int dy, RecyclerView.Recycler recycler) {
+    private void recyclerViewFromHead(RecyclerView.Recycler recycler) {
         int endIndex = 0;
         for (int index = 0; index < getChildCount(); index++) {
             View childView = getChildAt(index);

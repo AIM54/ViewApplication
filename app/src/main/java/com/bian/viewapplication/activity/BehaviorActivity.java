@@ -16,6 +16,7 @@ public class BehaviorActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private BankAdapter bankAdapter;
     private ArrayList<BankInfo> bankInfos;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

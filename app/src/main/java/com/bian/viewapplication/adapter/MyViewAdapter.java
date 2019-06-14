@@ -14,9 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MyViewAdapter extends RecyclerView.Adapter<MyViewAdapter.MyViewHolder> {
-    private List<BankInfo> bankInfos;
+    private List<String> bankInfos;
 
-    public MyViewAdapter(List<BankInfo> bankInfos) {
+    public MyViewAdapter(List<String> bankInfos) {
         this.bankInfos = bankInfos;
     }
 
@@ -29,7 +29,7 @@ public class MyViewAdapter extends RecyclerView.Adapter<MyViewAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.contentTv.setText("第" + position + "张图片");
+        holder.contentTv.setText(bankInfos.get(position));
     }
 
     @Override
