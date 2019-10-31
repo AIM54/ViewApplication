@@ -4,6 +4,7 @@ package com.bian.viewapplication.dialog;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
@@ -18,12 +19,6 @@ import com.bian.viewapplication.R;
 import com.bian.viewapplication.bean.ViewLoactionBean;
 import com.bian.viewapplication.util.CommonLog;
 import com.bian.viewapplication.view.NewGuildeView;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -35,6 +30,7 @@ public class GuideFragment extends DialogFragment {
     private ViewLoactionBean mParam2;
     private NewGuildeView newGuildeView;
     private ListView mListView;
+
     @Override
     public void onStart() {
         super.onStart();
@@ -81,9 +77,9 @@ public class GuideFragment extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         newGuildeView = view.findViewById(R.id.guildev_view);
         new Handler().post(() -> {
-         int activityHeight=getActivity().getWindow().getDecorView().getMeasuredHeight();
-         int dialogHeight=getDialog().getWindow().getDecorView().getMeasuredHeight();
-         CommonLog.i(String.format("activityHeight:%d,dialogHeight:%d",activityHeight,dialogHeight));
+            int activityHeight = getActivity().getWindow().getDecorView().getMeasuredHeight();
+            int dialogHeight = getDialog().getWindow().getDecorView().getMeasuredHeight();
+            CommonLog.i(String.format("activityHeight:%d,dialogHeight:%d", activityHeight, dialogHeight));
             if (mParam2 != null) {
                 CommonLog.i(mParam2.toString());
                 newGuildeView.setTargetView(mParam2);
@@ -98,20 +94,6 @@ public class GuideFragment extends DialogFragment {
     }
 
 
-    public void initOption(){
-        RequestOptions options2 = RequestOptions.bitmapTransform(new RoundedCorners(6))
-                .centerCrop()
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .dontAnimate();
-        Glide.with(getContext())
-                .load("file:///android_asset/ic_image.jpg")
-                .apply(options2)
-                .into(new SimpleTarget<Drawable>() {
-                    @Override
-                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-
-                    }
-                });
+    public void initOption() {
     }
 }

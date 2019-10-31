@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="main_page_function">
-        <item>@string/pull_able_recyclerview</item>
-        <item>@string/swipe_able_recyclerview</item>
         <item>@string/simple_view</item>
         <item>@string/simple_shape</item>
-        <item>@string/test_dialogfragment</item>
-        <item>@string/edit_text_dialog</item>
-        <item>@string/test_pdf</item>
         <item>@string/test_layout_manger</item>
     </string-array>
+
+
+    <string-array name="the_dead_army">
+        <item>@string/the_king_is_dead</item>
+        <item>@string/the_queen_is_dead</item>
+        <item>@string/the_cto_is_dead</item>
+        <item>@string/the_king_s_salt_wife_is_also_dead</item>
+        <item>@string/the_king_is_good_at_fucking</item>
+    </string-array>
+
 
 </resources>

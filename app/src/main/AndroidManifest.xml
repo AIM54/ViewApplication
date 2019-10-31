@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -14,11 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activity.ViewPagerActivity"></activity>
         <activity android:name=".activity.MyLayoutMangerActivity" />
-        <activity android:name=".activity.PdfReaderActivity" />
-        <activity android:name=".activity.GridManagerActivity" />
-        <activity android:name=".activity.ListViewActivity" />
-        <activity android:name=".activity.BianListActivity" />
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,9 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.ViewGroupActivity" />
-        <activity android:name=".activity.RefreshListActivity" />
         <activity android:name=".activity.ShapeActivity" />
-        <activity android:name=".activity.BehaviorActivity" />
     </application>
 
 </manifest>

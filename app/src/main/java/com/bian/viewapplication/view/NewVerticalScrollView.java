@@ -1,5 +1,6 @@
 package com.bian.viewapplication.view;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -34,6 +35,7 @@ public class NewVerticalScrollView extends ViewGroup {
 
     private ScrollView mScrollView;
 
+
     public NewVerticalScrollView(Context context) {
         this(context, null);
     }
@@ -58,6 +60,11 @@ public class NewVerticalScrollView extends ViewGroup {
         mScroller = new OverScroller(getContext());
         setVerticalScrollBarEnabled(true);
         setWillNotDraw(false);
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
     }
 
     @Override
@@ -145,9 +152,6 @@ public class NewVerticalScrollView extends ViewGroup {
                     onScroll(distanceY);
                     previousX = event.getX();
                     previousY = event.getY();
-                    if (getScrollRange() < 0) {
-
-                    }
                 }
                 break;
             case MotionEvent.ACTION_UP:

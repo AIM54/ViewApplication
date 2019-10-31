@@ -241,22 +241,6 @@ public class MyLinearLayoutManager extends RecyclerView.LayoutManager implements
         setReverseLayout(reverseLayout);
     }
 
-    /**
-     * Constructor used when layout manager is set in XML by RecyclerView attribute
-     * "layoutManager". Defaults to vertical orientation.
-     *
-     * @attr ref androidx.recyclerview.R.styleable#RecyclerView_android_orientation
-     * @attr ref androidx.recyclerview.R.styleable#RecyclerView_reverseLayout
-     * @attr ref androidx.recyclerview.R.styleable#RecyclerView_stackFromEnd
-     */
-    public MyLinearLayoutManager(Context context, AttributeSet attrs, int defStyleAttr,
-                                 int defStyleRes) {
-        RecyclerView.LayoutManager.Properties properties = getProperties(context, attrs, defStyleAttr, defStyleRes);
-        setOrientation(properties.orientation);
-        setReverseLayout(properties.reverseLayout);
-        setStackFromEnd(properties.stackFromEnd);
-    }
-
     @Override
     public boolean isAutoMeasureEnabled() {
         return true;
@@ -556,6 +540,8 @@ public class MyLinearLayoutManager extends RecyclerView.LayoutManager implements
         if (DEBUG) {
             Log.d(TAG, "is pre layout:" + state.isPreLayout());
         }
+
+        CommonLog.i("onLayoutChildren");
         if (mPendingSavedState != null || mPendingScrollPosition != RecyclerView.NO_POSITION) {
             if (state.getItemCount() == 0) {
                 removeAndRecycleAllViews(recycler);
@@ -1213,35 +1199,6 @@ public class MyLinearLayoutManager extends RecyclerView.LayoutManager implements
                 this, mSmoothScrollbarEnabled);
     }
 
-    /**
-     * When smooth scrollbar is enabled, the position and size of the scrollbar thumb is computed
-     * based on the number of visible pixels in the visible items. This however assumes that all
-     * list items have similar or equal widths or heights (depending on list orientation).
-     * If you use a list in which items have different dimensions, the scrollbar will change
-     * appearance as the user scrolls through the list. To avoid this issue,  you need to disable
-     * this property.
-     * <p>
-     * When smooth scrollbar is disabled, the position and size of the scrollbar thumb is based
-     * solely on the number of items in the adapter and the position of the visible items inside
-     * the adapter. This provides a stable scrollbar as the user navigates through a list of items
-     * with varying widths / heights.
-     *
-     * @param enabled Whether or not to enable smooth scrollbar.
-     * @see #setSmoothScrollbarEnabled(boolean)
-     */
-    public void setSmoothScrollbarEnabled(boolean enabled) {
-        mSmoothScrollbarEnabled = enabled;
-    }
-
-    /**
-     * Returns the current state of the smooth scrollbar feature. It is enabled by default.
-     *
-     * @return True if smooth scrollbar is enabled, false otherwise.
-     * @see #setSmoothScrollbarEnabled(boolean)
-     */
-    public boolean isSmoothScrollbarEnabled() {
-        return mSmoothScrollbarEnabled;
-    }
 
     private void updateLayoutState(int layoutDirection, int requiredSpace,
                                    boolean canUseExistingSpace, RecyclerView.State state) {

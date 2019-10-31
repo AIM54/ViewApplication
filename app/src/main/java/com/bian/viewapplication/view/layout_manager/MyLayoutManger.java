@@ -3,6 +3,12 @@ package com.bian.viewapplication.view.layout_manager;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bian.viewapplication.util.CommonLog;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,15 +29,28 @@ public class MyLayoutManger extends RecyclerView.LayoutManager {
      */
     private int mLayoutScrollDiretaion;
 
+    private AnchorInfo mAnchor;
+
+
     public MyLayoutManger() {
         orientationHelper = OrientationHelper.createVerticalHelper(this);
-        layoutState = new LayoutState();
         mLayoutScrollDiretaion = LAYOUT_DERATION_TAIL;
     }
 
     private void ensureLayoutState() {
-        layoutState.aviableSpace = orientationHelper.getEndAfterPadding() - layoutState.offSet;
-        layoutState.mCurrentPosition = 0;
+        if (layoutState == null) {
+            layoutState = new LayoutState();
+            layoutState.reset();
+            mAnchor = new AnchorInfo();
+        } else {
+            layoutState.reset();
+            layoutState.mCurrentPosition = mAnchor.mAnchorPosition;
+            if (mLayoutScrollDiretaion == LAYOUT_DERATION_TAIL) {
+                layoutState.secondOffSet = mAnchor.mAnchorOffset;
+            } else {
+                layoutState.offSet = mAnchor.mAnchorOffset;
+            }
+        }
     }
 
     private View getChildClosestToStart() {
@@ -45,11 +64,41 @@ public class MyLayoutManger extends RecyclerView.LayoutManager {
     @Override
     public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
         if (state.getItemCount() == 0) {
-            detachAndScrapAttachedViews(recycler);
+            removeAndRecycleAllViews(recycler);
             return;
         }
         ensureLayoutState();
+        detachAndScrapAttachedViews(recycler);
         fillContent(recycler, state);
+    }
+
+
+    /**
+     * 这里为notifyDataSetChanged做一些动作
+     *
+     * @param recycler
+     * @param state
+     */
+    private void layoutForPredictiveAnimations(RecyclerView.Recycler recycler, RecyclerView.State state) {
+        if (!state.willRunPredictiveAnimations() || getChildCount() == 0 || state.isPreLayout()
+                || !supportsPredictiveItemAnimations()) {
+            return;
+        }
+        //因为notifyItemChanged会导致重新Layout，所以在onLayoutChildren方法中通过 detachAndScrapAttachedViews(recycler)的方式
+        //将视图暂时缓存起来
+        List<RecyclerView.ViewHolder> scrapViewList = recycler.getScrapList();
+        layoutState.mScrapList = scrapViewList;
+        if (layoutState.mScrapList != null && layoutState.mScrapList.size() > 0) {
+            layoutState.reset();
+            detachAndScrapAttachedViews(recycler);
+        }
+        fillContent(recycler, state);
+        layoutState.mScrapList = null;
+    }
+
+    @Override
+    public boolean supportsPredictiveItemAnimations() {
+        return true;
     }
 
     /**
@@ -63,6 +112,7 @@ public class MyLayoutManger extends RecyclerView.LayoutManager {
             layoutState.mCurrentPosition = getChildClosestToEnd() == null ? 0 : getPosition(getChildClosestToEnd()) + mLayoutScrollDiretaion;
             layoutState.offSet = orientationHelper.getDecoratedEnd(getChildClosestToEnd());
             layoutState.scrollDistance = layoutState.offSet - orientationHelper.getEndAfterPadding();
+            //已经不需要添加新的Item了
             if (layoutState.mCurrentPosition >= state.getItemCount()) {
                 int lastItemoffert = orientationHelper.getDecoratedStart(getChildClosestToEnd());
                 layoutState.scrollDistance = Math.min(lastItemoffert, abs);
@@ -106,7 +156,7 @@ public class MyLayoutManger extends RecyclerView.LayoutManager {
             recyclerViewsFromContent(recycler);
         }
         while (layoutState.hasMore(state) && layoutState.aviableSpace > 0) {
-            View itemView = recycler.getViewForPosition(layoutState.mCurrentPosition);
+            View itemView = layoutState.next(recycler);
             measureChildWithMargins(itemView, 0, 0);
             int left = getPaddingLeft();
             int right = left + orientationHelper.getDecoratedMeasurementInOther(itemView);
@@ -121,14 +171,18 @@ public class MyLayoutManger extends RecyclerView.LayoutManager {
                 tryFixGap();
                 addView(itemView, 0);
                 layoutState.aviableSpace -= layoutState.itemConsumed;
+                updateOffset(layoutState.itemConsumed);
             }
             layoutDecoratedWithMargins(itemView, left, top, right, bottom);
-            if (layoutState.aviableSpace > 0) {
-                layoutState.mCurrentPosition += mLayoutScrollDiretaion;
-            }
             recyclerViewsFromContent(recycler);
         }
         return startValue - layoutState.aviableSpace;
+    }
+
+    private void updateOffset(int itemConsumed) {
+        if (layoutState.offSet > orientationHelper.getStartAfterPadding()) {
+            layoutState.offSet -= Math.min(itemConsumed, layoutState.offSet - orientationHelper.getStartAfterPadding());
+        }
     }
 
     /**
@@ -166,7 +220,26 @@ public class MyLayoutManger extends RecyclerView.LayoutManager {
         int consumedY = mLayoutScrollDiretaion * Math.min(absDy, Math.abs(layoutState.scrollDistance));
         offsetChilds(-consumedY);
         recyclerViewsFromContent(recycler);
+        saveCurrentAnchorInfo();
         return consumedY;
+    }
+
+    /**
+     * 获取布局的起始锚点，现在本布局只考虑，从上到下的情况
+     * 这里进行保存信息主要是考虑到notifyDataSetChanged的时候chongixn
+     *
+     * @return
+     */
+    private void saveCurrentAnchorInfo() {
+        if (mLayoutScrollDiretaion == LAYOUT_DERATION_HEAD) {
+            mAnchor.mAnchorPosition = getPosition(getChildClosestToEnd());
+            mAnchor.mAnchorOffset = orientationHelper.getDecoratedStart(getChildClosestToEnd());
+        } else {
+            mAnchor.mAnchorPosition = getPosition(getChildClosestToStart());
+            if (getChildCount() > 2) {
+                mAnchor.mAnchorOffset = orientationHelper.getDecoratedStart(getChildAt(1)) - orientationHelper.getDecoratedEnd(getChildAt(0));
+            }
+        }
     }
 
     private void offsetChilds(int consumedY) {
@@ -195,7 +268,6 @@ public class MyLayoutManger extends RecyclerView.LayoutManager {
     /**
      * 从界面上把不不可见的ItemView给Recycle掉
      *
-     * @param dy
      * @param recycler
      */
     private void recyclerViewsFromContent(RecyclerView.Recycler recycler) {
@@ -223,6 +295,7 @@ public class MyLayoutManger extends RecyclerView.LayoutManager {
         if (startIndex == endIndex) {
             return;
         }
+        //从最后一个位置的View 开始回收
         for (int index = endIndex; index > startIndex; index--) {
             removeAndRecycleView(getChildAt(index), recycler);
         }
@@ -269,15 +342,32 @@ public class MyLayoutManger extends RecyclerView.LayoutManager {
                 ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
+    /**
+     * 记录当前的itemView的position
+     */
+    private class AnchorInfo {
+        public int mAnchorPosition;
+        public int mAnchorOffset;
+    }
+
+
     private class LayoutState {
         /**
          * 布局的起始位置
          */
         public int mCurrentPosition;
+
+        /**
+         * 第二个View和第一个View之间的距离，很重要的
+         */
+        public int secondOffSet;
+
         /**
          * 布局的偏移量
          */
         public int offSet;
+
+
         /**
          * recyclerView可使用的距离
          */
@@ -294,9 +384,44 @@ public class MyLayoutManger extends RecyclerView.LayoutManager {
          * 标识下布局完全没有进行滚动的情况
          */
         public static final int NOT_SCROLL_AT_ALL = Integer.MIN_VALUE;
+        private List<RecyclerView.ViewHolder> mScrapList;
+
+        View next(RecyclerView.Recycler recycler) {
+            if (mScrapList != null) {
+                return nextViewFromScrapList();
+            }
+            final View view = recycler.getViewForPosition(mCurrentPosition);
+            mCurrentPosition += mLayoutScrollDiretaion;
+            return view;
+        }
+
+        private View nextViewFromScrapList() {
+            final int size = mScrapList.size();
+            for (int i = 0; i < size; i++) {
+                final View view = mScrapList.get(i).itemView;
+                final RecyclerView.LayoutParams lp = (RecyclerView.LayoutParams) view.getLayoutParams();
+                if (lp.isItemRemoved()) {
+                    continue;
+                }
+                if (mCurrentPosition == lp.getViewLayoutPosition()) {
+                    assignPositionFromScrapList(view);
+                    return view;
+                }
+            }
+            return null;
+        }
 
         public boolean hasMore(RecyclerView.State state) {
             return mCurrentPosition >= 0 && mCurrentPosition < state.getItemCount();
         }
+
+        public void reset() {
+            layoutState.offSet = 0;
+            aviableSpace = orientationHelper.getEndAfterPadding() - layoutState.offSet;
+        }
+    }
+
+    private void assignPositionFromScrapList(View view) {
+
     }
 }

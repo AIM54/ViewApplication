@@ -21,8 +21,23 @@
     <string name="test_dialogfragment">测试对话框</string>
     <string name="test_pdf">测试pdf</string>
     <string name="test_layout_manger">测试LayoutManager</string>
+    <string name="test_view_pager">测试viewpager</string>
+
+    <string name="test_item_decoration">测试ItemDecoration</string>
+
+
     <string name="edit_text_dialog">可输入对话框</string>
     <string name="refresh_header">刷新头部</string>
     <string name="refresh_footer">刷新尾部</string>
     <string name="get_child_count">获取子View数量</string>
+    <string name="change_all_data">变更全部数据</string>
+
+
+    <string name="the_king_is_dead">常星老公死的好惨啊！</string>
+    <string name="the_queen_is_dead">常星死的更惨，她的头都掉了</string>
+    <string name="the_cto_is_dead">坏啦，王东方也死了</string>
+    <string name="the_king_s_salt_wife_is_also_dead">牛逼毁啦，常星的情敌也死了</string>
+    <string name="the_king_is_good_at_fucking">震惊!刘小寒能一夜十炮</string>
+    <string name="camera">Camera</string>
+    <string name="take_photo">拍照</string>
 </resources>

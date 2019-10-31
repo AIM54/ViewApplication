@@ -2,10 +2,12 @@ package com.bian.viewapplication.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.bian.viewapplication.R
+import com.bian.viewapplication.dialog.SimpleDialogFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -21,43 +23,24 @@ class MainActivity : AppCompatActivity() {
         listview?.adapter = arrayAdapter
         listview?.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             when (position) {
-                0 -> skipToRefreshPage();
-                1 -> skipToListPage()
-                2 -> skipToViewPage()
-                3 -> skipToShapePage()
-                4 -> startActivity(Intent(this, GridManagerActivity::class.java))
-                5 -> showEditDialog()
-                6 -> gotoPdfPage()
-                7-> gotoLayoutMangerPage()
+                0 -> skipToViewPage()
+                1 -> skipToShapePage()
+                2 -> showEditDialog()
             }
         }
     }
 
-    private fun gotoLayoutMangerPage() {
-        val layoutIt=Intent(this,MyLayoutMangerActivity::class.java)
-        startActivity(layoutIt)
-    }
-
-    private fun gotoPdfPage() {
-        val it = Intent(this, PdfReaderActivity::class.java)
-        startActivity(it)
-    }
 
     private fun showEditDialog() {
-
+        val shapeIt = Intent(this, ViewPagerActivity::class.java);
+        startActivity(shapeIt)
     }
 
-    private fun skipToListPage() {
-        val listIt = Intent(this, ListViewActivity::class.java)
-        listIt.putExtra("tomcat", "in order to defeat cpc,we need to kill")
-        startActivity(listIt)
-    }
 
 
     private fun skipToShapePage() {
         val shapeIt = Intent(this, ShapeActivity::class.java);
         startActivity(shapeIt)
-        supportFragmentManager.executePendingTransactions();
     }
 
     private fun skipToViewPage() {
@@ -65,8 +48,4 @@ class MainActivity : AppCompatActivity() {
         startActivity(viewIt)
     }
 
-    private fun skipToRefreshPage() {
-        val intent = Intent(this, RefreshListActivity::class.java)
-        startActivity(intent)
-    }
 }
