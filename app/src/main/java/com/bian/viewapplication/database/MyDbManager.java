@@ -42,16 +42,18 @@ public class MyDbManager {
 
     public List<TakePhotoItem> getPhotoItems() {
         takePhotoItems = new LinkedList<>();
-        getItems("database/camera_query.sql");
-        getItems("database/camera_queryb.sql");
+        getItems(AssertUtil.getText("database/camera_query.sql"));
+        getItems(AssertUtil.getText("database/camera_queryb.sql"));
         return takePhotoItems;
     }
 
     private void getItems(String sql) {
-        Cursor cursor = configDataBase.rawQuery(sql, null);
-        while (cursor.moveToNext()) {
-            takePhotoItems.add(new TakePhotoItem(cursor));
+        if (configDataBase.isOpen()) {
+            Cursor cursor = configDataBase.rawQuery(sql, null);
+            while (cursor.moveToNext()) {
+                takePhotoItems.add(new TakePhotoItem(cursor));
+            }
+            cursor.close();
         }
-        cursor.close();
     }
 }

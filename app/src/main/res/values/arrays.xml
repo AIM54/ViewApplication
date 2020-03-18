@@ -4,6 +4,7 @@
         <item>@string/simple_view</item>
         <item>@string/simple_shape</item>
         <item>@string/test_layout_manger</item>
+        <item>@string/test_camera</item>
     </string-array>
 
 
