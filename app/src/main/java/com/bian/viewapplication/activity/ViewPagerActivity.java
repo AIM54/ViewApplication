@@ -1,19 +1,19 @@
 package com.bian.viewapplication.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bian.viewapplication.R;
+import androidx.annotation.NonNull;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
-public class ViewPagerActivity extends AppCompatActivity {
+import com.bian.viewapplication.R;
+import com.bian.viewapplication.activity.base.BaseActivity;
+
+public class ViewPagerActivity extends BaseActivity {
     private ViewPager mainViewPager;
     private LinearLayout linearLayout;
     private PagerAdapter mPagerAdapter = new PagerAdapter() {

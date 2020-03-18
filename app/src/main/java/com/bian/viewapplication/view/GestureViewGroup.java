@@ -8,10 +8,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.FrameLayout;
 import android.widget.Scroller;
-
-import com.bian.viewapplication.util.CommonLog;
 
 /**
  * Created by Bianmingliang on 2018/6/14.

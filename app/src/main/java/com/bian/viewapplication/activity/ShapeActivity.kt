@@ -9,9 +9,9 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bian.viewapplication.R
+import com.bian.viewapplication.activity.base.BaseActivity
 import com.bian.viewapplication.bean.ViewLoactionBean
 import com.bian.viewapplication.dialog.GuideFragment
 import com.bian.viewapplication.shape.MyRoundShape
@@ -22,7 +22,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_shape.*
 
-class ShapeActivity : AppCompatActivity() {
+class ShapeActivity : BaseActivity() {
     var guildeFragment: GuideFragment? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

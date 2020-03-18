@@ -1,6 +1,5 @@
 package com.bian.viewapplication.database;
 
-import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -15,7 +14,6 @@ import java.util.List;
 public class MyDbManager {
 
     private volatile static MyDbManager myDbManager;
-
     private SQLiteDatabase configDataBase;
 
     public static final String CONFIG_DB = ViewApplication.mContext.getCacheDir() + File.separator + "MyDataBase" + File.separator + "config.db";
@@ -41,9 +39,11 @@ public class MyDbManager {
 
 
     public List<TakePhotoItem> getPhotoItems() {
-        takePhotoItems = new LinkedList<>();
-        getItems(AssertUtil.getText("database/camera_query.sql"));
-        getItems(AssertUtil.getText("database/camera_queryb.sql"));
+        if (takePhotoItems == null || takePhotoItems.isEmpty()) {
+            takePhotoItems = new LinkedList<>();
+            getItems(AssertUtil.getText("database/camera_query.sql"));
+            getItems(AssertUtil.getText("database/camera_queryb.sql"));
+        }
         return takePhotoItems;
     }
 

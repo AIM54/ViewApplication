@@ -12,10 +12,11 @@ import android.graphics.RadialGradient;
 import android.graphics.Shader;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.ViewCompat;
 import android.view.View;
 import android.view.animation.Animation;
+
+import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
 
 /**
  * Private class created to work around issues with AnimationListeners being

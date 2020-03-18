@@ -2,9 +2,10 @@ package com.bian.viewapplication.view;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.view.View;
+
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.View;
 
 public class GroupItemDecoration extends RecyclerView.ItemDecoration {
     DividerItemDecoration dividerItemDecoration;

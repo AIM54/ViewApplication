@@ -5,8 +5,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bian.viewapplication.util.CommonLog;
-
 /**
  * Created by bianmingliang on 2018/6/20.
  */

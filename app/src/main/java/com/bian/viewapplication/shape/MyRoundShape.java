@@ -8,8 +8,8 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.shapes.RoundRectShape;
+
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 
 /**
  * Created by Administrator on 2018/8/11.

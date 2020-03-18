@@ -1,19 +1,17 @@
 package com.bian.viewapplication.dialog;
 
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ListView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 
 import com.bian.viewapplication.R;
 import com.bian.viewapplication.bean.ViewLoactionBean;

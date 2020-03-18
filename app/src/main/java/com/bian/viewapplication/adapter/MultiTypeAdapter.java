@@ -1,13 +1,14 @@
 package com.bian.viewapplication.adapter;
 
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bian.viewapplication.adapter.inter.TypeFactory;
-import com.bian.viewapplication.adapter.viewholder.TypeFactoryForList;
 import com.bian.viewapplication.adapter.inter.Visitable;
+import com.bian.viewapplication.adapter.viewholder.TypeFactoryForList;
 import com.bian.viewapplication.bean.BankInfo;
 
 import java.util.ArrayList;

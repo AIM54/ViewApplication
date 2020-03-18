@@ -11,9 +11,9 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 
-import com.bian.viewapplication.util.CommonLog;
-
 import androidx.annotation.Nullable;
+
+import com.bian.viewapplication.util.CommonLog;
 
 public class MeterView extends View implements ScaleGestureDetector.OnScaleGestureListener {
     private Paint mPaint;

@@ -1,24 +1,21 @@
 package com.bian.viewapplication.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bian.viewapplication.R;
+import com.bian.viewapplication.activity.base.BaseActivity;
 import com.bian.viewapplication.adapter.MyViewAdapter;
-import com.bian.viewapplication.bean.BankInfo;
-import com.bian.viewapplication.util.Contant;
 import com.bian.viewapplication.view.layout_manager.MyLayoutManger;
-import com.bian.viewapplication.view.layout_manager.MyLinearLayoutManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyLayoutMangerActivity extends AppCompatActivity {
+public class MyLayoutMangerActivity extends BaseActivity {
     private RecyclerView mRecyclerView;
     private MyViewAdapter bankAdapter;
     private Button getChildCountBt;

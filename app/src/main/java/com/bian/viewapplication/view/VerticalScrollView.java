@@ -2,7 +2,6 @@ package com.bian.viewapplication.view;
 
 
 import android.content.Context;
-import androidx.core.widget.NestedScrollView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_take_photo_bg"
+    android:minHeight="@dimen/dp60"
+    android:paddingLeft="@dimen/dp6"
+    android:paddingTop="@dimen/dp12"
+    android:paddingRight="@dimen/dp6"
+    android:paddingBottom="@dimen/dp12">
+
+    <TextView
+        android:id="@+id/tv_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp12"
+        tools:text="1/23" />
+
+    <TextView
+        android:id="@+id/tv_point_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_count"
+        android:layout_marginTop="@dimen/dp2"
+        android:layout_toLeftOf="@+id/tv_mark"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp12"
+        tools:text="行驶证正面" />
+
+    <TextView
+        android:id="@+id/tv_mark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tv_point_name"
+        android:layout_alignParentRight="true"
+        android:text="*"
+        android:textColor="@color/red"
+        android:textSize="@dimen/sp12"
+        android:visibility="gone" />
+
+</RelativeLayout>

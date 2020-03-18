@@ -7,11 +7,11 @@ import android.graphics.Rect;
 import android.text.TextPaint;
 import android.view.View;
 
-import com.bian.viewapplication.util.CommonLog;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bian.viewapplication.util.CommonLog;
 
 public class MyItemDecoration extends RecyclerView.ItemDecoration {
     private final Paint.FontMetrics mFontMetrics;

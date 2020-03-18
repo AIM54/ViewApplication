@@ -10,10 +10,7 @@ import android.graphics.PathEffect;
 import android.graphics.RectF;
 import android.text.TextPaint;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.view.View;
-
-import com.bian.viewapplication.util.CommonLog;
 
 import androidx.annotation.Nullable;
 

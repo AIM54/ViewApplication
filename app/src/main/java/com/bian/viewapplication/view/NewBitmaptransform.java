@@ -1,6 +1,7 @@
 package com.bian.viewapplication.view;
 
 import android.graphics.Bitmap;
+
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;

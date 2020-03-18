@@ -3,14 +3,10 @@ package com.bian.viewapplication.view.layout_manager;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bian.viewapplication.util.CommonLog;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
 
 public class MyLayoutManger extends RecyclerView.LayoutManager {
     private OrientationHelper orientationHelper;

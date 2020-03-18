@@ -2,12 +2,12 @@ package com.bian.viewapplication.activity
 
 import android.os.Bundle
 import android.view.ViewTreeObserver
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bian.viewapplication.R
+import com.bian.viewapplication.activity.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_view_group.*
 
-class ViewGroupActivity : AppCompatActivity(), ViewTreeObserver.OnGlobalLayoutListener {
+class ViewGroupActivity : BaseActivity(), ViewTreeObserver.OnGlobalLayoutListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

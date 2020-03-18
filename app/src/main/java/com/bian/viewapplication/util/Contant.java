@@ -1,7 +1,6 @@
 package com.bian.viewapplication.util;
 
 import android.os.SystemClock;
-import android.text.method.BaseKeyListener;
 
 import com.bian.viewapplication.R;
 import com.bian.viewapplication.bean.BankInfo;
@@ -11,7 +10,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 
 /**
  * Created by Administrator on 2018/6/19.

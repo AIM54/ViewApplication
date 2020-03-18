@@ -8,6 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+
+    </style>
+
+
     <style name="CustomDialog" parent="android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
@@ -33,6 +38,7 @@
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/black</item>
     </style>
+
     <style name="MyDialog" parent="android:style/Theme.Dialog">
         <item name="android:windowBackground">@null</item>
     </style>

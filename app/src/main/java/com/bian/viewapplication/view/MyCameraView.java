@@ -11,11 +11,11 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.bian.viewapplication.R;
-
 import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+
+import com.bian.viewapplication.R;
 
 public class MyCameraView extends View {
     private Drawable mDrawable;

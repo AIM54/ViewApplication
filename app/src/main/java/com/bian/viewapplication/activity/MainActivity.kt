@@ -2,16 +2,14 @@ package com.bian.viewapplication.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import androidx.appcompat.app.AppCompatActivity
 import com.bian.viewapplication.R
+import com.bian.viewapplication.activity.base.BaseActivity
 import com.bian.viewapplication.activity.camera.CameraActivity
-import com.bian.viewapplication.dialog.SimpleDialogFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

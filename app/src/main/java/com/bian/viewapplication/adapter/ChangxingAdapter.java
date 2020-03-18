@@ -5,13 +5,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bian.viewapplication.R;
 import com.bian.viewapplication.bean.ItemBean;
 
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class ChangxingAdapter extends RecyclerView.Adapter<ChangxingAdapter.MyViewHolder> {
     private List<ItemBean> mItemList;
