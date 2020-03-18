@@ -41,6 +41,9 @@ public class TakePhotoItem {
         nameEn = cursor.getString(cursor.getColumnIndex("NameEn"));
     }
 
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 
     public boolean isSelected() {
         return isSelected;

@@ -1,5 +1,6 @@
 package com.bian.viewapplication.activity.camera;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
@@ -13,6 +14,7 @@ import com.bian.viewapplication.R;
 import com.bian.viewapplication.activity.base.BaseActivity;
 import com.bian.viewapplication.bean.TakePhotoItem;
 import com.bian.viewapplication.database.MyDbManager;
+import com.bian.viewapplication.widget.HorizonTaskItemDecoration;
 import com.bian.viewapplication.widget.TaskItemDecoration;
 
 import java.util.List;
@@ -40,8 +42,16 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
 
     private void initData() {
         mList = MyDbManager.getInstance().getPhotoItems();
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.addItemDecoration(new TaskItemDecoration(mList.size(), getResources().getDimensionPixelOffset(R.dimen.dp6), ContextCompat.getColor(this, R.color.colorAppTheme)));
+        mList.get(0).setSelected(true);
+        if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+            mRecyclerView.addItemDecoration(new HorizonTaskItemDecoration(mList.size(), getResources().getDimensionPixelOffset(R.dimen.dp6), ContextCompat.getColor(this, R.color.colorAppTheme)));
+        } else {
+            //横屏
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+            mRecyclerView.addItemDecoration(new TaskItemDecoration(mList.size(), getResources().getDimensionPixelOffset(R.dimen.dp6), ContextCompat.getColor(this, R.color.colorAppTheme)));
+        }
+
         mAdapter = new CameraAdapter(mList);
         mRecyclerView.setAdapter(mAdapter);
     }

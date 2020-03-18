@@ -22,6 +22,16 @@ public class CameraAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private static final int NEED_TAKE_PHOTO = 1;
     private static final int HAS_PHOTOTED = 2;
 
+    private View.OnClickListener itemClickListener;
+
+    public View.OnClickListener getItemClickListener() {
+        return itemClickListener;
+    }
+
+    public void setItemClickListener(View.OnClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
+
     public CameraAdapter(List<TakePhotoItem> dataList) {
         this.mDataList = dataList;
     }
@@ -49,6 +59,10 @@ public class CameraAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             ((TakePhotoViewHolder) holder).nameTv.setText(mDataList.get(position).getNameCn());
             ((TakePhotoViewHolder) holder).countTv.setText((position + 1) + "/" + getItemCount());
             ((TakePhotoViewHolder) holder).rootLayout.setSelected(mDataList.get(position).isSelected());
+            if (itemClickListener!=null){
+                ((TakePhotoViewHolder) holder).rootLayout.setTag(position);
+                ((TakePhotoViewHolder) holder).rootLayout.setOnClickListener(itemClickListener);
+            }
         }
     }
 

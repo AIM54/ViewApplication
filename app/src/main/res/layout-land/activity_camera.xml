@@ -2,26 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:weightSum="10">
+
     <FrameLayout
         android:id="@+id/fl_container"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="7.4"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="7"
         android:background="@color/dimgray" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_task"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal" />
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1.4" />
 
     <RelativeLayout
         android:id="@+id/rl_take_photo"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:layout_weight="1.6"
         android:background="@color/colorAppTheme">
 
@@ -29,8 +28,8 @@
             android:id="@+id/tv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp26"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="26dp"
             android:text="@string/back_button"
             android:textColor="@color/white"
             android:textSize="@dimen/sp16" />
@@ -46,9 +45,9 @@
             android:id="@+id/cb_flash"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="26dp"
-            android:layout_toLeftOf="@+id/iv_rotete_camera"
+            android:layout_above="@+id/iv_rotete_camera"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="26dp"
             android:button="@drawable/flash_light_bg"
             android:textColor="@color/colorDeepGrey" />
 
@@ -56,9 +55,9 @@
             android:id="@+id/iv_rotete_camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="26dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="26dp"
             android:src="@drawable/ic_rotate_camera" />
     </RelativeLayout>
 </LinearLayout>
