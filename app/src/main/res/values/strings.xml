@@ -21,6 +21,7 @@
     <string name="test_dialogfragment">测试对话框</string>
     <string name="test_pdf">测试pdf</string>
     <string name="test_layout_manger">测试LayoutManager</string>
+    <string name="test_camera">测试相机</string>
     <string name="test_view_pager">测试viewpager</string>
 
     <string name="test_item_decoration">测试ItemDecoration</string>

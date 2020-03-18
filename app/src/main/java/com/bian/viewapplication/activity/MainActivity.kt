@@ -7,6 +7,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.bian.viewapplication.R
+import com.bian.viewapplication.activity.camera.CameraActivity
 import com.bian.viewapplication.dialog.SimpleDialogFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -26,8 +27,14 @@ class MainActivity : AppCompatActivity() {
                 0 -> skipToViewPage()
                 1 -> skipToShapePage()
                 2 -> showEditDialog()
+                3->testCamera()
             }
         }
+    }
+
+    private fun testCamera() {
+        val shapeIt = Intent(this, CameraActivity::class.java);
+        startActivity(shapeIt)
     }
 
 
