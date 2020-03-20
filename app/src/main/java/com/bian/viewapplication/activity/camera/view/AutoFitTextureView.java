@@ -22,6 +22,8 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.TextureView;
 
+import com.bian.viewapplication.util.CommonLog;
+
 /**
  * A {@link TextureView} that can be adjusted to a specified aspect ratio.
  */
@@ -86,12 +88,17 @@ public class AutoFitTextureView extends TextureView implements ScaleGestureDetec
 
     @Override
     public boolean onScale(ScaleGestureDetector detector) {
-        return false;
+        detector.getFocusX();
+        detector.getFocusY();
+        detector.getPreviousSpan();
+        detector.getCurrentSpan();
+        CommonLog.i("detector.getFocusX:" + detector.getFocusX() + "getFocusY:" + detector.getFocusY());
+        return true;
     }
 
     @Override
     public boolean onScaleBegin(ScaleGestureDetector detector) {
-        return false;
+        return true;
     }
 
     @Override

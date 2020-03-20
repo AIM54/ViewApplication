@@ -8,7 +8,7 @@
         android:id="@+id/fl_container"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="7"
+        android:layout_weight="7.6"
         android:background="@color/dimgray" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -21,7 +21,7 @@
         android:id="@+id/rl_take_photo"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1.6"
+        android:layout_weight="1"
         android:background="@color/colorAppTheme">
 
         <TextView

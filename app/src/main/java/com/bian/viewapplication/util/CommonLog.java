@@ -11,7 +11,7 @@ public class CommonLog {
     /**
      * 设置当前是否为调试模式
      */
-    private static boolean isDebug = false;
+    private static boolean isDebug = true;
 
     private static final String TAG_START = "BML";
     private static final String TAG_START2 = TAG_START + "-->";

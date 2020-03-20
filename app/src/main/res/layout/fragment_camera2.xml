@@ -4,5 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.camera.Camera2Fragment">
-
+    <com.bian.viewapplication.activity.camera.view.AutoFitTextureView
+        android:id="@+id/texture_camera"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </FrameLayout>
