@@ -196,7 +196,6 @@ public class Camera2Fragment extends Fragment {
             mCameraOpenCloseLock.release();
             mCameraDevice.close();
             mCameraDevice = null;
-
         }
     };
 

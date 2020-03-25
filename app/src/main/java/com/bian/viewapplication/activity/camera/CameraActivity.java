@@ -7,8 +7,10 @@ import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import androidx.annotation.RequiresApi;
@@ -33,6 +35,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     private CameraAdapter mAdapter;
     private CameraType mCurrentCamera;
     private Camera2Fragment camera2Fragment;
+    FrameLayout frameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,18 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
         setUpCameraPreView();
         initData();
 
+        frameLayout.dispatchTouchEvent()
+
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return true;
     }
 
     private void setUpCameraPreView() {
@@ -107,7 +122,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
         if (camera2Fragment == null) {
             camera2Fragment = Camera2Fragment.newInstance(takePhotoItem, null);
             getSupportFragmentManager().beginTransaction().add(R.id.fl_container, camera2Fragment, Camera2Fragment.class.getSimpleName()).commit();
-        }else{
+        } else {
             camera2Fragment.setCurrentItem(takePhotoItem);
         }
     }
